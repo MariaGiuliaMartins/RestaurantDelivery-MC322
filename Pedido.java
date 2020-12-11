@@ -288,7 +288,7 @@ public class Pedido {
 		 * Output: boolean - true significa sucesso, false significa que algo de errado ocorreu
 		 */
 		//se o usuario possuir uma permissão de aprovar pedidos, ou for um funcionário ou um admin
-		if(aprovador.getPermissoes() == APROVAR_PEDIDO || aprovador.getClass() == Admin || aprovador.getClass() == Funcionario) {
+		if(aprovador.getPermissoes() == APROVAR_PEDIDO || aprovador.getClass() == Admin.class || aprovador.getClass() == Funcionario.class) {
 			return true;
 		}
 		else {

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+
 public class Cardapio {
 	//atributos
 	private ArrayList<Comida> comidas;
@@ -30,7 +31,7 @@ public class Cardapio {
 		 * Output: boolean - true significa sucesso, false significa que algo de errado ocorreu
 		 */
 		//primeiro checamos se o usuario é um funcionário ou um admin
-		if(usuario.getClass() == Admin || usuario.getClass() == Funcionario) {
+		if(usuario.getClass() == Admin.class || usuario.getClass() == Funcionario.class) {
 			int aux_c = 0; //auxiliar para contadora de comida
 			//agora devemos ver se a comida já existe no cardápio
 			for(int i = 0; i < this.comidas.size(); i++) {
@@ -69,7 +70,7 @@ public class Cardapio {
 		 * Output: boolean - true significa sucesso, false significa que algo de errado ocorreu
 		 */
 		//primeiro checamos se o usuario é admin ou funcionário
-		if(usuario.getClass() == Admin || usuario.getClass() == Funcionario) {
+		if(usuario.getClass() == Admin.class || usuario.getClass() == Funcionario.class) {
 			//agora vemos se a comida existe
 			for(int i = 0; i < this.comidas.size(); i++) {
 				if(this.comidas.get(i) == comida) { //se ela existir, removemos
@@ -99,7 +100,7 @@ public class Cardapio {
 		 * Output: boolean - true significa sucesso, false significa que algo de errado ocorreu
 		 */
 		//primeiro checamos se o usuário que fará a edição é admin ou funcionário
-		if(usuario.getClass() == Admin || usuario.getClass() == Funcionario) {
+		if(usuario.getClass() == Admin.class || usuario.getClass() == Funcionario.class) {
 			//agora vemos se a comida existe no cardápio para se editada
 			for(int i = 0; i < this.comidas.size(); i++) {
 				if(this.comidas.get(i).getNome() == comida.getNome()) { //se a comida existe, começamos as comparações

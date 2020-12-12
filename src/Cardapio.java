@@ -7,7 +7,7 @@ public class Cardapio {
 	private ArrayList<Bebida> bebidas;
 	
 	//construtor
-	Cardapio(ArrayList<Comida> comidas, ArrayList<Bebida> bebidas){
+	Cardapio(){
 		this.comidas = new ArrayList<Comida>();
 		this.bebidas = new ArrayList<Bebida>();
 	}

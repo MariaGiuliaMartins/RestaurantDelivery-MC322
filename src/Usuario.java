@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -14,10 +15,9 @@ public class Usuario {
     private String telefone;
     private Endereco endereco;
     private boolean status;
-    private Permissoes permissoes;
     private Calendar dataCriacao;
 
-    public Usuario(String nome, String cpf, String email, String senhal, Sexo sexo, String telefone, Endereco endereco, boolean status, Permissoes permissoes, Calendar dataCriacao) {
+    public Usuario(String nome, String cpf, String email, String senhal, Sexo sexo, String telefone, Endereco endereco, boolean status, Calendar dataCriacao) {
         this.id = counter.incrementAndGet();
         this.nome = nome;
         this.cpf = cpf;
@@ -27,7 +27,6 @@ public class Usuario {
         this.telefone = telefone;
         this.endereco = endereco;
         this.status = status;
-        this.permissoes = permissoes;
         this.dataCriacao = dataCriacao;
     }
 
@@ -104,14 +103,6 @@ public class Usuario {
         this.status = status;
     }
 
-    public Permissoes getPermissoes() {
-        return permissoes;
-    }
-
-    public void setPermissoes(Permissoes permissoes) {
-        this.permissoes = permissoes;
-    }
-
     public Calendar getDataCriacao() {
         return dataCriacao;
     }
@@ -132,7 +123,6 @@ public class Usuario {
                 ", telefone='" + telefone + '\'' +
                 ", endereco=" + endereco +
                 ", status=" + status +
-                ", permissoes=" + permissoes +
                 ", dataCriacao=" + dataCriacao +
                 '}';
     }

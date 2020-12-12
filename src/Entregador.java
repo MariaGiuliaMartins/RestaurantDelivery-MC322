@@ -6,8 +6,8 @@ public class Entregador extends Usuario {
     private ArrayList<Pedido> pedidos;
     private ArrayList<Avaliacao> avaliacoes;
 
-    public Entregador(String nome, String cpf, String email, String senhal, Sexo sexo, String telefone, Endereco endereco, boolean status, Permissoes permissoes, Calendar dataCriacao) {
-        super(nome, cpf, email, senhal, sexo, telefone, endereco, status, permissoes, dataCriacao);
+    public Entregador(String nome, String cpf, String email, String senhal, Sexo sexo, String telefone, Endereco endereco, boolean status, Calendar dataCriacao) {
+        super(nome, cpf, email, senhal, sexo, telefone, endereco, status, dataCriacao);
         this.pedidos = new ArrayList<Pedido>();
         this.avaliacoes = new ArrayList<Avaliacao>();
     }

@@ -37,13 +37,13 @@ public class Entregador extends Usuario {
 
     //Avalia o entregador
     public void avaliar(float nota, String desc){
-        Avaliacao nova_aval = new Avaliacao(nota, desc);
-        this.avaliacoes.add(nova_aval);
+        Avaliacao novaAval = new Avaliacao(nota, desc);
+        this.avaliacoes.add(novaAval);
     }
 
     public void avaliar(float nota){
-        Avaliacao nova_aval = new Avaliacao(nota, "Sem descricao");
-        this.avaliacoes.add(nova_aval);
+        Avaliacao novaAval = new Avaliacao(nota, "Sem descricao");
+        this.avaliacoes.add(novaAval);
     }
 
     @Override

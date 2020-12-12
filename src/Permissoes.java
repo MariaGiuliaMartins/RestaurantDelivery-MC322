@@ -11,7 +11,7 @@ public enum Permissoes {
     ADICIONAR_FUNCIONARIO("ADICIONAR_FUNCIONARIO"),
     REMOVER_FUNCIONARIO("REMOVER_FUNCIONARIO");
 
-    public String descricao;
+    private final String descricao;
 
     Permissoes(String descricao) {
         this.descricao = descricao;
@@ -20,6 +20,5 @@ public enum Permissoes {
     public String getDescricao() {
         return descricao;
     }
-
 }
 

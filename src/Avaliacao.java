@@ -8,6 +8,10 @@ public class Avaliacao {
         this.descricao = descricao;
     }
 
+    public Avaliacao(float nota) {
+        this.nota = nota;
+    }
+
     public float getNota() {
         return nota;
     }

@@ -16,6 +16,8 @@ public class Pedido {
 	private StatusPedido status;
 	private Usuario responsavel;
 	private MetodoPagamento metodoPagamento;
+	private Entregador entregador;
+	private Avaliacao avaliacao;
 	
 	//construtor
 	public Pedido(Calendar dataCriacao, Calendar dataEntrega, Usuario cliente, ArrayList<Comida> comidas, ArrayList<Bebida> bebidas, double valor, Usuario responsavel) {
@@ -36,7 +38,7 @@ public class Pedido {
 		return numeroPedidos;
 	}
 	
-	public static int setNumeroPedidos(int numeroPedidos) {
+	public static void setNumeroPedidos(int numeroPedidos) {
 		Pedido.numeroPedidos = numeroPedidos;
 	}
 	
@@ -125,7 +127,23 @@ public class Pedido {
 	public ArrayList<Bebida> getBebida(){
 		return bebidas;
 	}
-	
+
+	public Entregador getEntregador() {
+		return entregador;
+	}
+
+	public void setEntregador(Entregador entregador) {
+		this.entregador = entregador;
+	}
+
+	public Avaliacao getAvaliacao() {
+		return avaliacao;
+	}
+
+	public void setAvaliacao(Avaliacao avaliacao) {
+		this.avaliacao = avaliacao;
+	}
+
 	/* Métodos */
 
 	///adicionar comida
@@ -241,13 +259,47 @@ public class Pedido {
 	
 	///aprovar pedido
 	/*
-		* Função que aprova o pedido de um cliente
-		* Input: usuário que possui a permissão de aprovar o pedido
+		* Função que aprova o pedido de um cliente e designa um entregador para ele
+		* Input: usuário que possui a permissão de aprovar o pedido, entregador
 		* Output: boolean - true significa sucesso, false significa que algo de errado ocorreu
 	*/
-	public boolean aprovarPedido(Usuario aprovador) {
+	public boolean aprovarPedido(Usuario aprovador, Entregador entregador) {
 		//se o usuario possuir uma permissão de aprovar pedidos, ou for um funcionário ou um admin
+		setEntregador(entregador);
+		entregador.assignPedido(this);
 		return aprovador.getPermissoes() == Permissoes.APROVAR_PEDIDOS || aprovador.getClass() == Admin.class || aprovador.getClass() == Funcionario.class;
+	}
+
+	///Avaliar pedido
+	/*
+	 * Função para avaliar o pedido
+	 * Input: usuário que fez pedido, avaliacao
+	 * Output: boolean - true significa sucesso, false significa que algo de errado ocorreu
+	 */
+	public boolean avaliarPedido(Usuario cliente, Avaliacao avaliacao) {
+		// Caso pedido nao tenha sido entregue ou cliente seja diferente do cliente que fez o pedido
+		if (getStatus() != StatusPedido.PEDIDO_ENTREGUE || cliente.equals(getCliente()))
+			return false;
+		else{
+			setAvaliacao(avaliacao);
+			return true;
+		}
+	}
+
+	///Avaliar entregador
+	/*
+	 * Função para avaliar o entregador do pedido
+	 * Input: usuário que fez pedido, avaliacao
+	 * Output: boolean - true significa sucesso, false significa que algo de errado ocorreu
+	 */
+	public boolean avaliarEntregador(Usuario cliente, Avaliacao avaliacao) {
+		// Caso pedido nao tenha sido entregue ou cliente seja diferente do cliente que fez o pedido
+		if (getStatus() != StatusPedido.PEDIDO_ENTREGUE || cliente.equals(getCliente()))
+			return false;
+		else{
+			getEntregador().avaliar(avaliacao);
+			return true;
+		}
 	}
 	
 	///toString
@@ -268,6 +320,8 @@ public class Pedido {
 		out += "Valor do pedido: " + getValor() + "\n";
 		out += "Responsável pelo pedido: " + getResponsavel() + "\n";
 		out += "Método de Pagamento do pedido: " + getMetodoPagamento() + "\n";
+		out += "Avaliacao: " + getAvaliacao() + "\n";
+		out += "Entregador: " + getEntregador() + "\n";
 		return out;
 	}
 }

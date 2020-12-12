@@ -129,7 +129,7 @@ public class Restaurante {
 	public String toString() {
 		return "Restaurante [cnpj=" + cnpj + ", nome=" + nome + ", descricao=" + descricao + ", cardapio=" + cardapio
 				+ ", pedidos=" + pedidos + ", funcionarios=" + funcionarios + ", entregadores=" + entregadores
-				+ ", administradores=" + administradores + ", telefone=" + telefone + ", endereço=" + endereço
+				+ ", administradores=" + administradores + ", telefone=" + telefone + ", endereço=" + endereco
 				+ ", status=" + status + ", site=" + site + "]";
 	}
 
@@ -267,19 +267,17 @@ public class Restaurante {
 	}
 
 /*
-	Função que adiciona um pedido ao restaurante, se o usuario responsável pela
-	ação for um administrador ou funcionário e o restaurante estiver habilitado
+	Função que adiciona um pedido ao restaurante, se o restaurante estiver habilitado
 	
 	Args:
 		- pedido: Novo pedido a ser adicionado aos pedidos do restaurante
-		- usuarioResponsavel: Usuário que está tentando realizar a ação de adição
 
 	Returns:
 		- true: significa que o pedido foi adicionado
 		- false: significa que o pedido não foi adicionado
 */
-	public boolean adicionarPedido(Pedido pedido, Usuario usuarioResponsavel) {
-		if (usuarioResponsavel.getClass() != Admin.class || usuarioResponsavel.getClass() != Funcionario.class || !isStatus()) {
+	public boolean adicionarPedido(Pedido pedido) {
+		if (!isStatus()) {
 			return false;
 		}
 

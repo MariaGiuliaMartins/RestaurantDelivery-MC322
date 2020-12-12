@@ -259,15 +259,28 @@ public class Pedido {
 	
 	///aprovar pedido
 	/*
-		* Função que aprova o pedido de um cliente e designa um entregador para ele
-		* Input: usuário que possui a permissão de aprovar o pedido, entregador
+		* Função que aprova o pedido de um cliente
+		* Input: usuário que possui a permissão de aprovar o pedido
 		* Output: boolean - true significa sucesso, false significa que algo de errado ocorreu
 	*/
-	public boolean aprovarPedido(Usuario aprovador, Entregador entregador) {
+	public boolean aprovarPedido(Usuario aprovador) {
+		//se o usuario possuir uma permissão de aprovar pedidos, ou for um funcionário ou um admin
+		setStatus(StatusPedido.PEDIDO_APROVADO);
+		return aprovador.getClass() == Admin.class || aprovador.getClass() == Funcionario.class;
+	}
+
+	///Entregar pedido
+	/*
+	 * Função que aprova o pedido de um cliente
+	 * Input: usuário que possui a permissão de aprovar o pedido
+	 * Output: boolean - true significa sucesso, false significa que algo de errado ocorreu
+	 */
+	public boolean entregarPedido(Usuario aprovador, Entregador entregador) {
 		//se o usuario possuir uma permissão de aprovar pedidos, ou for um funcionário ou um admin
 		setEntregador(entregador);
 		entregador.assignPedido(this);
-		return aprovador.getPermissoes() == Permissoes.APROVAR_PEDIDOS || aprovador.getClass() == Admin.class || aprovador.getClass() == Funcionario.class;
+		setStatus(StatusPedido.PEDIDO_APROVADO);
+		return aprovador.getClass() == Admin.class || aprovador.getClass() == Funcionario.class;
 	}
 
 	///Avaliar pedido

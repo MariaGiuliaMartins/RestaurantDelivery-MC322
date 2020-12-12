@@ -30,6 +30,14 @@ public class Entregador extends Usuario {
         this.pedidos.add(pedido);
     }
 
+    public void finalizarPedido(int id_pedido){
+        for (Pedido pedido: pedidos){
+            if (pedido.getId() == id_pedido){
+                pedido.setStatus(StatusPedido.PEDIDO_ENTREGUE);
+            }
+        }
+    }
+
 
     @Override
     public String toString() {

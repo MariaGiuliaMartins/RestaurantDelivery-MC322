@@ -20,10 +20,10 @@ public class Cliente extends Usuario{
     // TODO: chama metodo avalia na classe Pedido e pelo obejto pedido atualiza a avaliacao, algo do tipo:
     public String avaliarPedido(int pedido_index, float nota, String desc) {
         Pedido pedido = this.pedidos.get(pedido_index);
-        if (pedido.getStatus() == "Pedido entregue"){
+        if (pedido.getStatus().equals(StatusPedido.PEDIDO_ENTREGUE)){
             pedido.avaliar(nota, desc);
             return "Avaliado com sucesso";
-        } else if(pedido.getStatus() == "Pedido avaliado"){
+        } else if(pedido.getStatus().equals(StatusPedido.PEDIDO_AVALIADO)){
             return "Pedido ja avaliado";
         }
         return "Pedido nao encontrado";
@@ -31,10 +31,10 @@ public class Cliente extends Usuario{
 
     public String avaliarPedido(int pedido_index, float nota) {
         Pedido pedido = this.pedidos.get(pedido_index);
-        if (pedido.getStatus() == "Pedido entregue"){
+        if (pedido.getStatus().equals(StatusPedido.PEDIDO_ENTREGUE)){
             pedido.avaliar(nota);
             return "Avaliado com sucesso";
-        } else if(pedido.getStatus() == "Pedido avaliado"){
+        } else if(pedido.getStatus().equals(StatusPedido.PEDIDO_AVALIADO)){
             return "Pedido ja avaliado";
         }
         return "Pedido nao encontrado";

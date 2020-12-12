@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Cardapio {
 	//atributos
@@ -22,118 +23,111 @@ public class Cardapio {
 		return bebidas;
 	}
 	
-	//demais métodos
+	/* Métodos */
+
 	///criar item do cardápio
+	/*
+		* Função que adiciona uma comida ou uma bebida no cardapio através de um usuário (funcionário ou admin)
+		* Input: um item de comida, um item de bebida, usuario que adicionará o alimento
+		* Output: boolean - true significa sucesso, false significa que algo de errado ocorreu
+	*/
 	public boolean criarItemCardapio(Comida comida, Bebida bebida, Usuario usuario) {
-		/*
-		 * Função que adiciona uma comida ou uma bebida no cardapio através de um usuário (funcionário ou admin)
-		 * Input: um item de comida, um item de bebida, usuario que adicionará o alimento
-		 * Output: boolean - true significa sucesso, false significa que algo de errado ocorreu
-		 */
 		//primeiro checamos se o usuario é um funcionário ou um admin
 		if(usuario.getClass() == Admin.class || usuario.getClass() == Funcionario.class) {
-			int aux_c = 0; //auxiliar para contadora de comida
-			//agora devemos ver se a comida já existe no cardápio
-			for(int i = 0; i < this.comidas.size(); i++) {
-				if(this.comidas.get(i) == comida) { //se a comida já existe, vamos checar seu valor
-					aux_c++; //incrementamos a auxiliar de comida
-					}
-				}
-			if(aux_c == 0) { //se a auxilar de comida não incrementar, então essa comida não existe no cardapio
+			int auxComida = Collections.frequency(this.comidas, comida); //auxiliar para contadora de comida
+
+			if(auxComida == 0) { //se a auxiliar de comida for 0, então essa comida não existe no cardapio
 				this.comidas.add(comida); //então adicionamos
 				System.out.println("Comida adicionada com sucesso!");
 			}
+
 			//vamos fazer a mesma coisa para a bebida
-			int aux_b = 0; //auxiliar contadora de bebida
-			for(int i = 0; i < this.bebidas.size(); i++) {
-				if(this.bebidas.get(i) == bebida) { //se a bebida já existe, vamos checar seu valor
-					aux_b++; //incrementamos auxiliar de bebida
-				}
-			}
-			if(aux_b == 0) { //se a auxilar de bebida não incrementar, então essa bebida não existe no cardapio
+			int auxBebida = Collections.frequency(this.bebidas, bebida); //auxiliar contadora de bebida
+
+			if(auxBebida == 0) { //se a auxilar de bebida não incrementar, então essa bebida não existe no cardapio
 				this.bebidas.add(bebida); //então adicionamos
 				System.out.println("Bebida adicionada com sucesso!");
 			}
+
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 	
-	
 	///remover item do cardápio
+	/*
+		* Função que remove uma comida ou uma bebida no cardapio através de um usuário (funcionário ou admin)
+		* Input: um item de comida, um item de bebida, usuario que removerá o alimento
+		* Output: boolean - true significa sucesso, false significa que algo de errado ocorreu
+	*/
 	public boolean removerItemCardapio(Comida comida, Bebida bebida, Usuario usuario) {
-		/*
-		 * Função que remove uma comida ou uma bebida no cardapio através de um usuário (funcionário ou admin)
-		 * Input: um item de comida, um item de bebida, usuario que removerá o alimento
-		 * Output: boolean - true significa sucesso, false significa que algo de errado ocorreu
-		 */
 		//primeiro checamos se o usuario é admin ou funcionário
 		if(usuario.getClass() == Admin.class || usuario.getClass() == Funcionario.class) {
 			//agora vemos se a comida existe
-			for(int i = 0; i < this.comidas.size(); i++) {
-				if(this.comidas.get(i) == comida) { //se ela existir, removemos
-					this.comidas.remove(i);
-					System.out.println("Comida removida com sucesso!");
-				}
+			if (this.comidas.contains(comida)) {
+				this.comidas.remove(comida);
+				System.out.println("Comida removida com sucesso!");
 			}
+
 			//fazemos a mesma coisa para a bebida
-			for(int i = 0; i < this.bebidas.size(); i++) {
-				if(this.bebidas.get(i) == bebida) { //se ela existir, removemos
-					this.bebidas.remove(i);
-					System.out.println("Bebida removida com sucesso!");
-				}
+			if (this.bebidas.contains(bebida)) {
+				this.bebidas.remove(bebida);
+				System.out.println("Bebida removida com sucesso!");
 			}
+
 			return true;
 		}
-		else {
-			return false;
-		}
+			
+		return false;
 	}
 	
 	///editar item do cardápio
+	/*
+		* Função que edita um alimento do cardapio através de um usuário (funcionário ou admin)
+		* Input: um item de comida, um item de bebida, usuario que editará o alimento
+		* Output: boolean - true significa sucesso, false significa que algo de errado ocorreu
+	*/
 	public boolean editarItemCardapio(Comida comida, Bebida bebida, Usuario usuario) {
-		/*
-		 * Função que edita um alimento do cardapio através de um usuário (funcionário ou admin)
-		 * Input: um item de comida, um item de bebida, usuario que editará o alimento
-		 * Output: boolean - true significa sucesso, false significa que algo de errado ocorreu
-		 */
 		//primeiro checamos se o usuário que fará a edição é admin ou funcionário
 		if(usuario.getClass() == Admin.class || usuario.getClass() == Funcionario.class) {
 			//agora vemos se a comida existe no cardápio para se editada
 			for(int i = 0; i < this.comidas.size(); i++) {
-				if(this.comidas.get(i).getNome() == comida.getNome()) { //se a comida existe, começamos as comparações
-					if(this.comidas.get(i).getDescricao() != comida.getDescricao()) { //se a descrição for diferente, atualizamos
+				if(this.comidas.get(i).getNome().equals(comida.getNome())) { //se a comida existe, começamos as comparações
+					if(!this.comidas.get(i).getDescricao().equals(comida.getDescricao())) { //se a descrição for diferente, atualizamos
 						this.comidas.get(i).descricao = comida.getDescricao();
 					}
+
 					if(this.comidas.get(i).getPreco() != comida.getPreco()){ //se o preço for diferente, atualizamos
 						this.comidas.get(i).preco = comida.getPreco();
 					}
-					if(this.comidas.get(i).getImagem() != comida.getImagem()){ //se a imagem for diferente, atualizamos
+					
+					if(this.comidas.get(i).getImagem().equals(comida.getImagem())){ //se a imagem for diferente, atualizamos
 						this.comidas.get(i).imagem = comida.getImagem();
 					}	
 				}
 			}
+
 			//fazemos a mesma coisa para a bebida
 			for(int i = 0; i < this.bebidas.size(); i++) {
-				if(this.bebidas.get(i).getNome() == bebida.getNome()) { //se a bebida existe, começamos as comparações
-					if(this.bebidas.get(i).getDescricao() != bebida.getDescricao()) { //se a descrição for diferente, atualizamos
+				if(this.bebidas.get(i).getNome().equals(bebida.getNome())) { //se a bebida existe, começamos as comparações
+					if(!this.bebidas.get(i).getDescricao().equals(bebida.getDescricao())) { //se a descrição for diferente, atualizamos
 						this.bebidas.get(i).descricao = bebida.getDescricao();
 					}
+
 					if(this.bebidas.get(i).getPreco() != bebida.getPreco()){ //se o preço for diferente, atualizamos
 						this.bebidas.get(i).preco = bebida.getPreco();
 					}
-					if(this.bebidas.get(i).getImagem() != bebida.getImagem()){ //se a imagem for diferente, atualizamos
+
+					if(!this.bebidas.get(i).getImagem().equals(bebida.getImagem())){ //se a imagem for diferente, atualizamos
 						this.bebidas.get(i).imagem = bebida.getImagem();
 					}	
 				}
 			}
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 	
 	

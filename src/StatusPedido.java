@@ -4,7 +4,8 @@ public enum StatusPedido {
 	PEDIDO_APROVADO("O restaurante aprovou o pedido"),
 	PEDIDO_EM_PREPARACAO("O restaurante está preparando o pedido."),
 	PEDIDO_ENVIADO("O pedido saiu para entrega ao cliente."),
-	PEDIDO_ENTREGUE("O pedido foi entregue ao cliente.");	
+	PEDIDO_ENTREGUE("O pedido foi entregue ao cliente."),
+	PEDIDO_AVALIADO("O pedido foi avaliado pelo cliente");
 	
 	//atributos
 	private final String descricao;

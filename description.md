@@ -1,6 +1,7 @@
 # Projeto 1 - Sistema de Gerenciamento de pedidos em um restaurante 
 
 **Descrição**
+
 O projeto desenvolvido consiste de um sistema de gerenciamento de pedidos de um restaurante. Nele, os usuários poderão fazer pedidos no restaurante, verificando todo o cardápio disponível. Os administradores do restaurante poderão fazer todo o gerenciamento de pedidos, funcionários, entregadores e cardápio do restaurante. E cada uma das outras entidades presentes podem realizar certos tipos de funções de acordo com às suas permissões.
 
 **UML**

@@ -25,7 +25,7 @@ public class Main {
                 endereco, true, calendar);
 
         Cardapio cardapio = new Cardapio();
-        Restaurante restaurante = new Restaurante("cnpj", "nome", "tem comida", cardapio, "444", endereco,
+        Restaurante restaurante = new Restaurante("cnpj", "nome", "tem comida", cardapio, "444", "restaurante@email.com", endereco,
         true, "site");
 
         // Inicializando restaurante
@@ -36,9 +36,9 @@ public class Main {
         restaurante.adicionarCardapio(cardapio, admin);
 
         // Fazendo pedido
-        ArrayList<Comida> comidas_a_pedir = cardapio.getComida(); // no caso o cliente vai pedir tudo, para simplificar
-        ArrayList<Bebida> bebidas_a_pedir = cardapio.getBebida(); // no caso o cliente vai pedir tudo, para simplificar
-        Pedido pedido = new Pedido(calendar, calendar, cliente, comidas_a_pedir, bebidas_a_pedir, 15.0, admin);
+        ArrayList<Comida> comidasAPedir = cardapio.getComida(); // no caso o cliente vai pedir tudo, para simplificar
+        ArrayList<Bebida> bebidasAPedir = cardapio.getBebida(); // no caso o cliente vai pedir tudo, para simplificar
+        Pedido pedido = new Pedido(calendar, calendar, cliente, comidasAPedir, bebidasAPedir, 15.0, admin);
         pedido.setMetodoPagamento(MetodoPagamento.CARTAO_CREDITO);
         pedido.setStatus(StatusPedido.PEDIDO_EM_PROCESSAMENTO);
         cliente.fazerPedido(pedido, restaurante);

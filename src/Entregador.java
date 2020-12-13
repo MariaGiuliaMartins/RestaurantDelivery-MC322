@@ -6,8 +6,8 @@ public class Entregador extends Usuario {
     private ArrayList<Pedido> pedidos;
     private ArrayList<Avaliacao> avaliacoes;
 
-    public Entregador(String nome, String cpf, String email, String senhal, Sexo sexo, String telefone, Endereco endereco, boolean status, Calendar dataCriacao) {
-        super(nome, cpf, email, senhal, sexo, telefone, endereco, status, dataCriacao);
+    public Entregador(String nome, String cpf, String email, String senha, Sexo sexo, String telefone, Endereco endereco, boolean status, Calendar dataCriacao) {
+        super(nome, cpf, email, senha, sexo, telefone, endereco, status, dataCriacao);
         this.pedidos = new ArrayList<Pedido>();
         this.avaliacoes = new ArrayList<Avaliacao>();
     }
@@ -20,8 +20,16 @@ public class Entregador extends Usuario {
         return avaliacoes;
     }
 
+    @Override
+    public String toString() {
+        return "Entregador{" +
+                "pedidos=" + pedidos +
+                ", avaliacao=" + avaliacoes +
+                "} " + super.toString();
+    }
+
     //Avalia o entregador
-    public void avaliar(Avaliacao avaliacao){
+    public void avaliarEntregador(Avaliacao avaliacao){
         this.avaliacoes.add(avaliacao);
     }
 
@@ -30,20 +38,11 @@ public class Entregador extends Usuario {
         this.pedidos.add(pedido);
     }
 
-    public void finalizarPedido(int id_pedido){
+    public void finalizarPedido(int idPedido){
         for (Pedido pedido: pedidos){
-            if (pedido.getId() == id_pedido){
+            if (pedido.getId() == idPedido){
                 pedido.setStatus(StatusPedido.PEDIDO_ENTREGUE);
             }
         }
-    }
-
-
-    @Override
-    public String toString() {
-        return "Entregador{" +
-                "pedidos=" + pedidos +
-                ", avaliacao=" + avaliacoes +
-                "} " + super.toString();
     }
 }

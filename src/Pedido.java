@@ -310,7 +310,7 @@ public class Pedido {
 		if (getStatus() != StatusPedido.PEDIDO_ENTREGUE || cliente.equals(getCliente()))
 			return false;
 		else{
-			getEntregador().avaliar(avaliacao);
+			getEntregador().avaliarEntregador(avaliacao);
 			return true;
 		}
 	}

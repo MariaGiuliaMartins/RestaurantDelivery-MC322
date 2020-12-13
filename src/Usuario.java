@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -10,26 +9,25 @@ public class Usuario {
     private String nome;
     private String cpf;
     private String email;
-    private String senhal;
+    private String senha;
     private Sexo sexo;
     private String telefone;
     private Endereco endereco;
     private boolean status;
     private Calendar dataCriacao;
 
-    public Usuario(String nome, String cpf, String email, String senhal, Sexo sexo, String telefone, Endereco endereco, boolean status, Calendar dataCriacao) {
+    public Usuario(String nome, String cpf, String email, String senha, Sexo sexo, String telefone, Endereco endereco, boolean status, Calendar dataCriacao) {
         this.id = counter.incrementAndGet();
         this.nome = nome;
         this.cpf = cpf;
         this.email = email;
-        this.senhal = senhal;
+        this.senha = senha;
         this.sexo = sexo;
         this.telefone = telefone;
         this.endereco = endereco;
         this.status = status;
         this.dataCriacao = dataCriacao;
     }
-
 
     public static AtomicInteger getCounter() {
         return counter;
@@ -63,12 +61,12 @@ public class Usuario {
         this.email = email;
     }
 
-    public String getSenhal() {
-        return senhal;
+    public String getSenha() {
+        return senha;
     }
 
-    public void setSenhal(String senhal) {
-        this.senhal = senhal;
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
     public Sexo getSexo() {
@@ -118,7 +116,7 @@ public class Usuario {
                 ", nome='" + nome + '\'' +
                 ", cpf='" + cpf + '\'' +
                 ", email='" + email + '\'' +
-                ", senhal='" + senhal + '\'' +
+                ", senha='" + senha + '\'' +
                 ", sexo=" + sexo +
                 ", telefone='" + telefone + '\'' +
                 ", endereco=" + endereco +

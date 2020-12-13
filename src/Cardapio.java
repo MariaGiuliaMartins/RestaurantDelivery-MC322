@@ -95,15 +95,15 @@ public class Cardapio {
 			for(int i = 0; i < this.comidas.size(); i++) {
 				if(this.comidas.get(i).getNome().equals(comida.getNome())) { //se a comida existe, começamos as comparações
 					if(!this.comidas.get(i).getDescricao().equals(comida.getDescricao())) { //se a descrição for diferente, atualizamos
-						this.comidas.get(i).descricao = comida.getDescricao();
+						this.comidas.get(i).setDescricao(comida.getDescricao());
 					}
 
 					if(this.comidas.get(i).getPreco() != comida.getPreco()){ //se o preço for diferente, atualizamos
-						this.comidas.get(i).preco = comida.getPreco();
+						this.comidas.get(i).setPreco(comida.getPreco());
 					}
 					
 					if(this.comidas.get(i).getImagem().equals(comida.getImagem())){ //se a imagem for diferente, atualizamos
-						this.comidas.get(i).imagem = comida.getImagem();
+						this.comidas.get(i).setImagem(comida.getImagem());
 					}	
 				}
 			}
@@ -112,15 +112,15 @@ public class Cardapio {
 			for(int i = 0; i < this.bebidas.size(); i++) {
 				if(this.bebidas.get(i).getNome().equals(bebida.getNome())) { //se a bebida existe, começamos as comparações
 					if(!this.bebidas.get(i).getDescricao().equals(bebida.getDescricao())) { //se a descrição for diferente, atualizamos
-						this.bebidas.get(i).descricao = bebida.getDescricao();
+						this.bebidas.get(i).setDescricao(bebida.getDescricao());
 					}
 
 					if(this.bebidas.get(i).getPreco() != bebida.getPreco()){ //se o preço for diferente, atualizamos
-						this.bebidas.get(i).preco = bebida.getPreco();
+						this.bebidas.get(i).setPreco(bebida.getPreco());
 					}
 
 					if(!this.bebidas.get(i).getImagem().equals(bebida.getImagem())){ //se a imagem for diferente, atualizamos
-						this.bebidas.get(i).imagem = bebida.getImagem();
+						this.bebidas.get(i).setImagem(bebida.getImagem());
 					}	
 				}
 			}

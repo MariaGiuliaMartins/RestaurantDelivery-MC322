@@ -39,7 +39,7 @@ public class Main {
         // Fazendo pedido
         ArrayList<Comida> comidasAPedir = cardapio.getComida(); // no caso o cliente vai pedir tudo, para simplificar
         ArrayList<Bebida> bebidasAPedir = cardapio.getBebida(); // no caso o cliente vai pedir tudo, para simplificar
-        Pedido pedido = new Pedido(calendar, calendar, cliente, comidasAPedir, bebidasAPedir, 15.0, admin);
+        Pedido pedido = new Pedido(calendar, calendar, cliente, comidasAPedir, bebidasAPedir, admin);
         pedido.setMetodoPagamento(MetodoPagamento.CARTAO_CREDITO);
         pedido.setStatus(StatusPedido.PEDIDO_EM_PROCESSAMENTO);
         cliente.fazerPedido(pedido, restaurante);

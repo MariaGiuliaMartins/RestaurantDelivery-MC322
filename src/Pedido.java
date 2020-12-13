@@ -20,7 +20,7 @@ public class Pedido {
 	private Avaliacao avaliacao;
 	
 	//construtor
-	public Pedido(Calendar dataCriacao, Calendar dataEntrega, Usuario cliente, ArrayList<Comida> comidas, ArrayList<Bebida> bebidas, double valor, Usuario responsavel) {
+	public Pedido(Calendar dataCriacao, Calendar dataEntrega, Usuario cliente, ArrayList<Comida> comidas, ArrayList<Bebida> bebidas, Usuario responsavel) {
 		id = Pedido.numeroPedidos++;
 		numeroPedidos++;
 		this.dataCriacao = dataCriacao;
@@ -28,8 +28,8 @@ public class Pedido {
 		this.cliente = cliente;
 		this.comidas = new ArrayList<Comida>();
 		this.bebidas = new ArrayList<Bebida>();
-		this.valor = valor;
 		this.responsavel = responsavel;
+		this.valor = calcularValorTotal();
 	}
 	
 	//getters e setters
@@ -165,6 +165,9 @@ public class Pedido {
 		for (int i = 0; i < aux2; i++) {
 			this.getComida().add(comida);
 		}
+
+		// Update no valor total
+		this.setValor(this.getValor() + comida.getPreco());
 		
 		return true;
 	}
@@ -182,6 +185,9 @@ public class Pedido {
 		if (quant > aux1) return false; //se a quantidade a ser removida é maior do que a existente, não precisamos remover nada
 
 		this.getComida().removeAll(Collections.singleton(comida));
+
+		// Update no valor total
+		this.setValor(this.getValor() - comida.getPreco());
 
 		return true;
 	}
@@ -205,6 +211,9 @@ public class Pedido {
 			this.getBebida().add(bebida);
 		}
 
+		// Update no valor total
+		this.setValor(this.getValor() + bebida.getPreco());
+
 		return true;
 	}
 	
@@ -223,6 +232,9 @@ public class Pedido {
 		}
 
 		this.getBebida().removeAll(Collections.singleton(bebida));
+
+		// Update no valor total
+		this.setValor(this.getValor() - bebida.getPreco());
 
 		return true;
 	}
@@ -313,6 +325,24 @@ public class Pedido {
 			getEntregador().avaliarEntregador(avaliacao);
 			return true;
 		}
+	}
+
+	///Calcular valor total
+	/*
+	 * Função para calcular o valor total do pedido
+	 * Input:
+	 * Output: boolean - true significa sucesso, false significa que algo de errado ocorreu
+	 */
+	public double calcularValorTotal() {
+		double valor_bebidas = 0.0;
+		double valor_comidas = 0.0;
+		for ( Bebida bebida : bebidas){
+			valor_bebidas += bebida.getPreco();
+		}
+		for ( Comida comida : comidas){
+			valor_comidas += comida.getPreco();
+		}
+		return valor_bebidas + valor_comidas;
 	}
 	
 	///toString

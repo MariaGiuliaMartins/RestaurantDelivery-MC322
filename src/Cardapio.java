@@ -27,11 +27,11 @@ public class Cardapio {
 
 	///criar item do cardápio
 	/*
-		* Função que adiciona uma comida ou uma bebida no cardapio através de um usuário (funcionário ou admin)
-		* Input: um item de comida, um item de bebida, usuario que adicionará o alimento
+		* Função que adiciona uma comida no cardapio através de um usuário (funcionário ou admin)
+		* Input: um item de comida, usuario que adicionará o alimento
 		* Output: boolean - true significa sucesso, false significa que algo de errado ocorreu
 	*/
-	public boolean criarItemCardapio(Comida comida, Bebida bebida, Usuario usuario) {
+	public boolean criarItemCardapio(Comida comida, Usuario usuario) {
 		//primeiro checamos se o usuario é um funcionário ou um admin
 		if(usuario.getClass() == Admin.class || usuario.getClass() == Funcionario.class) {
 			int auxComida = Collections.frequency(this.comidas, comida); //auxiliar para contadora de comida
@@ -41,6 +41,21 @@ public class Cardapio {
 				System.out.println("Comida adicionada com sucesso!");
 			}
 
+			return true;
+		}
+
+		return false;
+	}
+
+	///criar item do cardápio
+	/*
+		* Função que adiciona uma bebida no cardapio através de um usuário (funcionário ou admin)
+		* Input: um item de bebida, usuario que adicionará o alimento
+		* Output: boolean - true significa sucesso, false significa que algo de errado ocorreu
+	*/
+	public boolean criarItemCardapio(Bebida bebida, Usuario usuario) {
+		//primeiro checamos se o usuario é um funcionário ou um admin
+		if(usuario.getClass() == Admin.class || usuario.getClass() == Funcionario.class) {
 			//vamos fazer a mesma coisa para a bebida
 			int auxBebida = Collections.frequency(this.bebidas, bebida); //auxiliar contadora de bebida
 
@@ -57,11 +72,11 @@ public class Cardapio {
 	
 	///remover item do cardápio
 	/*
-		* Função que remove uma comida ou uma bebida no cardapio através de um usuário (funcionário ou admin)
-		* Input: um item de comida, um item de bebida, usuario que removerá o alimento
+		* Função que remove uma comida do cardapio através de um usuário (funcionário ou admin)
+		* Input: um item de comida, usuario que removerá o alimento
 		* Output: boolean - true significa sucesso, false significa que algo de errado ocorreu
 	*/
-	public boolean removerItemCardapio(Comida comida, Bebida bebida, Usuario usuario) {
+	public boolean removerItemCardapio(Comida comida, Usuario usuario) {
 		//primeiro checamos se o usuario é admin ou funcionário
 		if(usuario.getClass() == Admin.class || usuario.getClass() == Funcionario.class) {
 			//agora vemos se a comida existe
@@ -70,7 +85,22 @@ public class Cardapio {
 				System.out.println("Comida removida com sucesso!");
 			}
 
-			//fazemos a mesma coisa para a bebida
+			return true;
+		}
+			
+		return false;
+	}
+
+	///remover item do cardápio
+	/*
+		* Função que remove uma bebida do cardapio através de um usuário (funcionário ou admin)
+		* Input: um item de bebida, usuario que removerá o alimento
+		* Output: boolean - true significa sucesso, false significa que algo de errado ocorreu
+	*/
+	public boolean removerItemCardapio(Bebida bebida, Usuario usuario) {
+		//primeiro checamos se o usuario é admin ou funcionário
+		if(usuario.getClass() == Admin.class || usuario.getClass() == Funcionario.class) {
+			//verificamos se a bebida existe no cardápio
 			if (this.bebidas.contains(bebida)) {
 				this.bebidas.remove(bebida);
 				System.out.println("Bebida removida com sucesso!");
@@ -84,11 +114,11 @@ public class Cardapio {
 	
 	///editar item do cardápio
 	/*
-		* Função que edita um alimento do cardapio através de um usuário (funcionário ou admin)
-		* Input: um item de comida, um item de bebida, usuario que editará o alimento
+		* Função que edita uma comida do cardapio através de um usuário (funcionário ou admin)
+		* Input: um item de comida, usuario que editará o alimento
 		* Output: boolean - true significa sucesso, false significa que algo de errado ocorreu
 	*/
-	public boolean editarItemCardapio(Comida comida, Bebida bebida, Usuario usuario) {
+	public boolean editarItemCardapio(Comida comida, Usuario usuario) {
 		//primeiro checamos se o usuário que fará a edição é admin ou funcionário
 		if(usuario.getClass() == Admin.class || usuario.getClass() == Funcionario.class) {
 			//agora vemos se a comida existe no cardápio para se editada
@@ -108,7 +138,22 @@ public class Cardapio {
 				}
 			}
 
-			//fazemos a mesma coisa para a bebida
+			return true;
+		}
+
+		return false;
+	}
+
+	///editar item do cardápio
+	/*
+		* Função que edita uma bebida do cardapio através de um usuário (funcionário ou admin)
+		* Input: um item de bebida, usuario que editará o alimento
+		* Output: boolean - true significa sucesso, false significa que algo de errado ocorreu
+	*/
+	public boolean editarItemCardapio(Bebida bebida, Usuario usuario) {
+		//primeiro checamos se o usuário que fará a edição é admin ou funcionário
+		if(usuario.getClass() == Admin.class || usuario.getClass() == Funcionario.class) {
+			//verificamos se a bebida existe no cardápio
 			for(int i = 0; i < this.bebidas.size(); i++) {
 				if(this.bebidas.get(i).getNome().equals(bebida.getNome())) { //se a bebida existe, começamos as comparações
 					if(!this.bebidas.get(i).getDescricao().equals(bebida.getDescricao())) { //se a descrição for diferente, atualizamos
@@ -124,6 +169,7 @@ public class Cardapio {
 					}	
 				}
 			}
+			
 			return true;
 		}
 

@@ -29,7 +29,8 @@ public class Main {
         true, "site");
 
         // Inicializando restaurante
-        cardapio.criarItemCardapio(comida, bebida, funcionario);
+        cardapio.criarItemCardapio(comida, funcionario);
+        cardapio.criarItemCardapio(bebida, funcionario);
         restaurante.adicionarAdministrador(admin, admin);
         restaurante.adicionarFuncionario(funcionario, admin);
         restaurante.adicionarEntregador(entregador, admin);
@@ -52,16 +53,5 @@ public class Main {
         Avaliacao avaliacao = new Avaliacao(10, "BOM");
         pedido.avaliarPedido(cliente, avaliacao);
         pedido.avaliarEntregador(cliente, avaliacao);
-
-
-
-
-
-
-
-
-
-
-
     }
 }

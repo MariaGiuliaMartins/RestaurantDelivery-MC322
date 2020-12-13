@@ -6,6 +6,9 @@ O projeto desenvolvido consiste de um sistema de gerenciamento de pedidos de um 
 
 **UML**
 
+No UML do projeto estão todas as classes com seus métodos e atributos implementados para contemplar o sistema 
+descrito acima. 
+
 [UML do projeto](UML.png) 
 
 **Teste das funcionalidades**

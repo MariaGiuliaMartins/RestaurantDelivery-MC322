@@ -157,7 +157,7 @@ public class Restaurante {
 		- false: significa que o funcionário não foi adicionado
 */
 	public boolean adicionarFuncionario(Funcionario funcionario, Usuario usuarioResponsavel) {
-		if (usuarioResponsavel.getClass() != Admin.class && !isStatus()) {
+		if (usuarioResponsavel.getClass() != Admin.class && !isStatus() && funcionarios.contains(funcionario)) {
 			return false;
 		}
 
@@ -179,7 +179,7 @@ public class Restaurante {
 		- false: significa que o funcionário não foi removido
 */
 	public boolean removerFuncionario(Funcionario funcionario, Usuario usuarioResponsavel) {
-		if (usuarioResponsavel.getClass() != Admin.class && !isStatus()) {
+		if (usuarioResponsavel.getClass() != Admin.class && !isStatus() && !funcionarios.contains(funcionario)) {
 			return false;
 		}
 
@@ -201,7 +201,7 @@ public class Restaurante {
 		- false: significa que o entregador não foi adicionado
 */
 	public boolean adicionarEntregador(Entregador entregador, Usuario usuarioResponsavel) {
-		if (usuarioResponsavel.getClass() != Admin.class && !isStatus()) {
+		if (usuarioResponsavel.getClass() != Admin.class && !isStatus() && entregadores.contains(entregador)) {
 			return false;
 		}
 
@@ -223,7 +223,7 @@ public class Restaurante {
 		- false: significa que o entregador não foi removido
 */
 	public boolean removerEntregador(Entregador entregador, Usuario usuarioResponsavel) {
-		if (usuarioResponsavel.getClass() != Admin.class  && !isStatus()) {
+		if (usuarioResponsavel.getClass() != Admin.class  && !isStatus() && !entregadores.contains(entregador)) {
 			return false;
 		}
 
@@ -245,7 +245,7 @@ public class Restaurante {
 		- false: significa que o administrador não foi adicionado
 */
 	public boolean adicionarAdministrador(Admin admin, Usuario usuarioResponsavel) {
-		if (usuarioResponsavel.getClass() != Admin.class && !isStatus()) {
+		if (usuarioResponsavel.getClass() != Admin.class && !isStatus() && administradores.contains(admin)) {
 			return false;
 		}
 
@@ -267,7 +267,7 @@ public class Restaurante {
 		- false: significa que o administrador não foi removido
 */
 	public boolean removerAdministrador(Admin admin, Usuario usuarioResponsavel) {
-		if (usuarioResponsavel.getClass() != Admin.class && !isStatus()) {
+		if (usuarioResponsavel.getClass() != Admin.class && !isStatus() && !administradores.contains(admin)) {
 			return false;
 		}
 
@@ -309,7 +309,8 @@ public class Restaurante {
 		- false: significa que o cardapio não foi adicionado
 */
 	public boolean adicionarCardapio(Cardapio cardapio, Usuario usuarioResponsavel) {
-		if ((usuarioResponsavel.getClass() != Admin.class || usuarioResponsavel.getClass() != Funcionario.class) && !isStatus()) {
+		if ((usuarioResponsavel.getClass() != Admin.class || usuarioResponsavel.getClass() != Funcionario.class 
+		|| !funcionarios.contains(usuarioResponsavel) || !administradores.contains(usuarioResponsavel)) && !isStatus()) {
 			return false;
 		}
 
@@ -330,7 +331,7 @@ public class Restaurante {
 		- false: significa que o status do restaurante não foi modificado
 */
 	public boolean mudarStatusRestaurante(Usuario usuarioResponsavel) {
-		if (usuarioResponsavel.getClass() != Admin.class) {
+		if (usuarioResponsavel.getClass() != Admin.class || !administradores.contains(usuarioResponsavel)) {
 			return false;
 		}
 

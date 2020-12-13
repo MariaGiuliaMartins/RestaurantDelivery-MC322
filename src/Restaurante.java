@@ -11,18 +11,20 @@ public class Restaurante {
 	ArrayList<Entregador> entregadores;
 	ArrayList<Admin> administradores;
 	private String telefone;
+	private String email;
 	private Endereco endereco;
 	private boolean status;
 	private String site;
 
 	// constructor with fields
-	public Restaurante(String cnpj, String nome, String descricao, Cardapio cardapio, String telefone, Endereco endereco, boolean status, String site) {
+	public Restaurante(String cnpj, String nome, String descricao, Cardapio cardapio, String telefone, String email, Endereco endereco, boolean status, String site) {
 		super();
 		this.cnpj = cnpj;
 		this.nome = nome;
 		this.descricao = descricao;
 		this.cardapio = cardapio;
 		this.telefone = telefone;
+		this.email = email;
 		this.endereco = endereco;
 		this.status = status;
 		this.site = site;
@@ -100,6 +102,15 @@ public class Restaurante {
 		this.telefone = telefone;
 	}
 
+	// E-mail
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	// Endereço
 	public Endereco getEndereco() {
 		return endereco;
@@ -129,10 +140,9 @@ public class Restaurante {
 	public String toString() {
 		return "Restaurante [cnpj=" + cnpj + ", nome=" + nome + ", descricao=" + descricao + ", cardapio=" + cardapio
 				+ ", pedidos=" + pedidos + ", funcionarios=" + funcionarios + ", entregadores=" + entregadores
-				+ ", administradores=" + administradores + ", telefone=" + telefone + ", endereço=" + endereco
-				+ ", status=" + status + ", site=" + site + "]";
+				+ ", administradores=" + administradores + ", telefone=" + telefone + ", email=" + email + 
+				", endereço=" + endereco + ", status=" + status + ", site=" + site + "]";
 	}
-
 
 /*
 	Função que adiciona um funcionario ao restaurante, se o usuario responsável pela

@@ -1,4 +1,11 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Formatter;
 
 public class Restaurante {
 	// atributtes
@@ -146,7 +153,8 @@ public class Restaurante {
 
 /*
 	Função que adiciona um funcionario ao restaurante, se o usuario responsável pela
-	ação for um administrador e o restaurante estiver habilitado
+	ação for um administrador e o restaurante estiver habilitado.
+	Além disso, adiciona no arquivo "funcionarios.txt".
 	
 	Args:
 		- funcionario: Novo funcionário a ser adicionado ao restaurante
@@ -160,15 +168,26 @@ public class Restaurante {
 		if (usuarioResponsavel.getClass() != Admin.class && !isStatus() && funcionarios.contains(funcionario)) {
 			return false;
 		}
-
-		funcionarios.add(funcionario);
-
+		
+		//manipulando o arquivo referente aos funcionários
+		String filename = "funcionarios.txt";
+		try {
+			Formatter output = new Formatter(filename);
+			//nome, cpf, email, telefone e status
+			output.format("%s %s %s %s %s %s %d\n", funcionario.getNome(), funcionario.getCpf(), funcionario.getEmail(), funcionario.getTelefone(), funcionario.isStatus());
+			output.flush();
+			output.close();
+			funcionarios.add(funcionario);
+		}catch(IOException ex) {
+			ex.printStackTrace();
+		}
 		return true;
 	}
 	
 /*
 	Função que remove um funcionario do restaurante, se o usuario responsável pela
-	ação for um administrador e o restaurante estiver habilitado
+	ação for um administrador e o restaurante estiver habilitado.
+	Além disso, remove esse funcionário do arquivo "funcionarios.txt"
 	
 	Args:
 		- funcionario: Funcionário a ser removido do restaurante
@@ -182,8 +201,34 @@ public class Restaurante {
 		if (usuarioResponsavel.getClass() != Admin.class && !isStatus() && !funcionarios.contains(funcionario)) {
 			return false;
 		}
-
-		funcionarios.remove(funcionario);
+		
+		//manipulando o arwuivo referente a funcionarios
+		File inputFile = new File("funcionarios.txt");
+		File tempFile = new File("funcionariosTemp.txt");
+		
+		
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+			BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
+		
+		
+			//nome, cpf, email, telefone e status do funcionario a serem removidos
+			String lineToRemove = funcionario.getNome() + funcionario.getCpf() + funcionario.getEmail() + funcionario.getTelefone() + funcionario.isStatus();
+			String currentLine;
+			
+			while((currentLine = reader.readLine()) != null) {
+				String trimmedLine = currentLine.trim();
+				if(trimmedLine.equals(lineToRemove)) continue;
+				writer.write(currentLine + System.getProperty("line.separator"));
+			}
+			writer.close();
+			reader.close();
+			tempFile.renameTo(inputFile);
+			funcionarios.remove(funcionario);
+		}
+		catch(IOException ex) {
+			ex.printStackTrace();
+		}
 		
 		return true;
 	}
@@ -204,9 +249,20 @@ public class Restaurante {
 		if (usuarioResponsavel.getClass() != Admin.class && !isStatus() && entregadores.contains(entregador)) {
 			return false;
 		}
-
-		entregadores.add(entregador);
-
+		
+		//manipulando o arquivo referente aos entregadores
+		String filename = "entregador.txt";
+		try {
+			Formatter output = new Formatter(filename);
+			//nome, cpf, email, telefone e status
+			output.format("%s %s %s %s %s %s %d\n", entregador.getNome(), entregador.getCpf(), entregador.getEmail(), entregador.getTelefone(), entregador.isStatus());
+			output.flush();
+			output.close();
+			entregadores.add(entregador);
+		}catch(IOException ex) {
+			ex.printStackTrace();
+		}
+		
 		return true;
 	}
 
@@ -227,8 +283,34 @@ public class Restaurante {
 			return false;
 		}
 
-		entregadores.remove(entregador);
+		//manipulando o arwuivo referente a entregadores
+		File inputFile = new File("entregador.txt");
+		File tempFile = new File("entregadorTemp.txt");
 		
+		
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+			BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
+		
+		
+			//nome, cpf, email, telefone e status do entregador a serem removidos
+			String lineToRemove = entregador.getNome() + entregador.getCpf() + entregador.getEmail() + entregador.getTelefone() + entregador.isStatus();
+			String currentLine;
+			
+			while((currentLine = reader.readLine()) != null) {
+				String trimmedLine = currentLine.trim();
+				if(trimmedLine.equals(lineToRemove)) continue;
+				writer.write(currentLine + System.getProperty("line.separator"));
+			}
+			writer.close();
+			reader.close();
+			tempFile.renameTo(inputFile);
+			entregadores.remove(entregador);
+		}
+		catch(IOException ex) {
+			ex.printStackTrace();
+		}
+				
 		return true;
 	}
 
@@ -248,8 +330,19 @@ public class Restaurante {
 		if (usuarioResponsavel.getClass() != Admin.class && !isStatus() && administradores.contains(admin)) {
 			return false;
 		}
-
-		administradores.add(admin);
+		
+		//manipulando o arquivo referente aos admins
+		String filename = "administradores.txt";
+		try {
+			Formatter output = new Formatter(filename);
+			//nome, cpf, email, telefone e status
+			output.format("%s %s %s %s %s %s %d\n", admin.getNome(), admin.getCpf(), admin.getEmail(), admin.getTelefone(), admin.isStatus());
+			output.flush();
+			output.close();
+			administradores.add(admin);
+		}catch(IOException ex) {
+			ex.printStackTrace();
+		}
 
 		return true;
 	}
@@ -271,8 +364,35 @@ public class Restaurante {
 			return false;
 		}
 
-		administradores.remove(admin);
 		
+		//manipulando o arwuivo referente a admins
+		File inputFile = new File("administradores.txt");
+		File tempFile = new File("administradoresTemp.txt");
+		
+		
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+			BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
+		
+		
+			//nome, cpf, email, telefone e status do entregador a serem removidos
+			String lineToRemove = admin.getNome() + admin.getCpf() + admin.getEmail() + admin.getTelefone() + admin.isStatus();
+			String currentLine;
+			
+			while((currentLine = reader.readLine()) != null) {
+				String trimmedLine = currentLine.trim();
+				if(trimmedLine.equals(lineToRemove)) continue;
+				writer.write(currentLine + System.getProperty("line.separator"));
+			}
+			writer.close();
+			reader.close();
+			tempFile.renameTo(inputFile);
+			administradores.remove(admin);
+		}
+		catch(IOException ex) {
+			ex.printStackTrace();
+		}
+				
 		return true;
 	}
 
@@ -290,8 +410,19 @@ public class Restaurante {
 		if (!isStatus()) {
 			return false;
 		}
-
-		pedidos.add(pedido);
+				
+		//manipulando o arquivo referente aos pedidos
+		String filename = "pedidos.txt";
+		try {
+			Formatter output = new Formatter(filename);
+			//cliente, valor, metodo de pagamento, status do pedido
+			output.format("%s %.2f %s\n", pedido.getCliente(), pedido.getValor(), pedido.getMetodoPagamento().getDescricao(), pedido.getStatus().getDescricao());
+			output.flush();
+			output.close();
+			pedidos.add(pedido);
+		}catch(IOException ex) {
+			ex.printStackTrace();
+		}
 
 		return true;
 	}
@@ -313,7 +444,7 @@ public class Restaurante {
 		|| !funcionarios.contains(usuarioResponsavel) || !administradores.contains(usuarioResponsavel)) && !isStatus()) {
 			return false;
 		}
-
+		
 		this.cardapio = cardapio;
 
 		return true;

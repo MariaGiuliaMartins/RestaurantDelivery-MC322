@@ -1,3 +1,5 @@
+package Models;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -22,7 +24,7 @@ public class Entregador extends Usuario {
 
     @Override
     public String toString() {
-        return "Entregador{" +
+        return "Models.Entregador{" +
                 "pedidos=" + pedidos +
                 ", avaliacao=" + avaliacoes +
                 "} " + super.toString();

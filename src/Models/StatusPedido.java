@@ -1,3 +1,5 @@
+package Models;
+
 public enum StatusPedido {
 	PEDIDO_EM_PROCESSAMENTO("O pedido está sendo processado pelo restaurante."),
 	PEDIDO_RECUSADO("O restaurante recusou o pedido."),

@@ -1,3 +1,5 @@
+package Models;
+
 import java.util.Calendar;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -111,7 +113,7 @@ public class Usuario {
 
     @Override
     public String toString() {
-        return "Usuario{" +
+        return "Models.Usuario{" +
                 "id=" + id +
                 ", nome='" + nome + '\'' +
                 ", cpf='" + cpf + '\'' +

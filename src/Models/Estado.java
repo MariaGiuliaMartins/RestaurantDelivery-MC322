@@ -1,3 +1,5 @@
+package Models;
+
 public enum Estado {
 	Acre ("AC"),
 	Alagoas ("AL"),

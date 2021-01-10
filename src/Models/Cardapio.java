@@ -1,3 +1,5 @@
+package Models;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -7,7 +9,7 @@ public class Cardapio {
 	private ArrayList<Bebida> bebidas;
 	
 	//construtor
-	Cardapio(){
+	public Cardapio(){
 		this.comidas = new ArrayList<Comida>();
 		this.bebidas = new ArrayList<Bebida>();
 	}
@@ -38,7 +40,7 @@ public class Cardapio {
 
 			if(auxComida == 0) { //se a auxiliar de comida for 0, então essa comida não existe no cardapio
 				this.comidas.add(comida); //então adicionamos
-				System.out.println("Comida adicionada com sucesso!");
+				System.out.println("Models.Comida adicionada com sucesso!");
 			}
 
 			return true;
@@ -61,7 +63,7 @@ public class Cardapio {
 
 			if(auxBebida == 0) { //se a auxilar de bebida não incrementar, então essa bebida não existe no cardapio
 				this.bebidas.add(bebida); //então adicionamos
-				System.out.println("Bebida adicionada com sucesso!");
+				System.out.println("Models.Bebida adicionada com sucesso!");
 			}
 
 			return true;
@@ -82,7 +84,7 @@ public class Cardapio {
 			//agora vemos se a comida existe
 			if (this.comidas.contains(comida)) {
 				this.comidas.remove(comida);
-				System.out.println("Comida removida com sucesso!");
+				System.out.println("Models.Comida removida com sucesso!");
 			}
 
 			return true;
@@ -103,7 +105,7 @@ public class Cardapio {
 			//verificamos se a bebida existe no cardápio
 			if (this.bebidas.contains(bebida)) {
 				this.bebidas.remove(bebida);
-				System.out.println("Bebida removida com sucesso!");
+				System.out.println("Models.Bebida removida com sucesso!");
 			}
 
 			return true;
@@ -182,7 +184,7 @@ public class Cardapio {
 	public String toString() {
 		String out = "Comidas do Cardápio: \n";
 		for(int i = 0; i < this.comidas.size(); i++) {
-			out += "-- Comida " + i + ":"; 
+			out += "-- Models.Comida " + i + ":";
 			out += "Nome: " + this.comidas.get(i).getNome() + ", ";
 			out += "Descrição: " + this.comidas.get(i).getDescricao() + ", ";
 			out += "Preço: " + this.comidas.get(i).getPreco() + ", ";
@@ -191,7 +193,7 @@ public class Cardapio {
 		out += "\n";
 		out = "Bebidas do Cardápio: \n";
 		for(int i = 0; i < this.bebidas.size(); i++) {
-			out += "-- Bebida " + i + ":"; 
+			out += "-- Models.Bebida " + i + ":";
 			out += "Nome: " + this.bebidas.get(i).getNome() + ", ";
 			out += "Descrição: " + this.bebidas.get(i).getDescricao() + ", ";
 			out += "Preço: " + this.bebidas.get(i).getPreco() + ", ";

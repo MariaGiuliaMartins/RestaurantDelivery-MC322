@@ -1,3 +1,5 @@
+package Models;
+
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Endereco {
@@ -80,7 +82,7 @@ public class Endereco {
 
     @Override
     public String toString() {
-        return "Endereco{" +
+        return "Models.Endereco{" +
                 "id=" + id +
                 ", cep='" + cep + '\'' +
                 ", estado=" + estado +

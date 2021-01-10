@@ -1,3 +1,5 @@
+package Models;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -26,12 +28,12 @@ public class Cliente extends Usuario{
 
     public String avaliarEntregador(Pedido pedido, float nota, String desc){
         Avaliacao aval = new Avaliacao(nota, desc);
-        return pedido.avaliarEntregador(this, aval) ? "Entregador avaliado com sucesso" : "Erro ao avaliar";
+        return pedido.avaliarEntregador(this, aval) ? "Models.Entregador avaliado com sucesso" : "Erro ao avaliar";
     }
 
     public String avaliarEntregador(Pedido pedido, float nota){
         Avaliacao aval = new Avaliacao(nota);
-        return pedido.avaliarEntregador(this, aval) ? "Entregador avaliado com sucesso" : "Erro ao avaliar";
+        return pedido.avaliarEntregador(this, aval) ? "Models.Entregador avaliado com sucesso" : "Erro ao avaliar";
     }
 
     public void fazerPedido(Pedido pedido, Restaurante restaurante){

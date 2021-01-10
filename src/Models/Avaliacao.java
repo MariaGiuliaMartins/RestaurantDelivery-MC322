@@ -1,3 +1,5 @@
+package Models;
+
 public class Avaliacao {
 
     private float nota;
@@ -30,7 +32,7 @@ public class Avaliacao {
 
     @Override
     public String toString() {
-        return "Avaliacao{" +
+        return "Models.Avaliacao{" +
                 "nota=" + nota +
                 ", descricao='" + descricao + '\'' +
                 '}';

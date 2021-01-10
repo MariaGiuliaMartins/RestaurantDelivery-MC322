@@ -1,3 +1,5 @@
+package Models;
+
 import java.util.Calendar;
 
 public class Admin extends Usuario{
@@ -8,6 +10,6 @@ public class Admin extends Usuario{
 
     @Override
     public String toString() {
-        return "Admin{} " + super.toString();
+        return "Models.Admin{} " + super.toString();
     }
 }

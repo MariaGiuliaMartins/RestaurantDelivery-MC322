@@ -1,3 +1,5 @@
+import Models.*;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -15,9 +17,9 @@ public class Main {
         Endereco endereco = new Endereco("11", Estado.Acre, "rua", "bairro", "cidade", 20);
         System.out.println("Alguns dados do endereço: " + endereco.getLogradouro() + ", " + endereco.getNumero() + " - " + endereco.getBairro() + ".");
         Comida comida = new Comida("arroz", "gostoso", 10.0, "img");
-        System.out.println("Comida: " + comida.getNome() + ", descrição: " + comida.getDescricao() + ", preço: " + comida.getPreco() + ", imagem: " + comida.getImagem());
+        System.out.println("Models.Comida: " + comida.getNome() + ", descrição: " + comida.getDescricao() + ", preço: " + comida.getPreco() + ", imagem: " + comida.getImagem());
         Bebida bebida = new Bebida("agua", "hidrate-se", 5.0, "img");
-        System.out.println("Bebida: " + bebida.getNome() + ", descrição: " + bebida.getDescricao() + ", preço: " + bebida.getPreco() + ", imagem: " + bebida.getImagem());
+        System.out.println("Models.Bebida: " + bebida.getNome() + ", descrição: " + bebida.getDescricao() + ", preço: " + bebida.getPreco() + ", imagem: " + bebida.getImagem());
 
         System.out.println();
         
@@ -33,7 +35,7 @@ public class Main {
                 endereco, true, calendar);
         System.out.println(funcionario.toString());
        
-        Entregador entregador = new Entregador("Entregador robson", "444", "entregador@gmail.com", "123", Sexo.MASCULINO, "4444",
+        Entregador entregador = new Entregador("Models.Entregador robson", "444", "entregador@gmail.com", "123", Sexo.MASCULINO, "4444",
                 endereco, true, calendar);
         System.out.println(entregador.toString());
       
@@ -43,17 +45,17 @@ public class Main {
 
         System.out.println();
        
-        System.out.println("Criando Cardápio e Restaurante:");
+        System.out.println("Criando Cardápio e Models.Restaurante:");
         Cardapio cardapio = new Cardapio();
         System.out.println(cardapio.getClass());
         Restaurante restaurante = new Restaurante("cnpj", "nome", "tem comida", cardapio, "444", "restaurante@email.com", endereco,
         true, "site");
-        System.out.println("Nome do Restaurante: " + restaurante.getNome());
+        System.out.println("Nome do Models.Restaurante: " + restaurante.getNome());
 
         System.out.println();
         
         // Inicializando restaurante
-        System.out.println("--------------------Inicializando o Restaurante:--------------------");
+        System.out.println("--------------------Inicializando o Models.Restaurante:--------------------");
         cardapio.criarItemCardapio(comida, funcionario);
         cardapio.criarItemCardapio(bebida, funcionario);
       
@@ -73,7 +75,7 @@ public class Main {
         System.out.println();
 
         // Fazendo pedido
-        System.out.println("--------------------Fazendo o Pedido:--------------------");
+        System.out.println("--------------------Fazendo o Models.Pedido:--------------------");
        
         ArrayList<Comida> comidasAPedir = cardapio.getComida(); // no caso o cliente vai pedir tudo, para simplificar
         System.out.println("Comidas a serem pedidas: " + comidasAPedir);
@@ -86,22 +88,22 @@ public class Main {
         pedido.setStatus(StatusPedido.PEDIDO_EM_PROCESSAMENTO);
         cliente.fazerPedido(pedido, restaurante);
 
-        // Restaurante aceita o pedido e envia o pedido para o entregador
-        System.out.println("--------------------Restaurante Aprovando, Entregando e Finalizando o Pedido:------------------------");
+        // Models.Restaurante aceita o pedido e envia o pedido para o entregador
+        System.out.println("--------------------Models.Restaurante Aprovando, Entregando e Finalizando o Models.Pedido:------------------------");
        
         restaurante.getPedidos().get(0).aprovarPedido(admin);
-        System.out.println("Pedido aprovado.");
+        System.out.println("Models.Pedido aprovado.");
         
         restaurante.getPedidos().get(0).entregarPedido(admin, entregador);
-        System.out.println("Pedido entregue.");
+        System.out.println("Models.Pedido entregue.");
         
         entregador.finalizarPedido(pedido.getId());
-        System.out.println("Pedido finalizado.");
+        System.out.println("Models.Pedido finalizado.");
 
         System.out.println();
         
-        // Cliente avalia o pedido e entregador
-        System.out.println("--------------------Cliente Avaliando o Pedido:--------------------");
+        // Models.Cliente avalia o pedido e entregador
+        System.out.println("--------------------Models.Cliente Avaliando o Models.Pedido:--------------------");
         Avaliacao avaliacao = new Avaliacao(10, "BOM");
         pedido.avaliarPedido(cliente, avaliacao);
         pedido.avaliarEntregador(cliente, avaliacao);

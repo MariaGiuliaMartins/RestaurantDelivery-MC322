@@ -1,3 +1,5 @@
+package Models;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -71,7 +73,7 @@ public class Restaurante {
 		this.descricao = descricao;
 	}
 
-	// Cardapio
+	// Models.Cardapio
 	public Cardapio getCardapio() {
 		return cardapio;
 	}
@@ -145,7 +147,7 @@ public class Restaurante {
 
 	@Override
 	public String toString() {
-		return "Restaurante [cnpj=" + cnpj + ", nome=" + nome + ", descricao=" + descricao + ", cardapio=" + cardapio
+		return "Models.Restaurante [cnpj=" + cnpj + ", nome=" + nome + ", descricao=" + descricao + ", cardapio=" + cardapio
 				+ ", pedidos=" + pedidos + ", funcionarios=" + funcionarios + ", entregadores=" + entregadores
 				+ ", administradores=" + administradores + ", telefone=" + telefone + ", email=" + email + 
 				", endereço=" + endereco + ", status=" + status + ", site=" + site + "]";
@@ -170,7 +172,7 @@ public class Restaurante {
 		}
 		
 		//manipulando o arquivo referente aos funcionários
-		String filename = "funcionarios.txt";
+		String filename = "data/funcionarios.txt";
 		try {
 			Formatter output = new Formatter(filename);
 			//nome, cpf, email, telefone e status
@@ -203,7 +205,7 @@ public class Restaurante {
 		}
 		
 		//manipulando o arwuivo referente a funcionarios
-		File inputFile = new File("funcionarios.txt");
+		File inputFile = new File("data/funcionarios.txt");
 		File tempFile = new File("funcionariosTemp.txt");
 		
 		
@@ -332,7 +334,7 @@ public class Restaurante {
 		}
 		
 		//manipulando o arquivo referente aos admins
-		String filename = "administradores.txt";
+		String filename = "data/administradores.txt";
 		try {
 			Formatter output = new Formatter(filename);
 			//nome, cpf, email, telefone e status
@@ -366,7 +368,7 @@ public class Restaurante {
 
 		
 		//manipulando o arwuivo referente a admins
-		File inputFile = new File("administradores.txt");
+		File inputFile = new File("data/administradores.txt");
 		File tempFile = new File("administradoresTemp.txt");
 		
 		
@@ -412,7 +414,7 @@ public class Restaurante {
 		}
 				
 		//manipulando o arquivo referente aos pedidos
-		String filename = "pedidos.txt";
+		String filename = "data/pedidos.txt";
 		try {
 			Formatter output = new Formatter(filename);
 			//cliente, valor, metodo de pagamento, status do pedido

@@ -1,3 +1,5 @@
+package Models;
+
 public enum MetodoPagamento {
 	CARTAO_CREDITO("Pagamento através do Cartão de Crédito."),
 	CARTAO_DEBITO("Pagamento através do Cartão de Débito."),

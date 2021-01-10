@@ -1,3 +1,5 @@
+package Models;
+
 public enum Sexo {
 	MASCULINO ("M"), 
 	FEMININO ("F");

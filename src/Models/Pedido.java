@@ -1,3 +1,5 @@
+package Models;
+
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.GregorianCalendar;
@@ -351,7 +353,7 @@ public class Pedido {
 		String out = "id do pedido: " + getId() + "\n";
 		out += "Data do pedido: " + getDataCriacao() + "\n";
 		out += "Data de entrega do pedido: " + getDataEntrega() + "\n";
-		out += "Cliente: " + getCliente() + "\n";
+		out += "Models.Cliente: " + getCliente() + "\n";
 		out += "Lista de comidas: \n";
 		for (int i = 0; i < this.comidas.size(); i++) {
 			out += "--> " + this.comidas.get(i) + "\n"; 
@@ -363,8 +365,8 @@ public class Pedido {
 		out += "Valor do pedido: " + getValor() + "\n";
 		out += "Responsável pelo pedido: " + getResponsavel() + "\n";
 		out += "Método de Pagamento do pedido: " + getMetodoPagamento() + "\n";
-		out += "Avaliacao: " + getAvaliacao() + "\n";
-		out += "Entregador: " + getEntregador() + "\n";
+		out += "Models.Avaliacao: " + getAvaliacao() + "\n";
+		out += "Models.Entregador: " + getEntregador() + "\n";
 		return out;
 	}
 }

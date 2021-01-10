@@ -64,7 +64,7 @@ import javax.swing.*;
 
 				private void jButtonAddAdminActionPerformed(ActionEvent evt) {
 					//manipulando o arquivo referente aos admins
-					String filename = "data/administradores.txt";
+					String filename = "src/data/administradores.txt";
 					try {
 						Formatter output = new Formatter(filename);
 						//nome, cpf, email, telefone e status
@@ -125,7 +125,7 @@ import javax.swing.*;
 
 				private void jButtonAddFuncActionPerformed(ActionEvent evt) {
 					//manipulando o arquivo referente aos funcionarios
-					String filename = "data/funcionarios.txt";
+					String filename = "src/data/funcionarios.txt";
 					try {
 						Formatter output = new Formatter(filename);
 						//nome, cpf, email, telefone e status
@@ -185,7 +185,7 @@ import javax.swing.*;
 
 				private void jButtonAddEntregadoresActionPerformed(ActionEvent evt) {
 					//manipulando o arquivo referente aos entregadores
-					String filename = "data/entregadores.txt";
+					String filename = "src/data/entregadores.txt";
 					try {
 						Formatter output = new Formatter(filename);
 						//nome, cpf, email, telefone e status
@@ -233,7 +233,7 @@ import javax.swing.*;
 
 				private void jButtonAddPedidoActionPerformed(ActionEvent evt) {
 						//manipulando o arquivo referente aos pedidos
-						String filename = "data/pedidos.txt";
+						String filename = "src/data/pedidos.txt";
 						try {
 							Formatter output = new Formatter(filename);
 							//nome, cpf, email, telefone e status

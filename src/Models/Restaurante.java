@@ -253,7 +253,7 @@ public class Restaurante {
 		}
 		
 		//manipulando o arquivo referente aos entregadores
-		String filename = "entregador.txt";
+		String filename = "data/entregadores.txt";
 		try {
 			Formatter output = new Formatter(filename);
 			//nome, cpf, email, telefone e status
@@ -286,7 +286,7 @@ public class Restaurante {
 		}
 
 		//manipulando o arwuivo referente a entregadores
-		File inputFile = new File("entregador.txt");
+		File inputFile = new File("data/entregadores.txt");
 		File tempFile = new File("entregadorTemp.txt");
 		
 		

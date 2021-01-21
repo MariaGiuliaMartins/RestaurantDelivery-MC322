@@ -1,7 +1,5 @@
 package View;
 
-import Models.Funcionario;
-
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.io.File;

@@ -1,4 +1,4 @@
-package Models;
+package Model;
 
 import java.util.Calendar;
 import java.util.concurrent.atomic.AtomicInteger;

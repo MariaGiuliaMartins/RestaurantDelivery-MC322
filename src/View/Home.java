@@ -1,10 +1,13 @@
 package View;
 
-import Models.Restaurante;
+import Model.Restaurante;
 
 public class Home extends javax.swing.JFrame {
 
+    private Model.Cardapio cardapio;
+
     public Home() {
+        cardapio = new Model.Cardapio();
         initComponents();
     }
 

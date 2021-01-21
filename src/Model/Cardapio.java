@@ -1,9 +1,8 @@
-package Models;
+package Model;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Scanner;
 
 public class Cardapio {
 	//atributos
@@ -14,29 +13,6 @@ public class Cardapio {
 	public Cardapio(){
 		this.comidas = new ArrayList<Comida>();
 		this.bebidas = new ArrayList<Bebida>();
-		// Serializa dados no objeto
-		try {
-			ObjectInputStream input = new ObjectInputStream(new FileInputStream("src/data/bebidas.txt"));
-			while(true){
-				Bebida bebida = (Bebida) input.readObject();
-				this.bebidas.add(bebida);
-			}
-		} catch (EOFException e){
-			e.printStackTrace();
-		} catch (Exception e){
-			e.printStackTrace();
-		}
-		try {
-			ObjectInputStream input = new ObjectInputStream(new FileInputStream("src/data/comidas.txt"));
-			while(true){
-				Comida comida = (Comida) input.readObject();
-				this.comidas.add(comida);
-			}
-		} catch (EOFException e){
-			e.printStackTrace();
-		} catch (Exception e){
-			e.printStackTrace();
-		}
 	}
 	
 	//getters e setters
@@ -118,28 +94,6 @@ public class Cardapio {
 
 		return true;
 	}
-
-	public void save(){
-		try {
-			ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("src/data/bebidas.txt"));
-			for(Bebida bebida : bebidas ){
-				output.writeObject(bebida);
-			}
-			output.flush();
-		} catch (Exception e){
-			e.printStackTrace();
-		}
-		try {
-			ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("src/data/comidas.txt"));
-			for(Comida comida : comidas ){
-				output.writeObject(comida);
-			}
-			output.flush();
-		} catch (Exception e){
-			e.printStackTrace();
-		}
-	}
-	
 	
 	///toString
 	@Override

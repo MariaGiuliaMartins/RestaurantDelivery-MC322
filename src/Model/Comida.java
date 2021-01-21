@@ -1,4 +1,4 @@
-package Models;
+package Model;
 
 public class Comida extends ItemCardapio {
 	public Comida(String nome, String descricao, double preco, String imagem) {

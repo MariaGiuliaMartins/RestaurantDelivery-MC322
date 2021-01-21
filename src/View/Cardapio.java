@@ -21,7 +21,8 @@ public class Cardapio extends JPanel implements ActionListener {
     private JMenuItem menuItemAdd;
     private JMenuItem menuItemRemove;
     private JMenuItem menuItemRemoveAll;
-     
+    private javax.swing.JButton jButtonSalvar;
+
     public Cardapio() {
 
         // sample table data
@@ -75,7 +76,15 @@ public class Cardapio extends JPanel implements ActionListener {
          
         // adds the table to the frame
         add(new JScrollPane(table));
-         
+        // button salvar
+        jButtonSalvar = new javax.swing.JButton();
+        jButtonSalvar.setText("Salvar");
+        jButtonSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSalvarActionPerformed(evt);
+            }
+        });
+        add(jButtonSalvar);
     }
  
     @Override
@@ -104,5 +113,9 @@ public class Cardapio extends JPanel implements ActionListener {
         for (int i = 0; i < rowCount; i++) {
             tableModel.removeRow(0);
         }
+    }
+
+    private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {
+
     }
 }

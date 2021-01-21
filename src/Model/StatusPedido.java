@@ -1,4 +1,4 @@
-package Models;
+package Model;
 
 public enum StatusPedido {
 	PEDIDO_EM_PROCESSAMENTO("O pedido está sendo processado pelo restaurante."),

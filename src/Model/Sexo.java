@@ -1,4 +1,4 @@
-package Models;
+package Model;
 
 public enum Sexo {
 	MASCULINO ("M"), 

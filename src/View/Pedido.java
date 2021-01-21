@@ -1,6 +1,6 @@
 package View;
 
-import Models.Restaurante;
+import Model.Restaurante;
 
 public class Pedido extends javax.swing.JPanel {
 

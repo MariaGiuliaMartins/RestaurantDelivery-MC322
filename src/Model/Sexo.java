@@ -1,6 +1,8 @@
 package Model;
 
-public enum Sexo {
+import java.io.Serializable;
+
+public enum Sexo implements Serializable {
 	MASCULINO ("M"), 
 	FEMININO ("F");
 		

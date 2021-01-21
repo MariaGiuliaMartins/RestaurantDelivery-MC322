@@ -1,7 +1,5 @@
 package View;
 
-import Model.Restaurante;
-
 public class Home extends javax.swing.JFrame {
 
     private Model.Cardapio cardapio;
@@ -17,7 +15,7 @@ public class Home extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanelHome = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jPanelPedidos = new Pedido(new Restaurante());
+        jPanelPedidos = new Pedido();
         jPanelCardapio = new Cardapio();
         jPanelAdmin = new Admin();
         jPanelEntregadores = new Entregadores();

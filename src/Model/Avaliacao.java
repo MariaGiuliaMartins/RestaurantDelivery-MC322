@@ -1,6 +1,10 @@
 package Model;
 
-public class Avaliacao {
+import java.io.Serializable;
+
+public class Avaliacao implements Serializable {
+
+    private static final long serialVersionUID = 302L;
 
     private float nota;
     private String descricao;

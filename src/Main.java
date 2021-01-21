@@ -1,4 +1,5 @@
 import Controller.CardapioController;
+import Controller.PedidoController;
 import Model.Cardapio;
 import Model.Comida;
 
@@ -9,12 +10,11 @@ public class Main {
 
     public static void main(String args[]) {
 
-
-        Model.Cardapio cardapio = new Model.Cardapio();
-        CardapioController cardapioController = new CardapioController(cardapio);
+        CardapioController cardapioController = new CardapioController(new Cardapio());
         Model.Comida comida = new Model.Comida("a","comida", 2, "a");
         cardapioController.addItem(comida);
-        cardapioController.save();
+
+        PedidoController pedidoController = new PedidoController();
 
 //        java.awt.EventQueue.invokeLater(new Runnable() {
 //            public void run() {

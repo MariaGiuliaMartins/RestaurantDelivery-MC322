@@ -1,6 +1,8 @@
 package Model;
 
-public enum StatusPedido {
+import java.io.Serializable;
+
+public enum StatusPedido implements Serializable {
 	PEDIDO_EM_PROCESSAMENTO("O pedido está sendo processado pelo restaurante."),
 	PEDIDO_RECUSADO("O restaurante recusou o pedido."),
 	PEDIDO_APROVADO("O restaurante aprovou o pedido"),

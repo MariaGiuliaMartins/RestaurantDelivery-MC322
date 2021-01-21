@@ -1,15 +1,10 @@
 package View;
 
-import Model.Restaurante;
-
 public class Pedido extends javax.swing.JPanel {
 
-    private Restaurante restaurante;
 
-
-    public Pedido(Restaurante restaurante) {
+    public Pedido() {
         initComponents();
-        this.restaurante = restaurante;
     }
 
     @SuppressWarnings("unchecked")

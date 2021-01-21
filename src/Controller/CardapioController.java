@@ -3,7 +3,6 @@ package Controller;
 import Model.Bebida;
 import Model.Cardapio;
 import Model.Comida;
-import Model.ItemCardapio;
 
 import java.io.*;
 
@@ -40,6 +39,22 @@ public class CardapioController {
         }
     }
 
+    public void addItem(Comida item){
+        this.cardapio.criarItemCardapio(item);
+    }
+
+    public void addItem(Bebida item){
+        this.cardapio.criarItemCardapio(item);
+    }
+
+    public void removeItem(Comida item){
+        this.cardapio.criarItemCardapio(item);
+    }
+
+    public void removeItem(Bebida item){
+        this.cardapio.criarItemCardapio(item);
+    }
+
     public void save(){
         try {
             ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("src/data/bebidas.txt"));
@@ -61,19 +76,5 @@ public class CardapioController {
         }
     }
 
-    public void addItem(Comida item){
-        this.cardapio.criarItemCardapio(item);
-    }
 
-    public void addItem(Bebida item){
-        this.cardapio.criarItemCardapio(item);
-    }
-
-    public void remove(Comida item){
-        this.cardapio.removerItemCardapio(item);
-    }
-
-    public void remove(Bebida item){
-        this.cardapio.removerItemCardapio(item);
-    }
 }

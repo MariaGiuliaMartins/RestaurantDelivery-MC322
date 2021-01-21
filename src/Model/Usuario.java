@@ -1,11 +1,13 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class Usuario {
+public class Usuario implements Serializable {
 
     private static final AtomicInteger counter = new AtomicInteger();
+    private static final long serialVersionUID = 302L;
 
     private int id;
     private String nome;

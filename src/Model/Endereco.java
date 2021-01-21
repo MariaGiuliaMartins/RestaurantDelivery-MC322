@@ -1,10 +1,12 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class Endereco {
+public class Endereco implements Serializable {
 
     private static final AtomicInteger counter = new AtomicInteger();
+    private static final long serialVersionUID = 302L;
 
     private int id;
     private String cep;

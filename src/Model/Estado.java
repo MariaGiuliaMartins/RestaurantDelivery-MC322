@@ -1,6 +1,8 @@
 package Model;
 
-public enum Estado {
+import java.io.Serializable;
+
+public enum Estado implements Serializable {
 	Acre ("AC"),
 	Alagoas ("AL"),
 	Amapa ("AP"),

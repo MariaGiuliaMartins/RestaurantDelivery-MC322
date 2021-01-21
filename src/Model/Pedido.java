@@ -1,16 +1,17 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.ArrayList;
 
-public class Pedido {
+public class Pedido implements Serializable {
 	//atributos
+	private static final long serialVersionUID = 302L;
 	private static int numeroPedidos = 0;
 	private final int id;
 	private Calendar dataCriacao;
-	private Calendar dataEntrega;
 	private Usuario cliente;
 	private ArrayList<Comida> comidas;
 	private ArrayList<Bebida> bebidas;
@@ -22,11 +23,10 @@ public class Pedido {
 	private Avaliacao avaliacao;
 	
 	//construtor
-	public Pedido(Calendar dataCriacao, Calendar dataEntrega, Usuario cliente, ArrayList<Comida> comidas, ArrayList<Bebida> bebidas, Usuario responsavel) {
+	public Pedido(Calendar dataCriacao, Usuario cliente, ArrayList<Comida> comidas, ArrayList<Bebida> bebidas, Usuario responsavel) {
 		id = Pedido.numeroPedidos++;
 		numeroPedidos++;
 		this.dataCriacao = dataCriacao;
-		this.dataEntrega = dataEntrega;
 		this.cliente = cliente;
 		this.comidas = new ArrayList<Comida>();
 		this.bebidas = new ArrayList<Bebida>();
@@ -62,21 +62,7 @@ public class Pedido {
 		dataCriacao.set(GregorianCalendar.MONTH, mes);
 		dataCriacao.set(GregorianCalendar.YEAR, ano);
 	}
-	
-	///data de entrega
-	public String getDataEntrega() {
-		return (String)(dataCriacao.get(GregorianCalendar.DAY_OF_MONTH) + "/" + dataCriacao.get(GregorianCalendar.MONTH) + "/" + dataCriacao.get(GregorianCalendar.YEAR));
-	}
-	
-	public void setDataEtrega(GregorianCalendar dataEntrega) {
-		this.dataEntrega = dataEntrega;
-	}	
-	public void setDataEntrega(int dia, int mes, int ano) {
-		dataEntrega.set(GregorianCalendar.DATE, dia);
-		dataEntrega.set(GregorianCalendar.MONTH, mes);
-		dataEntrega.set(GregorianCalendar.YEAR, ano);
-	}
-	
+
 	///cliente
 	public Usuario getCliente() {
 		return cliente;
@@ -352,7 +338,6 @@ public class Pedido {
 	public String toString() {
 		String out = "id do pedido: " + getId() + "\n";
 		out += "Data do pedido: " + getDataCriacao() + "\n";
-		out += "Data de entrega do pedido: " + getDataEntrega() + "\n";
 		out += "Models.Cliente: " + getCliente() + "\n";
 		out += "Lista de comidas: \n";
 		for (int i = 0; i < this.comidas.size(); i++) {

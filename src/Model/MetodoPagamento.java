@@ -1,6 +1,8 @@
 package Model;
 
-public enum MetodoPagamento {
+import java.io.Serializable;
+
+public enum MetodoPagamento implements Serializable {
 	CARTAO_CREDITO("Pagamento através do Cartão de Crédito."),
 	CARTAO_DEBITO("Pagamento através do Cartão de Débito."),
 	DINHEIRO("Pagamento através de Dinheiro."),

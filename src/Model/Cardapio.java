@@ -4,8 +4,9 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Cardapio {
+public class Cardapio implements Serializable{
 	//atributos
+	private static final long serialVersionUID = 302L;
 	private ArrayList<Comida> comidas;
 	private ArrayList<Bebida> bebidas;
 	

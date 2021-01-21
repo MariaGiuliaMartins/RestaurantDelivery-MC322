@@ -15,29 +15,4 @@ public class Cliente extends Usuario{
     public ArrayList<Pedido> getPedidos() {
         return pedidos;
     }
-
-    public String avaliarPedido(Pedido pedido, float nota, String desc) {
-        Avaliacao aval = new Avaliacao(nota, desc);
-        return pedido.avaliarPedido(this, aval) ? "Avaliado com sucesso" : "Erro ao avaliar";
-    }
-
-    public String avaliarPedido(Pedido pedido, float nota) {
-        Avaliacao aval = new Avaliacao(nota);
-        return pedido.avaliarPedido(this, aval) ? "Avaliado com sucesso" : "Erro ao avaliar";
-    }
-
-    public String avaliarEntregador(Pedido pedido, float nota, String desc){
-        Avaliacao aval = new Avaliacao(nota, desc);
-        return pedido.avaliarEntregador(this, aval) ? "Models.Entregador avaliado com sucesso" : "Erro ao avaliar";
-    }
-
-    public String avaliarEntregador(Pedido pedido, float nota){
-        Avaliacao aval = new Avaliacao(nota);
-        return pedido.avaliarEntregador(this, aval) ? "Models.Entregador avaliado com sucesso" : "Erro ao avaliar";
-    }
-
-    public void fazerPedido(Pedido pedido, Restaurante restaurante){
-        pedido.setCliente(this);
-        restaurante.adicionarPedido(pedido);
-    }
 }

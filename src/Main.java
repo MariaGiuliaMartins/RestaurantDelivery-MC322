@@ -1,6 +1,5 @@
 import Models.*;
 import View.*;
-import View.Pedido;
 
 public class Main {
 

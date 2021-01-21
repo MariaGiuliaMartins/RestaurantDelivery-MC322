@@ -27,7 +27,6 @@ public class Restaurante {
 
 	// constructor with fields
 	public Restaurante(String cnpj, String nome, String descricao, Cardapio cardapio, String telefone, String email, Endereco endereco, boolean status, String site) {
-		super();
 		this.cnpj = cnpj;
 		this.nome = nome;
 		this.descricao = descricao;
@@ -42,6 +41,10 @@ public class Restaurante {
 		funcionarios = new ArrayList<Funcionario>();
 		entregadores = new ArrayList<Entregador>();
 		administradores = new ArrayList<Admin>();
+	}
+
+	public Restaurante(){
+		//TODO criar usando docmuento
 	}
 
 /* getters and setters */

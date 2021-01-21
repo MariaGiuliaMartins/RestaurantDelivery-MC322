@@ -2,12 +2,8 @@ package View;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
- 
-import javax.swing.JFrame;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
+
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 import helpers.TableMouseListener;
@@ -16,7 +12,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
  
-public class Cardapio extends JFrame implements ActionListener {
+public class Cardapio extends JPanel implements ActionListener {
     private JTable table;
     private DefaultTableModel tableModel;
     private JPopupMenu popupMenu;
@@ -25,8 +21,7 @@ public class Cardapio extends JFrame implements ActionListener {
     private JMenuItem menuItemRemoveAll;
      
     public Cardapio() {
-        super("Cardapio");
-         
+
         // sample table data
         String[] columnNames = new String[] {"Nome", "Descrição", "Preço (R$)", "URL da imagem"};
         String[][] rowData = new String[][] {};
@@ -38,15 +33,14 @@ public class Cardapio extends JFrame implements ActionListener {
             while (myReader.hasNextLine()) {
               String data = myReader.nextLine();
               String[] arrData = data.split(",");
-              
+
               String[] aux = {arrData[0], arrData[1], arrData[2], arrData[3]};
               rowData[i] = aux;
-                
+
               i++;
             }
-
             myReader.close();
-        } catch (FileNotFoundException e) {
+        } catch (Exception e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
@@ -77,9 +71,6 @@ public class Cardapio extends JFrame implements ActionListener {
         // adds the table to the frame
         add(new JScrollPane(table));
          
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(1050, 525);
-        setLocationRelativeTo(null);
     }
  
     @Override

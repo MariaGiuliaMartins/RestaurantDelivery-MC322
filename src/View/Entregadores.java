@@ -57,7 +57,7 @@ public class Entregadores extends JPanel {
                 try {
                     Formatter output = new Formatter(filename);
                     //nome, cpf, email, telefone e status
-                    output.format("%s %s %s %s %s %s %d\n", campone1, campocpfe1, campoee1, campote1, op_status2.getSelectedItem());
+                    output.format("%s %s %s %s %s\n", campone1.getText(), campocpfe1.getText(), campoee1.getText(), campote1.getText(), op_status2.getSelectedItem());
                     output.flush();
                     output.close();
                 }catch(IOException ex) {
@@ -65,7 +65,5 @@ public class Entregadores extends JPanel {
                 }
             }
         });
-
-
     }
 }

@@ -61,10 +61,10 @@ public class Funcionarios extends javax.swing.JPanel {
                 try {
                     Formatter output = new Formatter(filename);
                     //nome, cpf, email, telefone e status
-                    output.format("%s %s %s %s %s %s %d\n", camponf1, campocpff1, campoef1, campotf1, op_status1.getSelectedItem());
+                    output.format("%s %s %s %s\n", camponf1.getText(), campocpff1.getText(), campoef1.getText(), campotf1.getText(), op_status1.getSelectedItem());
                     output.flush();
                     output.close();
-                }catch(IOException ex) {
+                } catch(IOException ex) {
                     ex.printStackTrace();
                 }
             }

@@ -62,7 +62,7 @@ public class Admin extends javax.swing.JPanel{
                 try {
                     Formatter output = new Formatter(filename);
                     //nome, cpf, email, telefone e status
-                    output.format("%s %s %s %s %s %s %d\n", campona1, campocpfa1, campoea1, campota1, op_status.getSelectedItem());
+                    output.format("%s %s %s %s %s\n", campona1.getText(), campocpfa1.getText(), campoea1.getText(), campota1.getText(), op_status.getSelectedItem());
                     output.flush();
                     output.close();
                 }catch(IOException ex) {

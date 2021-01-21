@@ -1,7 +1,10 @@
 package Models;
 
-public class ItemCardapio {
+import java.io.Serializable;
+
+public class ItemCardapio implements Serializable {
   //atributos
+	private static final long serialVersionUID = 302L;
 	private String nome;
 	private String descricao;
 	private double preco;

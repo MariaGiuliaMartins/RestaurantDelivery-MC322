@@ -1,7 +1,9 @@
 package Models;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Scanner;
 
 public class Cardapio {
 	//atributos
@@ -12,6 +14,29 @@ public class Cardapio {
 	public Cardapio(){
 		this.comidas = new ArrayList<Comida>();
 		this.bebidas = new ArrayList<Bebida>();
+		// Serializa dados no objeto
+		try {
+			ObjectInputStream input = new ObjectInputStream(new FileInputStream("src/data/bebidas.txt"));
+			while(true){
+				Bebida bebida = (Bebida) input.readObject();
+				this.bebidas.add(bebida);
+			}
+		} catch (EOFException e){
+			e.printStackTrace();
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+		try {
+			ObjectInputStream input = new ObjectInputStream(new FileInputStream("src/data/comidas.txt"));
+			while(true){
+				Comida comida = (Comida) input.readObject();
+				this.comidas.add(comida);
+			}
+		} catch (EOFException e){
+			e.printStackTrace();
+		} catch (Exception e){
+			e.printStackTrace();
+		}
 	}
 	
 	//getters e setters
@@ -29,153 +54,90 @@ public class Cardapio {
 
 	///criar item do cardápio
 	/*
-		* Função que adiciona uma comida no cardapio através de um usuário (funcionário ou admin)
+		* Função que adiciona uma comida no cardapio
 		* Input: um item de comida, usuario que adicionará o alimento
 		* Output: boolean - true significa sucesso, false significa que algo de errado ocorreu
 	*/
-	public boolean criarItemCardapio(Comida comida, Usuario usuario) {
-		//primeiro checamos se o usuario é um funcionário ou um admin
-		if(usuario.getClass() == Admin.class || usuario.getClass() == Funcionario.class) {
-			int auxComida = Collections.frequency(this.comidas, comida); //auxiliar para contadora de comida
+	public boolean criarItemCardapio(Comida comida) {
+		int auxComida = Collections.frequency(this.comidas, comida); //auxiliar para contadora de comida
 
-			if(auxComida == 0) { //se a auxiliar de comida for 0, então essa comida não existe no cardapio
-				this.comidas.add(comida); //então adicionamos
-				System.out.println("Models.Comida adicionada com sucesso!");
-			}
-
-			return true;
+		if(auxComida == 0) { //se a auxiliar de comida for 0, então essa comida não existe no cardapio
+			this.comidas.add(comida); //então adicionamos
+			System.out.println("Models.Comida adicionada com sucesso!");
 		}
 
-		return false;
+		return true;
 	}
 
 	///criar item do cardápio
 	/*
-		* Função que adiciona uma bebida no cardapio através de um usuário (funcionário ou admin)
+		* Função que adiciona uma bebida no cardapio
 		* Input: um item de bebida, usuario que adicionará o alimento
 		* Output: boolean - true significa sucesso, false significa que algo de errado ocorreu
 	*/
-	public boolean criarItemCardapio(Bebida bebida, Usuario usuario) {
-		//primeiro checamos se o usuario é um funcionário ou um admin
-		if(usuario.getClass() == Admin.class || usuario.getClass() == Funcionario.class) {
-			//vamos fazer a mesma coisa para a bebida
-			int auxBebida = Collections.frequency(this.bebidas, bebida); //auxiliar contadora de bebida
+	public boolean criarItemCardapio(Bebida bebida) {
+		//vamos fazer a mesma coisa para a bebida
+		int auxBebida = Collections.frequency(this.bebidas, bebida); //auxiliar contadora de bebida
 
-			if(auxBebida == 0) { //se a auxilar de bebida não incrementar, então essa bebida não existe no cardapio
-				this.bebidas.add(bebida); //então adicionamos
-				System.out.println("Models.Bebida adicionada com sucesso!");
-			}
-
-			return true;
+		if(auxBebida == 0) { //se a auxilar de bebida não incrementar, então essa bebida não existe no cardapio
+			this.bebidas.add(bebida); //então adicionamos
+			System.out.println("Models.Bebida adicionada com sucesso!");
 		}
 
-		return false;
+		return true;
 	}
 	
 	///remover item do cardápio
 	/*
-		* Função que remove uma comida do cardapio através de um usuário (funcionário ou admin)
+		* Função que remove uma comida do cardapio
 		* Input: um item de comida, usuario que removerá o alimento
 		* Output: boolean - true significa sucesso, false significa que algo de errado ocorreu
 	*/
-	public boolean removerItemCardapio(Comida comida, Usuario usuario) {
-		//primeiro checamos se o usuario é admin ou funcionário
-		if(usuario.getClass() == Admin.class || usuario.getClass() == Funcionario.class) {
-			//agora vemos se a comida existe
-			if (this.comidas.contains(comida)) {
-				this.comidas.remove(comida);
-				System.out.println("Models.Comida removida com sucesso!");
-			}
-
-			return true;
+	public boolean removerItemCardapio(Comida comida) {
+		//agora vemos se a comida existe
+		if (this.comidas.contains(comida)) {
+			this.comidas.remove(comida);
+			System.out.println("Models.Comida removida com sucesso!");
 		}
-			
-		return false;
+
+		return true;
 	}
 
 	///remover item do cardápio
 	/*
-		* Função que remove uma bebida do cardapio através de um usuário (funcionário ou admin)
+		* Função que remove uma bebida do cardapio
 		* Input: um item de bebida, usuario que removerá o alimento
 		* Output: boolean - true significa sucesso, false significa que algo de errado ocorreu
 	*/
-	public boolean removerItemCardapio(Bebida bebida, Usuario usuario) {
-		//primeiro checamos se o usuario é admin ou funcionário
-		if(usuario.getClass() == Admin.class || usuario.getClass() == Funcionario.class) {
-			//verificamos se a bebida existe no cardápio
-			if (this.bebidas.contains(bebida)) {
-				this.bebidas.remove(bebida);
-				System.out.println("Models.Bebida removida com sucesso!");
-			}
-
-			return true;
-		}
-			
-		return false;
-	}
-	
-	///editar item do cardápio
-	/*
-		* Função que edita uma comida do cardapio através de um usuário (funcionário ou admin)
-		* Input: um item de comida, usuario que editará o alimento
-		* Output: boolean - true significa sucesso, false significa que algo de errado ocorreu
-	*/
-	public boolean editarItemCardapio(Comida comida, Usuario usuario) {
-		//primeiro checamos se o usuário que fará a edição é admin ou funcionário
-		if(usuario.getClass() == Admin.class || usuario.getClass() == Funcionario.class) {
-			//agora vemos se a comida existe no cardápio para se editada
-			for(int i = 0; i < this.comidas.size(); i++) {
-				if(this.comidas.get(i).getNome().equals(comida.getNome())) { //se a comida existe, começamos as comparações
-					if(!this.comidas.get(i).getDescricao().equals(comida.getDescricao())) { //se a descrição for diferente, atualizamos
-						this.comidas.get(i).setDescricao(comida.getDescricao());
-					}
-
-					if(this.comidas.get(i).getPreco() != comida.getPreco()){ //se o preço for diferente, atualizamos
-						this.comidas.get(i).setPreco(comida.getPreco());
-					}
-					
-					if(this.comidas.get(i).getImagem().equals(comida.getImagem())){ //se a imagem for diferente, atualizamos
-						this.comidas.get(i).setImagem(comida.getImagem());
-					}	
-				}
-			}
-
-			return true;
+	public boolean removerItemCardapio(Bebida bebida) {
+		//verificamos se a bebida existe no cardápio
+		if (this.bebidas.contains(bebida)) {
+			this.bebidas.remove(bebida);
+			System.out.println("Models.Bebida removida com sucesso!");
 		}
 
-		return false;
+		return true;
 	}
 
-	///editar item do cardápio
-	/*
-		* Função que edita uma bebida do cardapio através de um usuário (funcionário ou admin)
-		* Input: um item de bebida, usuario que editará o alimento
-		* Output: boolean - true significa sucesso, false significa que algo de errado ocorreu
-	*/
-	public boolean editarItemCardapio(Bebida bebida, Usuario usuario) {
-		//primeiro checamos se o usuário que fará a edição é admin ou funcionário
-		if(usuario.getClass() == Admin.class || usuario.getClass() == Funcionario.class) {
-			//verificamos se a bebida existe no cardápio
-			for(int i = 0; i < this.bebidas.size(); i++) {
-				if(this.bebidas.get(i).getNome().equals(bebida.getNome())) { //se a bebida existe, começamos as comparações
-					if(!this.bebidas.get(i).getDescricao().equals(bebida.getDescricao())) { //se a descrição for diferente, atualizamos
-						this.bebidas.get(i).setDescricao(bebida.getDescricao());
-					}
-
-					if(this.bebidas.get(i).getPreco() != bebida.getPreco()){ //se o preço for diferente, atualizamos
-						this.bebidas.get(i).setPreco(bebida.getPreco());
-					}
-
-					if(!this.bebidas.get(i).getImagem().equals(bebida.getImagem())){ //se a imagem for diferente, atualizamos
-						this.bebidas.get(i).setImagem(bebida.getImagem());
-					}	
-				}
+	public void save(){
+		try {
+			ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("src/data/bebidas.txt"));
+			for(Bebida bebida : bebidas ){
+				output.writeObject(bebida);
 			}
-			
-			return true;
+			output.flush();
+		} catch (Exception e){
+			e.printStackTrace();
 		}
-
-		return false;
+		try {
+			ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("src/data/comidas.txt"));
+			for(Comida comida : comidas ){
+				output.writeObject(comida);
+			}
+			output.flush();
+		} catch (Exception e){
+			e.printStackTrace();
+		}
 	}
 	
 	

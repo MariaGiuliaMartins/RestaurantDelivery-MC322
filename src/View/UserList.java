@@ -27,7 +27,6 @@ public class UserList extends JFrame implements ActionListener {
     public UserList() {
         super("UserList");
          
-        // sample table data
         String[] columnNames = new String[] {"Nome", "CPF", "E-mail", "Telefone", "Sexo", "Rua", "Número", "Bairro", "Cidade", "Estado"};
         String[][] rowData = new String[1000][1000];
 

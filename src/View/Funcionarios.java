@@ -4,10 +4,14 @@ import Models.Funcionario;
 
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Formatter;
+import java.util.Scanner;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 public class Funcionarios extends javax.swing.JPanel {
 
@@ -17,14 +21,12 @@ public class Funcionarios extends javax.swing.JPanel {
 
         JTextField camponf1 = new JTextField(30);
         JLabel nf1 = new JLabel("Nome do Funcionário:");
-        nf1.setVerticalAlignment(JLabel.TOP);
         nf1.setLabelFor(camponf1);
         this.add(nf1);
         this.add(camponf1);
 
         JTextField campocpff1 = new JTextField(30);
         JLabel cpff1 = new JLabel("CPF do Funcionário: ");
-        cpff1.setVerticalAlignment(JLabel.TOP);
         cpff1.setLabelFor(campocpff1);
         this.add(cpff1);
         this.add(campocpff1);
@@ -61,7 +63,7 @@ public class Funcionarios extends javax.swing.JPanel {
                 try {
                     Formatter output = new Formatter(filename);
                     //nome, cpf, email, telefone e status
-                    output.format("%s %s %s %s\n", camponf1.getText(), campocpff1.getText(), campoef1.getText(), campotf1.getText(), op_status1.getSelectedItem());
+                    output.format("%s,%s,%s,%s\n", camponf1.getText(), campocpff1.getText(), campoef1.getText(), campotf1.getText(), op_status1.getSelectedItem());
                     output.flush();
                     output.close();
                 } catch(IOException ex) {
@@ -69,5 +71,36 @@ public class Funcionarios extends javax.swing.JPanel {
                 }
             }
         });
+
+        String[] columnNames = new String[] {"Nome", "CPF", "E-mail", "Telefone", "Status"};
+        String[][] rowData = new String[100][100];
+
+        final JTable table;
+        final DefaultTableModel tableModel;
+
+        try {
+            File myObj = new File("src/data/funcionarios.txt");
+            Scanner myReader = new Scanner(myObj);
+            int i = 0;
+            while (myReader.hasNextLine()) {
+              String data = myReader.nextLine();
+              String[] arrData = data.split(",");
+
+              String[] aux = {arrData[0], arrData[1], arrData[2], arrData[3], arrData[4]};
+              rowData[i] = aux;
+              i++;
+            }
+
+            myReader.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // constructs the table with sample data
+        tableModel = new DefaultTableModel(rowData, columnNames);
+        table = new JTable(tableModel);
+
+        JScrollPane jScrollPane = new JScrollPane(table);
+        this.add(jScrollPane);
     }
 }

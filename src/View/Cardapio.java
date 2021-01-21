@@ -10,6 +10,8 @@ import helpers.TableMouseListener;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
  
 public class Cardapio extends JPanel implements ActionListener {
@@ -24,7 +26,8 @@ public class Cardapio extends JPanel implements ActionListener {
 
         // sample table data
         String[] columnNames = new String[] {"Nome", "Descrição", "Preço (R$)", "URL da imagem"};
-        String[][] rowData = new String[][] {};
+        List<String[]> rowData = new ArrayList<String[]>();
+
 
         try {
             File myObj = new File("src/data/cardapio.txt");
@@ -35,7 +38,7 @@ public class Cardapio extends JPanel implements ActionListener {
               String[] arrData = data.split(",");
 
               String[] aux = {arrData[0], arrData[1], arrData[2], arrData[3]};
-              rowData[i] = aux;
+              rowData.add(aux);
 
               i++;
             }
@@ -44,9 +47,11 @@ public class Cardapio extends JPanel implements ActionListener {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
-         
+
+        String[][] simpleArray = new String[ rowData.size() ][];
+        rowData.toArray( simpleArray );
         // constructs the table with sample data
-        tableModel = new DefaultTableModel(rowData, columnNames);
+        tableModel = new DefaultTableModel(simpleArray, columnNames);
         table = new JTable(tableModel);
          
         // constructs the popup menu

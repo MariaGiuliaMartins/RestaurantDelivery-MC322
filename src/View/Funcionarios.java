@@ -1,104 +1,142 @@
 package View;
 
+import Controller.FuncionarioController;
+import Model.Funcionario;
+import Model.Sexo;
+
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.Formatter;
-import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 public class Funcionarios extends javax.swing.JPanel {
 
-    public Funcionarios(){
+    private FuncionarioController funcionarioController;
+
+    JTextField jTextFieldNome;
+    JTextField jTextFielCPF;
+    JTextField jTextFieldEmail;
+    JTextField jTextFieldTel;
+    JComboBox jComboBoxSexo;
+    JComboBox jComboBoxStatus;
+    JTable table;
+    DefaultTableModel tableModel;
+
+
+    public Funcionarios(FuncionarioController funcionarioController){
+
+        this.funcionarioController = funcionarioController;
         
         this.setLayout(new FlowLayout(FlowLayout.LEFT));
 
-        JTextField camponf1 = new JTextField(30);
-        JLabel nf1 = new JLabel("Nome do Funcionário:");
-        nf1.setLabelFor(camponf1);
+        jTextFieldNome = new JTextField(30);
+        JLabel nf1 = new JLabel("Nome:");
+        nf1.setLabelFor(jTextFieldNome);
         this.add(nf1);
-        this.add(camponf1);
+        this.add(jTextFieldNome);
 
-        JTextField campocpff1 = new JTextField(30);
-        JLabel cpff1 = new JLabel("CPF do Funcionário: ");
-        cpff1.setLabelFor(campocpff1);
+        jTextFielCPF = new JTextField(30);
+        JLabel cpff1 = new JLabel("CPF: ");
+        cpff1.setLabelFor(jTextFielCPF);
         this.add(cpff1);
-        this.add(campocpff1);
+        this.add(jTextFielCPF);
 
-        JTextField campoef1 = new JTextField(30);
-        JLabel ef1 = new JLabel("Email do Funcionário: ");
-        ef1.setLabelFor(campoef1);
+        jTextFieldEmail = new JTextField(30);
+        JLabel ef1 = new JLabel("Email: ");
+        ef1.setLabelFor(jTextFieldEmail);
         this.add(ef1);
-        this.add(campoef1);
+        this.add(jTextFieldEmail);
 
-        JTextField campotf1 = new JTextField(30);
-        JLabel tf1 = new JLabel("Telefone do Funcionário: ");
-        tf1.setLabelFor(campotf1);
+        jTextFieldTel = new JTextField(30);
+        JLabel tf1 = new JLabel("Telefone: ");
+        tf1.setLabelFor(jTextFieldTel);
         this.add(tf1);
-        this.add(campotf1);
+        this.add(jTextFieldTel);
 
-        Integer[] status1 = {0, 1};
-        @SuppressWarnings({ "rawtypes", "unchecked" })
-        JComboBox op_status1 = new JComboBox(status1);
-        JLabel st1 = new JLabel("Status do Funcionário: ");
-        this.add(st1);
-        this.add(op_status1);
+        String[] optionsSexo = {"M", "F"};
+        jComboBoxSexo = new JComboBox(optionsSexo);
+        JLabel jLabelSexo = new JLabel("Sexo: ");
+        this.add(jLabelSexo);
+        this.add(jComboBoxSexo);
 
         JButton botaoFunc = new JButton("<html><body>Adicionar<br> Funcionário</body></html>");
         this.add(botaoFunc);
         botaoFunc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAddFuncActionPerformed(evt);
-            }
-
-            private void jButtonAddFuncActionPerformed(ActionEvent evt) {
-                //manipulando o arquivo referente aos funcionarios
-                String filename = "src/data/funcionarios.txt";
-                try {
-                    Formatter output = new Formatter(filename);
-                    //nome, cpf, email, telefone e status
-                    output.format("%s,%s,%s,%s\n", camponf1.getText(), campocpff1.getText(), campoef1.getText(), campotf1.getText(), op_status1.getSelectedItem());
-                    output.flush();
-                    output.close();
-                } catch(IOException ex) {
-                    ex.printStackTrace();
-                }
+                jButtonAddActionPerformed(evt);
             }
         });
 
-        String[] columnNames = new String[] {"Nome", "CPF", "E-mail", "Telefone", "Status"};
-        String[][] rowData = new String[100][100];
-
-        final JTable table;
-        final DefaultTableModel tableModel;
-
-        try {
-            File myObj = new File("src/data/funcionarios.txt");
-            Scanner myReader = new Scanner(myObj);
-            int i = 0;
-            while (myReader.hasNextLine()) {
-              String data = myReader.nextLine();
-              String[] arrData = data.split(",");
-
-              String[] aux = {arrData[0], arrData[1], arrData[2], arrData[3], arrData[4]};
-              rowData[i] = aux;
-              i++;
+        JButton jButtonDelete = new JButton("<html><body>Deletar<br> Funcionário</body></html>");
+        this.add(jButtonDelete);
+        jButtonDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDeleteActionPerformed(evt);
             }
+        });
 
-            myReader.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        String[] columnNames = new String[] {"Nome", "CPF", "E-mail", "Telefone", "Sexo"};
+        List<String[]> rowData = new ArrayList<String[]>();
+
+
+
+        for (Funcionario funcionario : funcionarioController.getFuncionarios()){
+            String[] aux = {funcionario.getNome(), funcionario.getCpf(), funcionario.getEmail(), funcionario.getTelefone(), funcionario.getSexo().toString()};
+            rowData.add(aux);
         }
 
+        String[][] arrayData = new String[ rowData.size() ][];
+        rowData.toArray( arrayData );
         // constructs the table with sample data
-        tableModel = new DefaultTableModel(rowData, columnNames);
+        tableModel = new DefaultTableModel(arrayData, columnNames);
         table = new JTable(tableModel);
 
         JScrollPane jScrollPane = new JScrollPane(table);
         this.add(jScrollPane);
+    }
+
+    private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {
+        String nome = jTextFieldNome.getText();
+        String cpf = jTextFielCPF.getText();
+        String email = jTextFieldEmail.getText();
+        String tel = jTextFieldTel.getText();
+        String sexo = jComboBoxSexo.getSelectedItem().toString();
+
+        if (nome.equals("") || cpf.equals("") || email.equals("") || tel.equals("")) {
+            JOptionPane.showMessageDialog(null, "Verifiqiue se os campos estao todos preenchidos");
+            return;
+        }
+
+        try{
+            // Salva no arquivo
+            this.funcionarioController.addFuncionario(nome, cpf, email, sexo == "F" ? Sexo.FEMININO : Sexo.MASCULINO, tel);
+            // Adiciona na lista
+            String[] newRow = {nome, cpf, email, tel, sexo};
+            tableModel.addRow(newRow);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+    private void jButtonDeleteActionPerformed(java.awt.event.ActionEvent evt) {
+        try {
+            tableModel.removeRow(table.getSelectedRow());
+            ArrayList<Funcionario> funcionarios = new ArrayList<Funcionario>();
+            for (int count = 0; count < tableModel.getRowCount(); count++){
+                String nome = tableModel.getValueAt(count,0).toString();
+                String cpf = tableModel.getValueAt(count,1).toString();
+                String email = tableModel.getValueAt(count,2).toString();
+                String tel = tableModel.getValueAt(count,3).toString();
+                String sexo = tableModel.getValueAt(count,4).toString();
+
+                Funcionario funcionario = new Funcionario(nome, cpf, email, "senha", sexo == "FEMININO" ? Sexo.FEMININO : Sexo.MASCULINO, tel, true, Calendar.getInstance());
+            }
+            funcionarioController.removeFuncionario(funcionarios);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

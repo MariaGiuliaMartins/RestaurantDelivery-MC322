@@ -16,11 +16,10 @@ public class Usuario implements Serializable {
     private String senha;
     private Sexo sexo;
     private String telefone;
-    private Endereco endereco;
     private boolean status;
     private Calendar dataCriacao;
 
-    public Usuario(String nome, String cpf, String email, String senha, Sexo sexo, String telefone, Endereco endereco, boolean status, Calendar dataCriacao) {
+    public Usuario(String nome, String cpf, String email, String senha, Sexo sexo, String telefone, boolean status, Calendar dataCriacao) {
         this.id = counter.incrementAndGet();
         this.nome = nome;
         this.cpf = cpf;
@@ -28,7 +27,6 @@ public class Usuario implements Serializable {
         this.senha = senha;
         this.sexo = sexo;
         this.telefone = telefone;
-        this.endereco = endereco;
         this.status = status;
         this.dataCriacao = dataCriacao;
     }
@@ -89,14 +87,6 @@ public class Usuario implements Serializable {
         this.telefone = telefone;
     }
 
-    public Endereco getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(Endereco endereco) {
-        this.endereco = endereco;
-    }
-
     public boolean isStatus() {
         return status;
     }
@@ -123,7 +113,6 @@ public class Usuario implements Serializable {
                 ", senha='" + senha + '\'' +
                 ", sexo=" + sexo +
                 ", telefone='" + telefone + '\'' +
-                ", endereco=" + endereco +
                 ", status=" + status +
                 ", dataCriacao=" + dataCriacao +
                 '}';

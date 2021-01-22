@@ -1,15 +1,26 @@
 package View;
 
 import Controller.CardapioController;
+import Controller.FuncionarioController;
+
+import java.util.ArrayList;
 
 public class Home extends javax.swing.JFrame {
 
     private Model.Cardapio cardapio;
     private Controller.CardapioController cardapioController;
 
+    private ArrayList<Model.Funcionario> funcionarios;
+    private Controller.FuncionarioController funcionarioController;
+
     public Home() {
+
         cardapio = new Model.Cardapio();
         cardapioController = new CardapioController(cardapio);
+
+        funcionarios = new ArrayList<Model.Funcionario>();
+        funcionarioController = new FuncionarioController(funcionarios);
+
         initComponents();
     }
 
@@ -23,7 +34,7 @@ public class Home extends javax.swing.JFrame {
         jPanelCardapio = new Cardapio(cardapioController);
         jPanelAdmin = new Admin();
         jPanelEntregadores = new Entregadores();
-        jPanelFuncionarios = new Funcionarios();
+        jPanelFuncionarios = new Funcionarios(funcionarioController);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(800, 500));
@@ -48,8 +59,8 @@ public class Home extends javax.swing.JFrame {
                                 .addContainerGap(176, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Home", jPanelHome);
-        jTabbedPane1.addTab("Pedidos", jPanelPedidos);
+        jTabbedPane1.addTab("Pedidos", jPanelHome);
+        jTabbedPane1.addTab("Fazer Pedido", jPanelPedidos);
         jTabbedPane1.addTab("Cardapio", jPanelCardapio);
         jTabbedPane1.addTab("Admin", jPanelAdmin);
         jTabbedPane1.addTab("Funcionarios", jPanelFuncionarios);

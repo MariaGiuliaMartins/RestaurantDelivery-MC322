@@ -263,10 +263,9 @@ public class Pedido implements Serializable {
 		* Input: usuário que possui a permissão de aprovar o pedido
 		* Output: boolean - true significa sucesso, false significa que algo de errado ocorreu
 	*/
-	public boolean aprovarPedido(Usuario aprovador) {
+	public void aprovarPedido(Usuario aprovador) {
 		//se o usuario possuir uma permissão de aprovar pedidos, ou for um funcionário ou um admin
 		setStatus(StatusPedido.PEDIDO_APROVADO);
-		return aprovador.getClass() == Admin.class || aprovador.getClass() == Funcionario.class;
 	}
 
 	///Entregar pedido
@@ -275,12 +274,11 @@ public class Pedido implements Serializable {
 	 * Input: usuário que possui a permissão de aprovar o pedido
 	 * Output: boolean - true significa sucesso, false significa que algo de errado ocorreu
 	 */
-	public boolean entregarPedido(Usuario aprovador, Entregador entregador) {
+	public void entregarPedido(Usuario aprovador, Entregador entregador) {
 		//se o usuario possuir uma permissão de aprovar pedidos, ou for um funcionário ou um admin
 		setEntregador(entregador);
 		entregador.assignPedido(this);
 		setStatus(StatusPedido.PEDIDO_APROVADO);
-		return aprovador.getClass() == Admin.class || aprovador.getClass() == Funcionario.class;
 	}
 
 	///Avaliar pedido

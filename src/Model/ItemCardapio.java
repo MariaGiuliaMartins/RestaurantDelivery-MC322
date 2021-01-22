@@ -17,7 +17,13 @@ public class ItemCardapio implements Serializable {
 		this.preco = preco;
 		this.imagem = imagem;
 	}
-	
+	// Construtor para clonar objeto
+	public ItemCardapio(ItemCardapio item){
+		this.nome = item.getNome();
+		this.descricao = item.getDescricao();
+		this.preco = item.getPreco();
+		this.imagem = item.getImagem();
+	}
 	//getters e setters
 	///nome
 	public String getNome() {
@@ -54,14 +60,12 @@ public class ItemCardapio implements Serializable {
 	public void setImagem(String imagem) {
 		this.imagem = imagem;
 	}
-	
+
 	//demais métodos
 	@Override
 	public String toString() {
-		String out = "Item do Cardápio: " + getNome() + "\n";
-		out += "Descrição do item: " + getDescricao() + "\n";
-		out += "Preço: " + getPreco() + "\n";
-		out += "Imagem: " + getImagem() + "\n";
+		String out = getNome() + "\n";
+		out += " - " + getPreco() + "\n";
 		return out;
 	}
 }

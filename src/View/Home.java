@@ -1,7 +1,10 @@
 package View;
 
 import Controller.CardapioController;
+import Controller.ClienteController;
+import Controller.EntregadorController;
 import Controller.FuncionarioController;
+import Model.Entregador;
 
 import java.util.ArrayList;
 
@@ -13,6 +16,12 @@ public class Home extends javax.swing.JFrame {
     private ArrayList<Model.Funcionario> funcionarios;
     private Controller.FuncionarioController funcionarioController;
 
+    private ArrayList<Model.Cliente> clientes;
+    private Controller.ClienteController clienteController;
+
+    private ArrayList<Model.Entregador> entregadores;
+    private Controller.EntregadorController entregadorController;
+
     public Home() {
 
         cardapio = new Model.Cardapio();
@@ -21,48 +30,60 @@ public class Home extends javax.swing.JFrame {
         funcionarios = new ArrayList<Model.Funcionario>();
         funcionarioController = new FuncionarioController(funcionarios);
 
+        clientes = new ArrayList<Model.Cliente>();
+        clienteController = new ClienteController(clientes);
+
+        entregadores = new ArrayList<Entregador>();
+        entregadorController = new EntregadorController(entregadores);
+
         initComponents();
     }
-
-    @SuppressWarnings("unchecked")
     private void initComponents() {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanelHome = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jPanelPedidos = new Pedido();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jPanelPedidos = new Pedido(cardapioController);
         jPanelCardapio = new Cardapio(cardapioController);
-        jPanelAdmin = new Admin();
-        jPanelEntregadores = new Entregadores();
+        jPanelAdmin = new Clientes(clienteController);
+        jPanelEntregadores = new Entregadores(entregadorController);
         jPanelFuncionarios = new Funcionarios(funcionarioController);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(800, 500));
 
-        jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 48)); // NOI18N
-        jLabel1.setText("Bem-vindo");
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+                new Object [][] {
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null}
+                },
+                new String [] {
+                        "Title 1", "Title 2", "Title 3", "Title 4"
+                }
+        ));
+        jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout jPanelHomeLayout = new javax.swing.GroupLayout(jPanelHome);
         jPanelHome.setLayout(jPanelHomeLayout);
         jPanelHomeLayout.setHorizontalGroup(
                 jPanelHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelHomeLayout.createSequentialGroup()
-                                .addContainerGap(198, Short.MAX_VALUE)
-                                .addComponent(jLabel1)
-                                .addGap(193, 193, 193))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 824, Short.MAX_VALUE)
         );
         jPanelHomeLayout.setVerticalGroup(
                 jPanelHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanelHomeLayout.createSequentialGroup()
-                                .addGap(166, 166, 166)
-                                .addComponent(jLabel1)
-                                .addContainerGap(176, Short.MAX_VALUE))
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
         );
 
+        jTabbedPane1.addTab("Home", jPanelHome);
         jTabbedPane1.addTab("Pedidos", jPanelHome);
         jTabbedPane1.addTab("Fazer Pedido", jPanelPedidos);
         jTabbedPane1.addTab("Cardapio", jPanelCardapio);
-        jTabbedPane1.addTab("Admin", jPanelAdmin);
+        jTabbedPane1.addTab("Clientes", jPanelAdmin);
         jTabbedPane1.addTab("Funcionarios", jPanelFuncionarios);
         jTabbedPane1.add("Entregadores", jPanelEntregadores);
 
@@ -80,13 +101,13 @@ public class Home extends javax.swing.JFrame {
         pack();
     }
 
-
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanelHome;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     private Pedido jPanelPedidos;
     private Cardapio jPanelCardapio;
-    private Admin jPanelAdmin;
+    private Clientes jPanelAdmin;
     private Funcionarios jPanelFuncionarios;
     private Entregadores jPanelEntregadores;
 }

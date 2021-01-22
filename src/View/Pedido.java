@@ -1,17 +1,25 @@
 package View;
 
+import Controller.CardapioController;
+import Model.Bebida;
+import Model.Comida;
+import Model.ItemCardapio;
+
+import javax.swing.*;
+
 public class Pedido extends javax.swing.JPanel {
 
+    private CardapioController cardapioController;
 
-    public Pedido() {
+    public Pedido(CardapioController cardapioController) {
+        this.cardapioController = cardapioController;
         initComponents();
     }
 
-    @SuppressWarnings("unchecked")
     private void initComponents() {
 
         jScrollPaneComidas = new javax.swing.JScrollPane();
-        jListComidas = new javax.swing.JList<>();
+        jListComidas = new javax.swing.JList<Comida>();
         jLabelBebidas = new javax.swing.JLabel();
         jLabelComidas = new javax.swing.JLabel();
         jScrollPaneBebidas = new javax.swing.JScrollPane();
@@ -33,24 +41,36 @@ public class Pedido extends javax.swing.JPanel {
         jScrollPanePedido = new javax.swing.JScrollPane();
         jListPedidos = new javax.swing.JList<>();
         jLabelPedido = new javax.swing.JLabel();
+        jLabelEntregador = new javax.swing.JLabel();
+        jLabelEntregadorValue = new javax.swing.JLabel();
+        jButtonSelectEntregador = new javax.swing.JButton();
 
-        jListComidas.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
+        //Setting up list of comidas
+        jListModelComidas = new DefaultListModel<Comida>();
+        jListComidas.setModel(jListModelComidas);
+        for (Comida comida : cardapioController.getComidas()){
+            jListModelComidas.addElement(comida);
+        }
         jScrollPaneComidas.setViewportView(jListComidas);
 
         jLabelBebidas.setText("Bebidas");
 
         jLabelComidas.setText("Comidas");
 
-        jListBebidas.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
+        //Setting up list of bebidas
+        jListModelBebidas = new DefaultListModel<Bebida>();
+        jListBebidas.setModel(jListModelBebidas);
+        for (Bebida bebida : cardapioController.getBebidas()){
+            jListModelBebidas.addElement(bebida);
+        }
         jScrollPaneBebidas.setViewportView(jListBebidas);
+
+        // Setting up pedido
+        jListModelPedido = new DefaultListModel<ItemCardapio>();
+        jListPedidos.setModel(jListModelPedido);
+        jScrollPanePedido.setViewportView(jListPedidos);
+
+        jLabelPedido.setText("Pedido");
 
         jButtonAddComida.setText("Adicionar Comida");
         jButtonAddComida.addActionListener(new java.awt.event.ActionListener() {
@@ -111,14 +131,16 @@ public class Pedido extends javax.swing.JPanel {
 
         jLabelFuncionario.setText("Funcionario:");
 
-        jListPedidos.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPanePedido.setViewportView(jListPedidos);
+        jLabelEntregador.setText("Entregador:");
 
-        jLabelPedido.setText("Pedido");
+        jLabelEntregadorValue.setText("");
+
+        jButtonSelectEntregador.setText("Selecionar Entregador");
+        jButtonSelectEntregador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSelectEntregadorActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -127,20 +149,6 @@ public class Pedido extends javax.swing.JPanel {
                         .addGroup(layout.createSequentialGroup()
                                 .addGap(37, 37, 37)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addGroup(layout.createSequentialGroup()
-                                                                .addComponent(jLabelFuncionario)
-                                                                .addGap(42, 42, 42)
-                                                                .addComponent(jLabelFuncionarioValue))
-                                                        .addGroup(layout.createSequentialGroup()
-                                                                .addComponent(jLabelCliente)
-                                                                .addGap(32, 32, 32)
-                                                                .addComponent(jLabelClienteValue)))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                        .addComponent(jButtonSelectClient, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                        .addComponent(jButtonSelectFunc, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                         .addGroup(layout.createSequentialGroup()
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                         .addGroup(layout.createSequentialGroup()
@@ -168,7 +176,27 @@ public class Pedido extends javax.swing.JPanel {
                                                         .addComponent(jButtonAddComida, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
                                                         .addComponent(jButtonAddBebida, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                         .addComponent(jButtonRemover, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                        .addComponent(jButtonFinalizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                                        .addComponent(jButtonFinalizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addComponent(jLabelFuncionario)
+                                                                .addGap(42, 42, 42)
+                                                                .addComponent(jLabelFuncionarioValue))
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addComponent(jLabelCliente)
+                                                                .addGap(32, 32, 32)
+                                                                .addComponent(jLabelClienteValue))
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addComponent(jLabelEntregador)
+                                                                .addGap(18, 18, 18)
+                                                                .addComponent(jLabelEntregadorValue)))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(jButtonSelectEntregador, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                                .addComponent(jButtonSelectClient, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addComponent(jButtonSelectFunc, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                                 .addGap(40, 40, 40))
         );
         layout.setVerticalGroup(
@@ -184,11 +212,17 @@ public class Pedido extends javax.swing.JPanel {
                                         .addComponent(jLabelFuncionario)
                                         .addComponent(jButtonSelectFunc)
                                         .addComponent(jLabelFuncionarioValue))
-                                .addGap(31, 31, 31)
+                                .addGap(3, 3, 3)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLabelBebidas, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabelComidas, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabelPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(jLabelEntregador)
+                                        .addComponent(jLabelEntregadorValue)
+                                        .addComponent(jButtonSelectEntregador))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabelBebidas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                .addComponent(jLabelComidas, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jLabelPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(layout.createSequentialGroup()
@@ -198,9 +232,9 @@ public class Pedido extends javax.swing.JPanel {
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(jButtonRemover)
                                                 .addGap(0, 0, Short.MAX_VALUE))
-                                        .addComponent(jScrollPaneComidas, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
+                                        .addComponent(jScrollPaneComidas, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
                                         .addComponent(jScrollPaneBebidas)
-                                        .addComponent(jScrollPanePedido, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE))
+                                        .addComponent(jScrollPanePedido, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE))
                                 .addGap(48, 48, 48)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabelTotal)
@@ -213,11 +247,31 @@ public class Pedido extends javax.swing.JPanel {
     }// </editor-fold>
 
     private void jButtonAddComidaActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        int index = jListComidas.getSelectedIndex();
+        if (index < 0){
+            JOptionPane.showMessageDialog(null, "Selecione uma comida");
+            return;
+        }
+        ItemCardapio comida = (ItemCardapio) jListModelComidas.getElementAt(index);
+        ItemCardapio pedido =  new ItemCardapio(comida);
+        Double total = Double.valueOf(jLabelTotalValue.getText());
+        total += comida.getPreco();
+        jLabelTotalValue.setText(total.toString());
+        jListModelPedido.addElement(comida);
     }
 
     private void jButtonAddBebidaActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        int index = jListBebidas.getSelectedIndex();
+        if (index < 0){
+            JOptionPane.showMessageDialog(null, "Selecione uma bebida");
+            return;
+        }
+        ItemCardapio bebida = (ItemCardapio) jListModelBebidas.getElementAt(index);
+//        ItemCardapio pedido =  new ItemCardapio(bebida);
+        Double total = Double.valueOf(jLabelTotalValue.getText());
+        total += bebida.getPreco();
+        jLabelTotalValue.setText(total.toString());
+        jListModelPedido.addElement(bebida);
     }
 
     private void jButtonRemoverActionPerformed(java.awt.event.ActionEvent evt) {
@@ -225,7 +279,7 @@ public class Pedido extends javax.swing.JPanel {
     }
 
     private void jButtonLimparActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        jListModelPedido.removeAllElements();
     }
 
     private void jButtonFinalizarActionPerformed(java.awt.event.ActionEvent evt) {
@@ -240,17 +294,24 @@ public class Pedido extends javax.swing.JPanel {
         // TODO add your handling code here:
     }
 
+    private void jButtonSelectEntregadorActionPerformed(java.awt.event.ActionEvent evt) {
+        // TODO add your handling code here:
+    }
+
     private javax.swing.JButton jButtonAddBebida;
     private javax.swing.JButton jButtonAddComida;
     private javax.swing.JButton jButtonFinalizar;
     private javax.swing.JButton jButtonLimpar;
     private javax.swing.JButton jButtonRemover;
     private javax.swing.JButton jButtonSelectClient;
+    private javax.swing.JButton jButtonSelectEntregador;
     private javax.swing.JButton jButtonSelectFunc;
     private javax.swing.JLabel jLabelBebidas;
     private javax.swing.JLabel jLabelCliente;
     private javax.swing.JLabel jLabelClienteValue;
     private javax.swing.JLabel jLabelComidas;
+    private javax.swing.JLabel jLabelEntregador;
+    private javax.swing.JLabel jLabelEntregadorValue;
     private javax.swing.JLabel jLabelFuncionario;
     private javax.swing.JLabel jLabelFuncionarioValue;
     private javax.swing.JLabel jLabelPedido;
@@ -258,9 +319,12 @@ public class Pedido extends javax.swing.JPanel {
     private javax.swing.JLabel jLabelTotalCurrency;
     private javax.swing.JLabel jLabelTotalValue;
     private javax.swing.JList<String> jListBebidas;
-    private javax.swing.JList<String> jListComidas;
+    private JList<Comida> jListComidas;
     private javax.swing.JList<String> jListPedidos;
     private javax.swing.JScrollPane jScrollPaneBebidas;
     private javax.swing.JScrollPane jScrollPaneComidas;
     private javax.swing.JScrollPane jScrollPanePedido;
+    private DefaultListModel jListModelComidas;
+    private DefaultListModel jListModelBebidas;
+    private DefaultListModel jListModelPedido;
 }

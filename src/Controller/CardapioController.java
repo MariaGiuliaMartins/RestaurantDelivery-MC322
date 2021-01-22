@@ -76,14 +76,6 @@ public class CardapioController {
         this.cardapio.criarItemCardapio(item);
     }
 
-    public void removeItem(Comida item){
-        this.cardapio.criarItemCardapio(item);
-    }
-
-    public void removeItem(Bebida item){
-        this.cardapio.criarItemCardapio(item);
-    }
-
     // Reseta lista de comida e bebida do cardapio pra poder dar overwrite no arquivo
     public void reset(){
         this.cardapio.getComida().clear();

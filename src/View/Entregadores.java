@@ -1,69 +1,147 @@
 package View;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.io.IOException;
-import java.util.Formatter;
+import Controller.EntregadorController;
+import Model.Entregador;
+import Model.Sexo;
 
-public class Entregadores extends JPanel {
-    public Entregadores(){
+import java.awt.FlowLayout;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+
+public class Entregadores extends javax.swing.JPanel {
+
+    private EntregadorController entregadorController;
+
+    JTextField jTextFieldNome;
+    JTextField jTextFielCPF;
+    JTextField jTextFieldEmail;
+    JTextField jTextFieldTel;
+    JComboBox jComboBoxSexo;
+    JComboBox jComboBoxStatus;
+    JTable table;
+    DefaultTableModel tableModel;
+
+
+    public Entregadores(EntregadorController entregadorController){
+
+        this.entregadorController = entregadorController;
 
         this.setLayout(new FlowLayout(FlowLayout.LEFT));
 
-        JTextField campone1 = new JTextField(30);
-        JLabel ne1 = new JLabel("Nome do Entregador:");
-        ne1.setVerticalAlignment(JLabel.TOP);
-        ne1.setLabelFor(campone1);
-        this.add(ne1);
-        this.add(campone1);
+        jTextFieldNome = new JTextField(30);
+        JLabel nf1 = new JLabel("Nome:");
+        nf1.setLabelFor(jTextFieldNome);
+        this.add(nf1);
+        this.add(jTextFieldNome);
 
-        JTextField campocpfe1 = new JTextField(30);
-        JLabel cpfe1 = new JLabel("CPF do Entregador: ");
-        cpfe1.setVerticalAlignment(JLabel.TOP);
-        cpfe1.setLabelFor(campocpfe1);
-        this.add(cpfe1);
-        this.add(campocpfe1);
+        jTextFielCPF = new JTextField(30);
+        JLabel cpff1 = new JLabel("CPF: ");
+        cpff1.setLabelFor(jTextFielCPF);
+        this.add(cpff1);
+        this.add(jTextFielCPF);
 
-        JTextField campoee1 = new JTextField(30);
-        JLabel ee1 = new JLabel("Email do Entregador: ");
-        ee1.setLabelFor(campoee1);
-        this.add(ee1);
-        this.add(campoee1);
+        jTextFieldEmail = new JTextField(30);
+        JLabel ef1 = new JLabel("Email: ");
+        ef1.setLabelFor(jTextFieldEmail);
+        this.add(ef1);
+        this.add(jTextFieldEmail);
 
-        JTextField campote1 = new JTextField(30);
-        JLabel te1 = new JLabel("Telefone do Entregador: ");
-        te1.setLabelFor(campote1);
-        this.add(te1);
-        this.add(campote1);
+        jTextFieldTel = new JTextField(30);
+        JLabel tf1 = new JLabel("Telefone: ");
+        tf1.setLabelFor(jTextFieldTel);
+        this.add(tf1);
+        this.add(jTextFieldTel);
 
-        Integer[] status2 = {0, 1};
-        @SuppressWarnings({ "rawtypes", "unchecked" })
-        JComboBox op_status2 = new JComboBox(status2);
-        JLabel st2 = new JLabel("Status do Entregador: ");
-        this.add(st2);
-        this.add(op_status2);
+        String[] optionsSexo = {"M", "F"};
+        jComboBoxSexo = new JComboBox(optionsSexo);
+        JLabel jLabelSexo = new JLabel("Sexo: ");
+        this.add(jLabelSexo);
+        this.add(jComboBoxSexo);
 
-        JButton botaoEntregadores = new JButton("<html><body>Adicionar<br> Entregador</body></html>");
-        this.add(botaoEntregadores);
-        botaoEntregadores.addActionListener(new java.awt.event.ActionListener() {
+        JButton botaoFunc = new JButton("<html><body>Adicionar<br> Entregador</body></html>");
+        this.add(botaoFunc);
+        botaoFunc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAddEntregadoresActionPerformed(evt);
-            }
-
-            private void jButtonAddEntregadoresActionPerformed(ActionEvent evt) {
-                //manipulando o arquivo referente aos entregadores
-                String filename = "src/data/entregadores.txt";
-                try {
-                    Formatter output = new Formatter(filename);
-                    //nome, cpf, email, telefone e status
-                    output.format("%s,%s,%s,%s,%s\n", campone1.getText(), campocpfe1.getText(), campoee1.getText(), campote1.getText(), op_status2.getSelectedItem());
-                    output.flush();
-                    output.close();
-                }catch(IOException ex) {
-                    ex.printStackTrace();
-                }
+                jButtonAddActionPerformed(evt);
             }
         });
+
+        JButton jButtonDelete = new JButton("<html><body>Deletar<br> Entregador</body></html>");
+        this.add(jButtonDelete);
+        jButtonDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDeleteActionPerformed(evt);
+            }
+        });
+
+        String[] columnNames = new String[] {"Nome", "CPF", "E-mail", "Telefone", "Sexo"};
+        List<String[]> rowData = new ArrayList<String[]>();
+
+
+
+        for (Entregador entregador : entregadorController.getEntregadores()){
+            String[] aux = {entregador.getNome(), entregador.getCpf(), entregador.getEmail(), entregador.getTelefone(), entregador.getSexo().toString()};
+            rowData.add(aux);
+        }
+
+        String[][] arrayData = new String[ rowData.size() ][];
+        rowData.toArray( arrayData );
+        // constructs the table with sample data
+        tableModel = new DefaultTableModel(arrayData, columnNames);
+        table = new JTable(tableModel);
+
+        JScrollPane jScrollPane = new JScrollPane(table);
+        this.add(jScrollPane);
+    }
+
+    private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {
+        String nome = jTextFieldNome.getText();
+        String cpf = jTextFielCPF.getText();
+        String email = jTextFieldEmail.getText();
+        String tel = jTextFieldTel.getText();
+        String sexo = jComboBoxSexo.getSelectedItem().toString();
+
+        if (nome.equals("") || cpf.equals("") || email.equals("") || tel.equals("")) {
+            JOptionPane.showMessageDialog(null, "Verifiqiue se os campos estao todos preenchidos");
+            return;
+        }
+
+        try{
+            // Salva no arquivo
+            this.entregadorController.addEntregador(nome, cpf, email, sexo == "F" ? Sexo.FEMININO : Sexo.MASCULINO, tel);
+            // Adiciona na lista
+            String[] newRow = {nome, cpf, email, tel, sexo};
+            tableModel.addRow(newRow);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+    private void jButtonDeleteActionPerformed(java.awt.event.ActionEvent evt) {
+        try {
+            int index = table.getSelectedRow();
+            // check is user selected a row
+            if (index < 0) {
+                JOptionPane.showMessageDialog(null, "Selecione uma linha da lista");
+                return;
+            }
+            tableModel.removeRow(index);            ArrayList<Entregador> entregadores = new ArrayList<Entregador>();
+            for (int count = 0; count < tableModel.getRowCount(); count++){
+                String nome = tableModel.getValueAt(count,0).toString();
+                String cpf = tableModel.getValueAt(count,1).toString();
+                String email = tableModel.getValueAt(count,2).toString();
+                String tel = tableModel.getValueAt(count,3).toString();
+                String sexo = tableModel.getValueAt(count,4).toString();
+
+                Entregador entregador = new Entregador(nome, cpf, email, "senha", sexo == "FEMININO" ? Sexo.FEMININO : Sexo.MASCULINO, tel, true, Calendar.getInstance());
+            }
+            entregadorController.removeEntregador(entregadores);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

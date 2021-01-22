@@ -1,7 +1,9 @@
 package View;
 
-import Controller.FuncionarioController;
-import Model.Funcionario;
+import Controller.ClienteController;
+import Controller.EntregadorController;
+import Model.Cliente;
+import Model.Entregador;
 import Model.Sexo;
 
 import java.awt.FlowLayout;
@@ -12,24 +14,23 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-public class Funcionarios extends javax.swing.JPanel {
+public class Clientes extends javax.swing.JPanel {
 
-    private FuncionarioController funcionarioController;
+    private ClienteController clienteController;
 
     JTextField jTextFieldNome;
     JTextField jTextFielCPF;
     JTextField jTextFieldEmail;
     JTextField jTextFieldTel;
     JComboBox jComboBoxSexo;
-    JComboBox jComboBoxStatus;
     JTable table;
     DefaultTableModel tableModel;
 
 
-    public Funcionarios(FuncionarioController funcionarioController){
+    public Clientes(ClienteController clienteController){
 
-        this.funcionarioController = funcionarioController;
-        
+        this.clienteController = clienteController;
+
         this.setLayout(new FlowLayout(FlowLayout.LEFT));
 
         jTextFieldNome = new JTextField(30);
@@ -62,7 +63,7 @@ public class Funcionarios extends javax.swing.JPanel {
         this.add(jLabelSexo);
         this.add(jComboBoxSexo);
 
-        JButton botaoFunc = new JButton("<html><body>Adicionar<br> Funcionário</body></html>");
+        JButton botaoFunc = new JButton("<html><body>Adicionar<br> Cliente</body></html>");
         this.add(botaoFunc);
         botaoFunc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -70,7 +71,7 @@ public class Funcionarios extends javax.swing.JPanel {
             }
         });
 
-        JButton jButtonDelete = new JButton("<html><body>Deletar<br> Funcionário</body></html>");
+        JButton jButtonDelete = new JButton("<html><body>Deletar<br> Cliente</body></html>");
         this.add(jButtonDelete);
         jButtonDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -83,8 +84,8 @@ public class Funcionarios extends javax.swing.JPanel {
 
 
 
-        for (Funcionario funcionario : funcionarioController.getFuncionarios()){
-            String[] aux = {funcionario.getNome(), funcionario.getCpf(), funcionario.getEmail(), funcionario.getTelefone(), funcionario.getSexo().toString()};
+        for (Cliente cliente : clienteController.getClientes()){
+            String[] aux = {cliente.getNome(), cliente.getCpf(), cliente.getEmail(), cliente.getTelefone(), cliente.getSexo().toString()};
             rowData.add(aux);
         }
 
@@ -112,7 +113,7 @@ public class Funcionarios extends javax.swing.JPanel {
 
         try{
             // Salva no arquivo
-            this.funcionarioController.addFuncionario(nome, cpf, email, sexo == "F" ? Sexo.FEMININO : Sexo.MASCULINO, tel);
+            this.clienteController.addCliente(nome, cpf, email, sexo == "F" ? Sexo.FEMININO : Sexo.MASCULINO, tel);
             // Adiciona na lista
             String[] newRow = {nome, cpf, email, tel, sexo};
             tableModel.addRow(newRow);
@@ -130,7 +131,7 @@ public class Funcionarios extends javax.swing.JPanel {
                 return;
             }
             tableModel.removeRow(index);
-            ArrayList<Funcionario> funcionarios = new ArrayList<Funcionario>();
+            ArrayList<Cliente> clientes = new ArrayList<Cliente>();
             for (int count = 0; count < tableModel.getRowCount(); count++){
                 String nome = tableModel.getValueAt(count,0).toString();
                 String cpf = tableModel.getValueAt(count,1).toString();
@@ -138,9 +139,9 @@ public class Funcionarios extends javax.swing.JPanel {
                 String tel = tableModel.getValueAt(count,3).toString();
                 String sexo = tableModel.getValueAt(count,4).toString();
 
-                Funcionario funcionario = new Funcionario(nome, cpf, email, "senha", sexo == "FEMININO" ? Sexo.FEMININO : Sexo.MASCULINO, tel, true, Calendar.getInstance());
+                Cliente cliente = new Cliente(nome, cpf, email, "senha", sexo == "FEMININO" ? Sexo.FEMININO : Sexo.MASCULINO, tel, true, Calendar.getInstance());
             }
-            funcionarioController.removeFuncionario(funcionarios);
+            clienteController.removeCliente(clientes);
         }catch (Exception e){
             e.printStackTrace();
         }

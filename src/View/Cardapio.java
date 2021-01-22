@@ -9,15 +9,11 @@ import javax.swing.table.DefaultTableModel;
 import Controller.CardapioController;
 import Model.Bebida;
 import Model.Comida;
-import Model.ItemCardapio;
 import helpers.TableMouseListener;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
- 
+
 public class Cardapio extends JPanel implements ActionListener {
     private JTable tableComidas;
     private JTable tableBebidas;

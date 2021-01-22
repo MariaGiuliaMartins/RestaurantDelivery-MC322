@@ -19,8 +19,7 @@ public class Pedido implements Serializable {
 	private Usuario responsavel;
 	private MetodoPagamento metodoPagamento;
 	private Entregador entregador;
-	private Avaliacao avaliacao;
-	
+
 	//construtor
 	public Pedido(Calendar dataCriacao, Usuario cliente, ArrayList<ItemCardapio> itensPedidos, Usuario responsavel, Entregador entregador) {
 		id = Pedido.numeroPedidos++;
@@ -118,14 +117,6 @@ public class Pedido implements Serializable {
 		this.entregador = entregador;
 	}
 
-	public Avaliacao getAvaliacao() {
-		return avaliacao;
-	}
-
-	public void setAvaliacao(Avaliacao avaliacao) {
-		this.avaliacao = avaliacao;
-	}
-
 	/* Métodos */
 	public boolean adicionarItem(ItemCardapio item, int quant) {
 		
@@ -215,38 +206,6 @@ public class Pedido implements Serializable {
 		setStatus(StatusPedido.PEDIDO_APROVADO);
 	}
 
-	///Avaliar pedido
-	/*
-	 * Função para avaliar o pedido
-	 * Input: usuário que fez pedido, avaliacao
-	 * Output: boolean - true significa sucesso, false significa que algo de errado ocorreu
-	 */
-	public boolean avaliarPedido(Usuario cliente, Avaliacao avaliacao) {
-		// Caso pedido nao tenha sido entregue ou cliente seja diferente do cliente que fez o pedido
-		if (getStatus() != StatusPedido.PEDIDO_ENTREGUE || cliente.equals(getCliente()))
-			return false;
-		else{
-			setAvaliacao(avaliacao);
-			return true;
-		}
-	}
-
-	///Avaliar entregador
-	/*
-	 * Função para avaliar o entregador do pedido
-	 * Input: usuário que fez pedido, avaliacao
-	 * Output: boolean - true significa sucesso, false significa que algo de errado ocorreu
-	 */
-	public boolean avaliarEntregador(Usuario cliente, Avaliacao avaliacao) {
-		// Caso pedido nao tenha sido entregue ou cliente seja diferente do cliente que fez o pedido
-		if (getStatus() != StatusPedido.PEDIDO_ENTREGUE || cliente.equals(getCliente()))
-			return false;
-		else{
-			getEntregador().avaliarEntregador(avaliacao);
-			return true;
-		}
-	}
-
 	///Calcular valor total
 	/*
 	 * Função para calcular o valor total do pedido
@@ -274,7 +233,6 @@ public class Pedido implements Serializable {
 		out += "Valor do pedido: " + getValor() + "\n";
 		out += "Responsável pelo pedido: " + getResponsavel() + "\n";
 		out += "Método de Pagamento do pedido: " + getMetodoPagamento() + "\n";
-		out += "Models.Avaliacao: " + getAvaliacao() + "\n";
 		out += "Models.Entregador: " + getEntregador() + "\n";
 		return out;
 	}

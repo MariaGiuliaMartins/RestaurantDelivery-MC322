@@ -43,7 +43,7 @@ public class PedidoController {
         }
     }
 
-    public void removePedido(ArrayList<Pedido> pedidos){
-
+    public void removePedido(int index){
+        this.pedidos.remove(index);
     }
 }

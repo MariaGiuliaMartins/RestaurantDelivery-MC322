@@ -81,7 +81,6 @@ public class Cardapio extends JPanel implements ActionListener {
         tableComidas.setComponentPopupMenu(popupMenu);
         tableComidas.addMouseListener(new TableMouseListener(tableComidas));
 
-
         // bebida table
 
         List<String[]> rowDataBebida = new ArrayList<String[]>();

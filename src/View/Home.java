@@ -2,8 +2,12 @@ package View;
 
 import Controller.*;
 import Model.Entregador;
+import helpers.TableMouseListener;
 
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Home extends javax.swing.JFrame {
 
@@ -21,6 +25,8 @@ public class Home extends javax.swing.JFrame {
 
     private ArrayList<Model.Pedido> pedidos;
     private Controller.PedidoController pedidoController;
+
+    private String[] columnNames = new String[] {"ID", "Data", "Cliente", "Itens pedidos","Preço (R$)", "Funcionario", "Entregador"};
 
     public Home() {
 
@@ -46,40 +52,69 @@ public class Home extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanelHome = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         jPanelPedidos = new Pedido(cardapioController, entregadorController, clienteController, funcionarioController, pedidoController);
         jPanelCardapio = new Cardapio(cardapioController);
         jPanelAdmin = new Clientes(clienteController);
         jPanelEntregadores = new Entregadores(entregadorController);
         jPanelFuncionarios = new Funcionarios(funcionarioController);
+        jButtonAtualizar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(800, 500));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-                new Object [][] {
-                        {null, null, null, null},
-                        {null, null, null, null},
-                        {null, null, null, null},
-                        {null, null, null, null}
-                },
-                new String [] {
-                        "Title 1", "Title 2", "Title 3", "Title 4"
-                }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        // comida table
+        List<String[]> rowData = new ArrayList<String[]>();
+
+        for (Model.Pedido pedido : pedidoController.getPedidos()){
+            String[] aux = {String.valueOf(pedido.getId()), pedido.getDataCriacao().toString(),pedido.getCliente().toString(), pedido.getItensPedidos().toString(),String.valueOf(pedido.getValor()), pedido.getResponsavel().toString(), pedido.getEntregador().toString()};
+            rowData.add(aux);
+        }
+
+        String[][] arrayPedidos = new String[ rowData.size() ][];
+        rowData.toArray( arrayPedidos );
+        // constructs the table with sample data
+        tableModelPedidos = new DefaultTableModel(arrayPedidos, columnNames);
+        jTablePedidos = new javax.swing.JTable(tableModelPedidos);
+
+        jScrollPane1.setViewportView(jTablePedidos);
+
+        jButtonAtualizar.setText("Atualizar");
+        jButtonAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAtualizarActionPerformed(evt);
+            }
+        });
+
+        //Setting popmenu
+        popupMenu = new JPopupMenu();
+        menuItemRemove = new JMenuItem("Remove Pedido");
+        menuItemRemove.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removePedido(evt);
+            }
+        });
+        popupMenu.add(menuItemRemove);
+        jTablePedidos.setComponentPopupMenu(popupMenu);
+        jTablePedidos.addMouseListener(new TableMouseListener(jTablePedidos));
+
 
         javax.swing.GroupLayout jPanelHomeLayout = new javax.swing.GroupLayout(jPanelHome);
         jPanelHome.setLayout(jPanelHomeLayout);
         jPanelHomeLayout.setHorizontalGroup(
                 jPanelHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 824, Short.MAX_VALUE)
+                        .addGroup(jPanelHomeLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jButtonAtualizar))
         );
         jPanelHomeLayout.setVerticalGroup(
                 jPanelHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanelHomeLayout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
+                                .addContainerGap()
+                                .addComponent(jButtonAtualizar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Home", jPanelHome);
@@ -104,10 +139,39 @@ public class Home extends javax.swing.JFrame {
         pack();
     }
 
+    private void jButtonAtualizarActionPerformed(java.awt.event.ActionEvent evt) {
+        //Clear
+        while (tableModelPedidos.getRowCount() > 0){
+            for (int i = 0; i < tableModelPedidos.getRowCount(); ++i){
+                tableModelPedidos.removeRow(i);
+            }
+        }
+        for (Model.Pedido pedido : pedidoController.getPedidos()){
+            String[] aux = {String.valueOf(pedido.getId()), pedido.getDataCriacao().toString(),pedido.getCliente().toString(), pedido.getItensPedidos().toString(),String.valueOf(pedido.getValor()), pedido.getResponsavel().toString(), pedido.getEntregador().toString()};
+            tableModelPedidos.addRow(aux);
+        }
+    }
+
+
+    private void removePedido(java.awt.event.ActionEvent evt) {
+        int selectedRow = jTablePedidos.getSelectedRow();
+        if(selectedRow<0){
+            JOptionPane.showMessageDialog(null, "Selecione um pedido");
+            return;
+        }
+        tableModelPedidos.removeRow(selectedRow);
+        pedidoController.removePedido(selectedRow);
+    }
+
+
+    private javax.swing.JButton jButtonAtualizar;
     private javax.swing.JPanel jPanelHome;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTablePedidos;
+    private DefaultTableModel tableModelPedidos;
+    private JMenuItem menuItemRemove;
+    private JPopupMenu popupMenu;
     private Pedido jPanelPedidos;
     private Cardapio jPanelCardapio;
     private Clientes jPanelAdmin;

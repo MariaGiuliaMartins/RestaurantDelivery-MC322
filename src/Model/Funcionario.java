@@ -10,6 +10,6 @@ public class Funcionario extends Usuario{
 
     @Override
     public String toString() {
-        return "Models.Funcionario{} " + super.toString();
+        return "ID: "+getId() + " Nome: "+ getNome();
     }
 }

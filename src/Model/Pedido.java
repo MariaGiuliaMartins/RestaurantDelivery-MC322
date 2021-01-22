@@ -13,8 +13,7 @@ public class Pedido implements Serializable {
 	private final int id;
 	private Calendar dataCriacao;
 	private Usuario cliente;
-	private ArrayList<Comida> comidas;
-	private ArrayList<Bebida> bebidas;
+	private ArrayList<ItemCardapio> itensPedidos;
 	private double valor;
 	private StatusPedido status;
 	private Usuario responsavel;
@@ -23,14 +22,14 @@ public class Pedido implements Serializable {
 	private Avaliacao avaliacao;
 	
 	//construtor
-	public Pedido(Calendar dataCriacao, Usuario cliente, ArrayList<Comida> comidas, ArrayList<Bebida> bebidas, Usuario responsavel) {
+	public Pedido(Calendar dataCriacao, Usuario cliente, ArrayList<ItemCardapio> itensPedidos, Usuario responsavel, Entregador entregador) {
 		id = Pedido.numeroPedidos++;
 		numeroPedidos++;
 		this.dataCriacao = dataCriacao;
 		this.cliente = cliente;
-		this.comidas = new ArrayList<Comida>();
-		this.bebidas = new ArrayList<Bebida>();
+		this.itensPedidos = itensPedidos;
 		this.responsavel = responsavel;
+		this.entregador = entregador;
 		this.valor = calcularValorTotal();
 	}
 	
@@ -107,13 +106,8 @@ public class Pedido implements Serializable {
 	
 	
 	///comida
-	public ArrayList<Comida> getComida(){
-		return comidas;
-	}
-	
-	///bebida
-	public ArrayList<Bebida> getBebida(){
-		return bebidas;
+	public ArrayList<ItemCardapio> getItensPedidos(){
+		return itensPedidos;
 	}
 
 	public Entregador getEntregador() {
@@ -133,17 +127,10 @@ public class Pedido implements Serializable {
 	}
 
 	/* Métodos */
-
-	///adicionar comida
-	/*
-		* Função que adiciona um tipo de comida no array list de comida do pedido, bem como sua quantidade	
-		* Input: comida e quantidade de comida
-		* Output: boolean - true significa que foi adicionado com sucesso, false significa que algo de errado ocorreu
-	*/
-	public boolean adicionarComida(Comida comida, int quant) {
+	public boolean adicionarItem(ItemCardapio item, int quant) {
 		
 		//primeiro checamos se esta comida já está no array list, pois pode ser apenas uma atualização de quantidade
-		int aux1 = Collections.frequency(this.getComida(), comida); //auxiliar para ver a quantidade já contida
+		int aux1 = Collections.frequency(this.getItensPedidos(), item); //auxiliar para ver a quantidade já contida
 		int aux2 = quant - aux1; //auxiliar para determinar a quantidade a ser adicionada
 		
 		if (aux2 == 0) { //se a quantidade a ser adicionada for zero, então não precisa adicionar, sequer chamar este método
@@ -151,82 +138,29 @@ public class Pedido implements Serializable {
 		}
 
 		for (int i = 0; i < aux2; i++) {
-			this.getComida().add(comida);
+			this.getItensPedidos().add(item);
 		}
 
 		// Update no valor total
-		this.setValor(this.getValor() + comida.getPreco());
+		this.setValor(this.getValor() + item.getPreco());
 		
 		return true;
 	}
-	
-	///remover comida
-	/*
-		* Função que remove um tipo de comida no array list de comida do pedido, bem como sua quantidade	
-		* Input: comida e quantidade de comida
-		* Output: boolean - true significa que foi removido com sucesso, false significa que algo de errado ocorreu
-	*/
-	public boolean removerComida(Comida comida, int quant) {
+
+	public boolean removeItem(ItemCardapio item, int quant) {
 		//primeiro checamos se esta comida existe no array list, pois pode ser apenas uma atualização de quantidade
-		int aux1 = Collections.frequency(this.getComida(), comida); //auxiliar para ver a quantidade já contida
+		int aux1 = Collections.frequency(this.getItensPedidos(), item); //auxiliar para ver a quantidade já contida
 		
 		if (quant > aux1) return false; //se a quantidade a ser removida é maior do que a existente, não precisamos remover nada
 
-		this.getComida().removeAll(Collections.singleton(comida));
+		this.getItensPedidos().removeAll(Collections.singleton(item));
 
 		// Update no valor total
-		this.setValor(this.getValor() - comida.getPreco());
+		this.setValor(this.getValor() - item.getPreco());
 
 		return true;
 	}
-	
-	///adicionar bebida
-	/*
-		* Função que adiciona um tipo de bebida no array list de bebida do pedido, bem como sua quantidade	
-		* Input: bebida e quantidade de bebida
-		* Output: boolean - true significa que foi adicionado com sucesso, false significa que algo de errado ocorreu
-	*/
-	public boolean adicionarBebida(Bebida bebida, int quant) {
-		//primeiro checamos se esta bebida já está no array list, pois pode ser apenas uma atualização de quantidade
-		int aux1 = Collections.frequency(this.getBebida(), bebida); //auxiliar para ver a quantidade já contida
-		int aux2 = quant - aux1; //auxiliar para determinar a quantidade a ser adicionada
-		
-		if (aux2 == 0) { //se a quantidade a ser adicionada for zero, então não precisa adicionar, sequer chamar este método
-			return false;
-		}
 
-		for (int i = 0; i < aux2; i++) {
-			this.getBebida().add(bebida);
-		}
-
-		// Update no valor total
-		this.setValor(this.getValor() + bebida.getPreco());
-
-		return true;
-	}
-	
-	///remover bebida
-	/*
-		* Função que remove um tipo de bebida no array list de bebida do pedido, bem como sua quantidade	
-		* Input: bebida e quantidade de bebida
-		* Output: boolean - true significa que foi removido com sucesso, false significa que algo de errado ocorreu
-	*/
-	public boolean removerBebida(Bebida bebida, int quant) {
-		//primeiro checamos se esta bebida existe no array list, pois pode ser apenas uma atualização de quantidade
-		int aux1 = Collections.frequency(this.getBebida(), bebida); //auxiliar para ver a quantidade já contida
-		
-		if (quant > aux1) { //se a quantidade a ser removida é maior do que a existente, então não precisamos remover
-			return false;
-		}
-
-		this.getBebida().removeAll(Collections.singleton(bebida));
-
-		// Update no valor total
-		this.setValor(this.getValor() - bebida.getPreco());
-
-		return true;
-	}
-	
 	///modificar o status do pedido
 	/*
 		* Função que modifica o status do pedido conforme parâmetro passado na função
@@ -320,15 +254,11 @@ public class Pedido implements Serializable {
 	 * Output: boolean - true significa sucesso, false significa que algo de errado ocorreu
 	 */
 	public double calcularValorTotal() {
-		double valor_bebidas = 0.0;
-		double valor_comidas = 0.0;
-		for ( Bebida bebida : bebidas){
-			valor_bebidas += bebida.getPreco();
+		double total = 0.0;
+		for ( ItemCardapio item : itensPedidos){
+			total += item.getPreco();
 		}
-		for ( Comida comida : comidas){
-			valor_comidas += comida.getPreco();
-		}
-		return valor_bebidas + valor_comidas;
+		return total;
 	}
 	
 	///toString
@@ -337,13 +267,9 @@ public class Pedido implements Serializable {
 		String out = "id do pedido: " + getId() + "\n";
 		out += "Data do pedido: " + getDataCriacao() + "\n";
 		out += "Models.Cliente: " + getCliente() + "\n";
-		out += "Lista de comidas: \n";
-		for (int i = 0; i < this.comidas.size(); i++) {
-			out += "--> " + this.comidas.get(i) + "\n"; 
-		}
-		out += "Lista de bebidas: \n";
-		for (int i = 0; i < this.bebidas.size(); i++) {
-			out += "--> " + this.bebidas.get(i) + "\n"; 
+		out += "Lista de itens pedidos: \n";
+		for (int i = 0; i < this.itensPedidos.size(); i++) {
+			out += "--> " + this.itensPedidos.get(i) + "\n";
 		}
 		out += "Valor do pedido: " + getValor() + "\n";
 		out += "Responsável pelo pedido: " + getResponsavel() + "\n";

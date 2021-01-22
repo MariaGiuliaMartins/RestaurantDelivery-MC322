@@ -105,17 +105,7 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "Models.Usuario{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", cpf='" + cpf + '\'' +
-                ", email='" + email + '\'' +
-                ", senha='" + senha + '\'' +
-                ", sexo=" + sexo +
-                ", telefone='" + telefone + '\'' +
-                ", status=" + status +
-                ", dataCriacao=" + dataCriacao +
-                '}';
+        return "ID: "+getId() + " Nome: "+ getNome();
     }
 
 }

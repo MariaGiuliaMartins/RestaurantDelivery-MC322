@@ -1,18 +1,31 @@
 package View;
 
-import Controller.CardapioController;
-import Model.Bebida;
-import Model.Comida;
-import Model.ItemCardapio;
+import Controller.*;
+import Model.*;
 
 import javax.swing.*;
+import java.util.ArrayList;
 
 public class Pedido extends javax.swing.JPanel {
 
     private CardapioController cardapioController;
+    private FuncionarioController funcionarioController;
+    private ClienteController clienteController;
+    private EntregadorController entregadorController;
+    private PedidoController pedidoController;
 
-    public Pedido(CardapioController cardapioController) {
+    private Cliente cliente;
+    private Funcionario funcionario;
+    private Entregador entregador;
+    private ArrayList<ItemCardapio> itensPedido;
+
+    public Pedido(CardapioController cardapioController, EntregadorController entregadorController, ClienteController clienteController, FuncionarioController funcionarioController, PedidoController pedidoController) {
         this.cardapioController = cardapioController;
+        this.funcionarioController = funcionarioController;
+        this.entregadorController = entregadorController;
+        this.clienteController = clienteController;
+        this.pedidoController = pedidoController;
+        this.itensPedido = new ArrayList<ItemCardapio>();
         initComponents();
     }
 
@@ -27,6 +40,7 @@ public class Pedido extends javax.swing.JPanel {
         jButtonAddComida = new javax.swing.JButton();
         jButtonAddBebida = new javax.swing.JButton();
         jButtonRemover = new javax.swing.JButton();
+        jButtonAtualizar = new javax.swing.JButton();
         jLabelTotal = new javax.swing.JLabel();
         jLabelTotalValue = new javax.swing.JLabel();
         jButtonLimpar = new javax.swing.JButton();
@@ -66,8 +80,8 @@ public class Pedido extends javax.swing.JPanel {
         jScrollPaneBebidas.setViewportView(jListBebidas);
 
         // Setting up pedido
-        jListModelPedido = new DefaultListModel<ItemCardapio>();
-        jListPedidos.setModel(jListModelPedido);
+        jListModelPedidos = new DefaultListModel<ItemCardapio>();
+        jListPedidos.setModel(jListModelPedidos);
         jScrollPanePedido.setViewportView(jListPedidos);
 
         jLabelPedido.setText("Pedido");
@@ -90,6 +104,13 @@ public class Pedido extends javax.swing.JPanel {
         jButtonRemover.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonRemoverActionPerformed(evt);
+            }
+        });
+
+        jButtonAtualizar.setText("Atualizar Cardapio");
+        jButtonAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAtualizarActionPerformed(evt);
             }
         });
 
@@ -176,7 +197,8 @@ public class Pedido extends javax.swing.JPanel {
                                                         .addComponent(jButtonAddComida, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
                                                         .addComponent(jButtonAddBebida, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                         .addComponent(jButtonRemover, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                        .addComponent(jButtonFinalizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                                        .addComponent(jButtonFinalizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(jButtonAtualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                         .addGroup(layout.createSequentialGroup()
@@ -231,6 +253,8 @@ public class Pedido extends javax.swing.JPanel {
                                                 .addComponent(jButtonAddBebida)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(jButtonRemover)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jButtonAtualizar)
                                                 .addGap(0, 0, Short.MAX_VALUE))
                                         .addComponent(jScrollPaneComidas, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
                                         .addComponent(jScrollPaneBebidas)
@@ -253,11 +277,11 @@ public class Pedido extends javax.swing.JPanel {
             return;
         }
         ItemCardapio comida = (ItemCardapio) jListModelComidas.getElementAt(index);
-        ItemCardapio pedido =  new ItemCardapio(comida);
         Double total = Double.valueOf(jLabelTotalValue.getText());
         total += comida.getPreco();
         jLabelTotalValue.setText(total.toString());
-        jListModelPedido.addElement(comida);
+        jListModelPedidos.addElement(comida);
+        itensPedido.add(comida);
     }
 
     private void jButtonAddBebidaActionPerformed(java.awt.event.ActionEvent evt) {
@@ -267,41 +291,121 @@ public class Pedido extends javax.swing.JPanel {
             return;
         }
         ItemCardapio bebida = (ItemCardapio) jListModelBebidas.getElementAt(index);
-//        ItemCardapio pedido =  new ItemCardapio(bebida);
         Double total = Double.valueOf(jLabelTotalValue.getText());
         total += bebida.getPreco();
         jLabelTotalValue.setText(total.toString());
-        jListModelPedido.addElement(bebida);
+        jListModelPedidos.addElement(bebida);
+        itensPedido.add(bebida);
     }
 
     private void jButtonRemoverActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        int index = jListPedidos.getSelectedIndex();
+        if (index < 0){
+            JOptionPane.showMessageDialog(null, "Selecione um item do pedido");
+            return;
+        }
+        jListModelPedidos.remove(index);
+        itensPedido.remove(index);
     }
 
     private void jButtonLimparActionPerformed(java.awt.event.ActionEvent evt) {
-        jListModelPedido.removeAllElements();
+        Double zero = 0.0;
+        jLabelTotalValue.setText(zero.toString());
+        jListModelPedidos.removeAllElements();
+        itensPedido.clear();
+    }
+
+    private void jButtonAtualizarActionPerformed(java.awt.event.ActionEvent evt) {
+        // Atualiza cardapio
+        jListModelBebidas.removeAllElements();
+        jListModelComidas.removeAllElements();
+        for (Bebida bebida : cardapioController.getBebidas()){
+            jListModelBebidas.addElement(bebida);
+        }
+        jScrollPaneBebidas.setViewportView(jListBebidas);
+
+        for (Comida comida : cardapioController.getComidas()){
+            jListModelComidas.addElement(comida);
+        }
+        jScrollPaneComidas.setViewportView(jListComidas);
     }
 
     private void jButtonFinalizarActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        if (this.cliente == null || this.entregador == null || this.funcionario == null || this.itensPedido.size() == 0){
+            JOptionPane.showMessageDialog(null, "Preencha todos os campos");
+            return;
+        }
+        pedidoController.addPedido(this.cliente, this.itensPedido, this.funcionario, this.entregador);
+        JOptionPane.showMessageDialog(null, "Pedido realizado com sucesso");
+        // Limpa os campos
+        this.cliente = null;
+        this.entregador = null;
+        this.entregador = null;
+        jLabelClienteValue.setText("");
+        jLabelFuncionarioValue.setText("");
+        jLabelEntregadorValue.setText("");
+        jLabelTotalValue.setText("0.0");
+        this.itensPedido.clear();
+        jListModelPedidos.clear();
     }
 
     private void jButtonSelectClientActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        if (clienteController.getClientes().size() == 0) {
+            return;
+        }
+        Cliente[] clientes = new Cliente[clienteController.getClientes().size()];
+        int i = 0;
+        for (Cliente cliente : clienteController.getClientes()){
+            clientes[i] = cliente;
+            i++;
+        }
+        Cliente cliente = (Cliente) JOptionPane.showInputDialog(null, "Selecione um cliente", "Clientes", JOptionPane.QUESTION_MESSAGE,
+                null, clientes, clientes[0]);
+
+        jLabelClienteValue.setText(cliente.toString());
+        this.cliente = cliente;
+
     }
 
     private void jButtonSelectFuncActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        if (funcionarioController.getFuncionarios().size() == 0) {
+            return;
+        }
+        Funcionario[] funcionarios = new Funcionario[funcionarioController.getFuncionarios().size()];
+        int i = 0;
+        for (Funcionario funcionario : funcionarioController.getFuncionarios()){
+            funcionarios[i] = funcionario;
+            i++;
+        }
+        Funcionario funcionario = (Funcionario) JOptionPane.showInputDialog(null, "Selecione um funcionario", "Funcionarios", JOptionPane.QUESTION_MESSAGE,
+                null, funcionarios, funcionarios[0]);
+
+        jLabelFuncionarioValue.setText(funcionario.toString());
+        this.funcionario = funcionario;
     }
 
     private void jButtonSelectEntregadorActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        if (entregadorController.getEntregadores().size() == 0) {
+            return;
+        }
+        Entregador[] entregadores = new Entregador[entregadorController.getEntregadores().size()];
+        int i = 0;
+        for (Entregador entregador : entregadorController.getEntregadores()){
+            entregadores[i] = entregador;
+            i++;
+        }
+        Entregador entregador = (Entregador) JOptionPane.showInputDialog(null, "Selecione um entregador", "Entregadores", JOptionPane.QUESTION_MESSAGE,
+                null, entregadores, entregadores[0]);
+
+        jLabelEntregadorValue.setText(entregador.toString());
+        this.entregador = entregador;
     }
 
     private javax.swing.JButton jButtonAddBebida;
     private javax.swing.JButton jButtonAddComida;
     private javax.swing.JButton jButtonFinalizar;
     private javax.swing.JButton jButtonLimpar;
+    private javax.swing.JButton jButtonAtualizar;
     private javax.swing.JButton jButtonRemover;
     private javax.swing.JButton jButtonSelectClient;
     private javax.swing.JButton jButtonSelectEntregador;
@@ -326,5 +430,5 @@ public class Pedido extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPanePedido;
     private DefaultListModel jListModelComidas;
     private DefaultListModel jListModelBebidas;
-    private DefaultListModel jListModelPedido;
+    private DefaultListModel jListModelPedidos;
 }

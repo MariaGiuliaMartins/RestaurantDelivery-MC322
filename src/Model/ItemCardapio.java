@@ -17,13 +17,6 @@ public class ItemCardapio implements Serializable {
 		this.preco = preco;
 		this.imagem = imagem;
 	}
-	// Construtor para clonar objeto
-	public ItemCardapio(ItemCardapio item){
-		this.nome = item.getNome();
-		this.descricao = item.getDescricao();
-		this.preco = item.getPreco();
-		this.imagem = item.getImagem();
-	}
 	//getters e setters
 	///nome
 	public String getNome() {

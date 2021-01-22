@@ -1,9 +1,6 @@
 package View;
 
-import Controller.CardapioController;
-import Controller.ClienteController;
-import Controller.EntregadorController;
-import Controller.FuncionarioController;
+import Controller.*;
 import Model.Entregador;
 
 import java.util.ArrayList;
@@ -22,6 +19,9 @@ public class Home extends javax.swing.JFrame {
     private ArrayList<Model.Entregador> entregadores;
     private Controller.EntregadorController entregadorController;
 
+    private ArrayList<Model.Pedido> pedidos;
+    private Controller.PedidoController pedidoController;
+
     public Home() {
 
         cardapio = new Model.Cardapio();
@@ -36,6 +36,9 @@ public class Home extends javax.swing.JFrame {
         entregadores = new ArrayList<Entregador>();
         entregadorController = new EntregadorController(entregadores);
 
+        pedidos = new ArrayList<Model.Pedido>();
+        pedidoController = new PedidoController(pedidos);
+
         initComponents();
     }
     private void initComponents() {
@@ -44,7 +47,7 @@ public class Home extends javax.swing.JFrame {
         jPanelHome = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jPanelPedidos = new Pedido(cardapioController);
+        jPanelPedidos = new Pedido(cardapioController, entregadorController, clienteController, funcionarioController, pedidoController);
         jPanelCardapio = new Cardapio(cardapioController);
         jPanelAdmin = new Clientes(clienteController);
         jPanelEntregadores = new Entregadores(entregadorController);

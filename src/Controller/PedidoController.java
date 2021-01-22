@@ -1,9 +1,6 @@
 package Controller;
 
-import Model.Bebida;
-import Model.Comida;
-import Model.Pedido;
-import Model.Usuario;
+import Model.*;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -13,8 +10,8 @@ public class PedidoController {
 
     private ArrayList<Pedido> pedidos;
 
-    public PedidoController(){
-        this.pedidos = new ArrayList<Pedido>();
+    public PedidoController(ArrayList<Pedido> pedidos){
+        this.pedidos = pedidos;
 
         // Serializa dados no objeto
         try {
@@ -24,7 +21,6 @@ public class PedidoController {
                 this.pedidos.add(pedido);
             }
         } catch (EOFException e){
-            e.printStackTrace();
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -34,26 +30,20 @@ public class PedidoController {
         return pedidos;
     }
 
-    public void setPedidos(ArrayList<Pedido> pedidos) {
-        this.pedidos = pedidos;
-    }
-
-    public void criarPedido(Calendar dataCriacao, Usuario cliente, ArrayList<Comida> comidas, ArrayList<Bebida> bebidas, Usuario responsavel)
-    {
-        Pedido pedido_novo = new Pedido(dataCriacao, cliente, comidas, bebidas, responsavel);
-        this.pedidos.add(pedido_novo);
-        save();
-    }
-
-    public void save() {
+    public void addPedido(Usuario cliente, ArrayList<ItemCardapio> itens, Usuario responsavel, Entregador entregador){
+        Pedido pedido = new Pedido (Calendar.getInstance(), cliente, itens, responsavel, entregador);
         try {
             ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("src/data/pedidos.txt"));
-            for(Pedido pedido : this.pedidos ){
-                output.writeObject(pedido);
-            }
+            output.writeObject(pedido);
             output.flush();
+            output.close();
+            pedidos.add(pedido);
         } catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    public void removePedido(ArrayList<Pedido> pedidos){
+
     }
 }

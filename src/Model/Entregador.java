@@ -22,12 +22,10 @@ public class Entregador extends Usuario {
         return avaliacoes;
     }
 
+
     @Override
     public String toString() {
-        return "Models.Entregador{" +
-                "pedidos=" + pedidos +
-                ", avaliacao=" + avaliacoes +
-                "} " + super.toString();
+        return "ID: "+getId() + " Nome: "+ getNome();
     }
 
     //Avalia o entregador

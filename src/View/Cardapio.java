@@ -124,7 +124,7 @@ public class Cardapio extends JPanel implements ActionListener {
         popupMenuBebidas.add(menuItemRemoveAllBebidas);
 
         // sets the popup menu for the table
-        tableBebidas.setComponentPopupMenu(popupMenu);
+        tableBebidas.setComponentPopupMenu(popupMenuBebidas);
         tableBebidas.addMouseListener(new TableMouseListener(tableBebidas));
          
         // adds the table to the frame
@@ -166,7 +166,7 @@ public class Cardapio extends JPanel implements ActionListener {
     }
 
     private void addNewRowBebida(java.awt.event.ActionEvent evt) {
-        tableModelComidas.addRow(new String[0]);
+        tableModelBebidas.addRow(new String[0]);
     }
 
     private void removeCurrentRowBebida(java.awt.event.ActionEvent evt) {

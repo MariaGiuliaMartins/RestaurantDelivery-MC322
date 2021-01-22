@@ -5,6 +5,7 @@ import Model.Cardapio;
 import Model.Comida;
 
 import java.io.*;
+import java.util.ArrayList;
 
 public class CardapioController {
 
@@ -16,27 +17,55 @@ public class CardapioController {
 
         // Serializa dados no objeto
         try {
-            ObjectInputStream input = new ObjectInputStream(new FileInputStream("src/data/bebidas.txt"));
-            while(true){
-                Bebida bebida = (Bebida) input.readObject();
-                this.cardapio.criarItemCardapio(bebida);
+            FileInputStream fi = new FileInputStream("src/data/bebidas.txt");
+            try {
+                ObjectInputStream input = new ObjectInputStream(fi);
+                try {
+                    while (true) {
+                        Bebida bebida = (Bebida) input.readObject();
+                        this.cardapio.criarItemCardapio(bebida);
+                    }
+                } finally {
+                    input.close();
+                }
+
+            } finally {
+                fi.close();
             }
         } catch (EOFException e){
-            e.printStackTrace();
         } catch (Exception e){
             e.printStackTrace();
         }
         try {
-            ObjectInputStream input = new ObjectInputStream(new FileInputStream("src/data/comidas.txt"));
-            while(true){
-                Comida comida = (Comida) input.readObject();
-                this.cardapio.criarItemCardapio(comida);
+
+            FileInputStream fi = new FileInputStream("src/data/comidas.txt");
+            try {
+                ObjectInputStream input = new ObjectInputStream(fi);
+                try {
+                    while (true) {
+                        Comida comida = (Comida) input.readObject();
+                        this.cardapio.criarItemCardapio(comida);
+                    }
+                } finally {
+                    input.close();
+                }
+
+            } finally {
+                fi.close();
             }
+
         } catch (EOFException e){
-            e.printStackTrace();
         } catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    public ArrayList<Comida> getComidas(){
+        return this.cardapio.getComida();
+    }
+
+    public ArrayList<Bebida> getBebidas(){
+        return this.cardapio.getBebida();
     }
 
     public void addItem(Comida item){
@@ -55,13 +84,21 @@ public class CardapioController {
         this.cardapio.criarItemCardapio(item);
     }
 
+    // Reseta lista de comida e bebida do cardapio pra poder dar overwrite no arquivo
+    public void reset(){
+        this.cardapio.getComida().clear();
+        this.cardapio.getBebida().clear();
+    }
+
     public void save(){
+
         try {
             ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("src/data/bebidas.txt"));
             for(Bebida bebida : this.cardapio.getBebida() ){
                 output.writeObject(bebida);
             }
             output.flush();
+            output.close();
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -71,6 +108,7 @@ public class CardapioController {
                 output.writeObject(comida);
             }
             output.flush();
+            output.close();
         } catch (Exception e){
             e.printStackTrace();
         }

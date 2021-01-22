@@ -2,6 +2,7 @@ import Controller.CardapioController;
 import Controller.PedidoController;
 import Model.Cardapio;
 import Model.Comida;
+import View.Home;
 
 import java.awt.*;
 
@@ -9,18 +10,11 @@ public class Main {
 
 
     public static void main(String args[]) {
-
-        CardapioController cardapioController = new CardapioController(new Cardapio());
-        Model.Comida comida = new Model.Comida("a","comida", 2, "a");
-        cardapioController.addItem(comida);
-
-        PedidoController pedidoController = new PedidoController();
-
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new Home().setVisible(true);
-//            }
-//        });
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Home().setVisible(true);
+            }
+        });
     }
 
 //    public static void main(String[] args) {

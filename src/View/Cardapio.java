@@ -6,6 +6,10 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
+import Controller.CardapioController;
+import Model.Bebida;
+import Model.Comida;
+import Model.ItemCardapio;
 import helpers.TableMouseListener;
 
 import java.io.File;
@@ -15,45 +19,41 @@ import java.util.List;
 import java.util.Scanner;
  
 public class Cardapio extends JPanel implements ActionListener {
-    private JTable table;
-    private DefaultTableModel tableModel;
+    private JTable tableComidas;
+    private JTable tableBebidas;
+    private DefaultTableModel tableModelComidas;
+    private DefaultTableModel tableModelBebidas;
+
     private JPopupMenu popupMenu;
     private JMenuItem menuItemAdd;
     private JMenuItem menuItemRemove;
     private JMenuItem menuItemRemoveAll;
-    private javax.swing.JButton jButtonSalvar;
+    private JPopupMenu popupMenuBebidas;
+    private JMenuItem menuItemAddBebidas;
+    private JMenuItem menuItemRemoveBebidas;
+    private JMenuItem menuItemRemoveAllBebidas;
+    private JButton jButtonSalvar;
 
-    public Cardapio() {
+    private CardapioController cardapioController;
+    public Cardapio(CardapioController cardapioController) {
 
-        // sample table data
+        this.cardapioController = cardapioController;
+
         String[] columnNames = new String[] {"Nome", "Descrição", "Preço (R$)", "URL da imagem"};
-        List<String[]> rowData = new ArrayList<String[]>();
 
+        // comida table
+        List<String[]> rowDataComida = new ArrayList<String[]>();
 
-        try {
-            File myObj = new File("src/data/cardapio.txt");
-            Scanner myReader = new Scanner(myObj);
-            int i = 0;
-            while (myReader.hasNextLine()) {
-              String data = myReader.nextLine();
-              String[] arrData = data.split(",");
-
-              String[] aux = {arrData[0], arrData[1], arrData[2], arrData[3]};
-              rowData.add(aux);
-
-              i++;
-            }
-            myReader.close();
-        } catch (Exception e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
+        for (Comida comida : cardapioController.getComidas()){
+            String[] aux = {comida.getNome(), comida.getDescricao(), Double.toString(comida.getPreco()), comida.getImagem()};
+            rowDataComida.add(aux);
         }
 
-        String[][] simpleArray = new String[ rowData.size() ][];
-        rowData.toArray( simpleArray );
+        String[][] arrayComidas = new String[ rowDataComida.size() ][];
+        rowDataComida.toArray( arrayComidas );
         // constructs the table with sample data
-        tableModel = new DefaultTableModel(simpleArray, columnNames);
-        table = new JTable(tableModel);
+        tableModelComidas = new DefaultTableModel(arrayComidas, columnNames);
+        tableComidas = new JTable(tableModelComidas);
          
         // constructs the popup menu
         popupMenu = new JPopupMenu();
@@ -61,21 +61,81 @@ public class Cardapio extends JPanel implements ActionListener {
         menuItemRemove = new JMenuItem("Remover linha");
         menuItemRemoveAll = new JMenuItem("Remover todas as linhas");
          
-        menuItemAdd.addActionListener(this);
-        menuItemRemove.addActionListener(this);
-        menuItemRemoveAll.addActionListener(this);
+        menuItemAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addNewRowComida(evt);
+            }
+        });
+        menuItemRemove.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeCurrentRowComida(evt);
+            }
+        });
+        menuItemRemoveAll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeAllRowsComida(evt);
+            }
+        });
          
         popupMenu.add(menuItemAdd);
         popupMenu.add(menuItemRemove);
         popupMenu.add(menuItemRemoveAll);
          
         // sets the popup menu for the table
-        table.setComponentPopupMenu(popupMenu);
-         
-        table.addMouseListener(new TableMouseListener(table));
+        tableComidas.setComponentPopupMenu(popupMenu);
+        tableComidas.addMouseListener(new TableMouseListener(tableComidas));
+
+
+        // bebida table
+
+        List<String[]> rowDataBebida = new ArrayList<String[]>();
+
+        for (Bebida bebida : cardapioController.getBebidas()){
+            String[] aux = {bebida.getNome(), bebida.getDescricao(), Double.toString(bebida.getPreco()), bebida.getImagem()};
+            rowDataBebida.add(aux);
+        }
+
+        String[][] arrayBebidas = new String[ rowDataBebida.size() ][];
+        rowDataBebida.toArray( arrayBebidas );
+        // constructs the table with sample data
+        tableModelBebidas = new DefaultTableModel(arrayBebidas, columnNames);
+        tableBebidas = new JTable(tableModelBebidas);
+
+        // constructs the popup menu
+        popupMenuBebidas = new JPopupMenu();
+        menuItemAddBebidas = new JMenuItem("Adicionar nova linha");
+        menuItemRemoveBebidas = new JMenuItem("Remover linha");
+        menuItemRemoveAllBebidas = new JMenuItem("Remover todas as linhas");
+
+        menuItemAddBebidas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addNewRowBebida(evt);
+            }
+        });
+        menuItemRemoveBebidas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeCurrentRowBebida(evt);
+            }
+        });
+        menuItemRemoveAllBebidas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeAllRowsBebida(evt);
+            }
+        });
+
+        popupMenuBebidas.add(menuItemAddBebidas);
+        popupMenuBebidas.add(menuItemRemoveBebidas);
+        popupMenuBebidas.add(menuItemRemoveAllBebidas);
+
+        // sets the popup menu for the table
+        tableBebidas.setComponentPopupMenu(popupMenu);
+        tableBebidas.addMouseListener(new TableMouseListener(tableBebidas));
          
         // adds the table to the frame
-        add(new JScrollPane(table));
+        add(new JScrollPane(tableBebidas));
+        add(new JScrollPane(tableComidas));
+
+
         // button salvar
         jButtonSalvar = new javax.swing.JButton();
         jButtonSalvar.setText("Salvar");
@@ -84,38 +144,80 @@ public class Cardapio extends JPanel implements ActionListener {
                 jButtonSalvarActionPerformed(evt);
             }
         });
+
         add(jButtonSalvar);
     }
- 
+
     @Override
-    public void actionPerformed(ActionEvent event) {
-        JMenuItem menu = (JMenuItem) event.getSource();
-        if (menu == menuItemAdd) {
-            addNewRow();
-        } else if (menu == menuItemRemove) {
-            removeCurrentRow();
-        } else if (menu == menuItemRemoveAll) {
-            removeAllRows();
+    public void actionPerformed(ActionEvent e) {
+
+    }
+
+    private void addNewRowComida(java.awt.event.ActionEvent evt) {
+        tableModelComidas.addRow(new String[0]);
+    }
+     
+    private void removeCurrentRowComida(java.awt.event.ActionEvent evt) {
+        int selectedRow = tableComidas.getSelectedRow();
+        tableModelComidas.removeRow(selectedRow);
+    }
+     
+    private void removeAllRowsComida(java.awt.event.ActionEvent evt) {
+        int rowCount = tableModelComidas.getRowCount();
+        for (int i = 0; i < rowCount; i++) {
+            tableModelComidas.removeRow(0);
         }
     }
-     
-    private void addNewRow() {
-        tableModel.addRow(new String[0]);
+
+    private void addNewRowBebida(java.awt.event.ActionEvent evt) {
+        tableModelComidas.addRow(new String[0]);
     }
-     
-    private void removeCurrentRow() {
-        int selectedRow = table.getSelectedRow();
-        tableModel.removeRow(selectedRow);
+
+    private void removeCurrentRowBebida(java.awt.event.ActionEvent evt) {
+        int selectedRow = tableBebidas.getSelectedRow();
+        tableModelBebidas.removeRow(selectedRow);
     }
-     
-    private void removeAllRows() {
-        int rowCount = tableModel.getRowCount();
+
+    private void removeAllRowsBebida(java.awt.event.ActionEvent evt) {
+        int rowCount = tableModelBebidas.getRowCount();
         for (int i = 0; i < rowCount; i++) {
-            tableModel.removeRow(0);
+            tableModelBebidas.removeRow(0);
         }
     }
 
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {
+        cardapioController.reset();
+        for (int count = 0; count < tableModelComidas.getRowCount(); count++){
+            Comida comida;
+            Object nome = tableModelComidas.getValueAt(count,0);
+            Object desc = tableModelComidas.getValueAt(count,1);
+            Object preco = tableModelComidas.getValueAt(count,2);
+            Object img = tableModelComidas.getValueAt(count,3);
 
+            if (img == null || nome == null || desc == null || preco == null){
+                JOptionPane.showMessageDialog(null, "Verifiqiue se os campos de comidas estao todos preenchidos");
+                return;
+            } else{
+                comida = new Comida(nome.toString(), desc.toString(), Double.parseDouble(preco.toString()), img.toString());
+                cardapioController.addItem(comida);
+            }
+        }
+        for (int count = 0; count < tableModelBebidas.getRowCount(); count++){
+
+            Bebida bebida;
+            Object nome = tableModelBebidas.getValueAt(count,0);
+            Object desc = tableModelBebidas.getValueAt(count,1);
+            Object preco = tableModelBebidas.getValueAt(count,2);
+            Object img = tableModelBebidas.getValueAt(count,3);
+
+            if (img == null || nome == null || desc == null || preco == null){
+                JOptionPane.showMessageDialog(null, "Verifique se os campos de bebidas estao todos preenchidos");
+                return;
+            } else{
+                bebida = new Bebida(nome.toString(), desc.toString(), Double.parseDouble(preco.toString()), img.toString());
+                cardapioController.addItem(bebida);
+            }
+        }
+        this.cardapioController.save();
     }
 }

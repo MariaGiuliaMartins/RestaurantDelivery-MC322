@@ -1,11 +1,15 @@
 package View;
 
+import Controller.CardapioController;
+
 public class Home extends javax.swing.JFrame {
 
     private Model.Cardapio cardapio;
+    private Controller.CardapioController cardapioController;
 
     public Home() {
         cardapio = new Model.Cardapio();
+        cardapioController = new CardapioController(cardapio);
         initComponents();
     }
 
@@ -16,7 +20,7 @@ public class Home extends javax.swing.JFrame {
         jPanelHome = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanelPedidos = new Pedido();
-        jPanelCardapio = new Cardapio();
+        jPanelCardapio = new Cardapio(cardapioController);
         jPanelAdmin = new Admin();
         jPanelEntregadores = new Entregadores();
         jPanelFuncionarios = new Funcionarios();

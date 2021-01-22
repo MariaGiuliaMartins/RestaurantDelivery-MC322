@@ -7,6 +7,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 import Controller.CardapioController;
+import Exceptions.InvalidValue;
 import Model.Bebida;
 import Model.Comida;
 import helpers.TableMouseListener;
@@ -193,8 +194,14 @@ public class Cardapio extends JPanel implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Verifiqiue se os campos de comidas estao todos preenchidos");
                 return;
             } else{
-                comida = new Comida(nome.toString(), desc.toString(), Double.parseDouble(preco.toString()), img.toString());
-                cardapioController.addItem(comida);
+                try {
+                    if ( Double.valueOf(preco.toString()) <=  0)
+                        throw new InvalidValue();
+                    comida = new Comida(nome.toString(), desc.toString(), Double.parseDouble(preco.toString()), img.toString());
+                    cardapioController.addItem(comida);
+                } catch (InvalidValue e){
+                    e.printStackTrace();
+                }
             }
         }
         for (int count = 0; count < tableModelBebidas.getRowCount(); count++){

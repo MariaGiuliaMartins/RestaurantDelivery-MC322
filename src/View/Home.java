@@ -1,6 +1,8 @@
 package View;
 
 import Controller.*;
+import Model.Bebida;
+import Model.Comida;
 import Model.Entregador;
 import helpers.TableMouseListener;
 
@@ -31,9 +33,13 @@ public class Home extends javax.swing.JFrame {
     private String[] columnNames = new String[] {"ID", "Data", "Cliente", "Itens pedidos","Preço (R$)", "Funcionario", "Entregador"};
 
     public Home() {
+        Comida comida = new Comida("Comida", "Gostoso", 15.0, "url");
+        Bebida bebida = new Bebida("Bebida", "Gelada", 5.0, "url");
 
         cardapio = new Model.Cardapio();
         cardapioController = new CardapioController(cardapio);
+        cardapioController.addItem(comida);
+        cardapioController.addItem(bebida);
 
         funcionarios = new ArrayList<Model.Funcionario>();
         funcionarioController = new FuncionarioController(funcionarios);

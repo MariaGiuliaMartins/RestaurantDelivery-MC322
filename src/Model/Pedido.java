@@ -23,7 +23,6 @@ public class Pedido implements Serializable {
 	//construtor
 	public Pedido(Calendar dataCriacao, Usuario cliente, ArrayList<ItemCardapio> itensPedidos, Usuario responsavel, Entregador entregador) {
 		id = Pedido.numeroPedidos++;
-		numeroPedidos++;
 		this.dataCriacao = dataCriacao;
 		this.cliente = cliente;
 		this.itensPedidos = itensPedidos;
@@ -40,6 +39,10 @@ public class Pedido implements Serializable {
 	
 	public static void setNumeroPedidos(int numeroPedidos) {
 		Pedido.numeroPedidos = numeroPedidos;
+	}
+
+	public static void incrementNumeroPedidos(){
+		numeroPedidos++;
 	}
 	
 	///id
@@ -226,10 +229,7 @@ public class Pedido implements Serializable {
 		String out = "id do pedido: " + getId() + "\n";
 		out += "Data do pedido: " + getDataCriacao() + "\n";
 		out += "Models.Cliente: " + getCliente() + "\n";
-		out += "Lista de itens pedidos: \n";
-		for (int i = 0; i < this.itensPedidos.size(); i++) {
-			out += "--> " + this.itensPedidos.get(i) + "\n";
-		}
+		out += "Lista de itens pedidos: " + getItensPedidos().toString() + "\n";
 		out += "Valor do pedido: " + getValor() + "\n";
 		out += "Responsável pelo pedido: " + getResponsavel() + "\n";
 		out += "Método de Pagamento do pedido: " + getMetodoPagamento() + "\n";

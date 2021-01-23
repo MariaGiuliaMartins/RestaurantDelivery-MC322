@@ -335,13 +335,14 @@ public class Pedido extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Preencha todos os campos");
             return;
         }
+
         pedidoController.addPedido(this.cliente, this.itensPedido, this.funcionario, this.entregador);
         JOptionPane.showMessageDialog(null, "Pedido realizado com sucesso");
         // Limpa os campos
         this.cliente = null;
         jLabelClienteValue.setText("");
         jLabelTotalValue.setText("0.0");
-        this.itensPedido.clear();
+        this.itensPedido = new ArrayList<ItemCardapio>();
         jListModelPedidos.clear();
     }
 

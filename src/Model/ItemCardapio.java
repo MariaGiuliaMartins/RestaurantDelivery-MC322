@@ -11,12 +11,13 @@ public class ItemCardapio implements Serializable {
 	private String imagem;
 	
 	//contrutor
-	ItemCardapio(String nome, String descricao, double preco, String imagem){
+	public ItemCardapio(String nome, String descricao, double preco, String imagem){
 		this.nome = nome;
 		this.descricao = descricao;
 		this.preco = preco;
 		this.imagem = imagem;
 	}
+
 	//getters e setters
 	///nome
 	public String getNome() {

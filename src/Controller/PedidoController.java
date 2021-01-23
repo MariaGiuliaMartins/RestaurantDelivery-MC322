@@ -18,6 +18,7 @@ public class PedidoController {
             ObjectInputStream input = new ObjectInputStream(new FileInputStream("src/data/pedidos.txt"));
             while(true){
                 Pedido pedido = (Pedido) input.readObject();
+                Pedido.incrementNumeroPedidos();
                 this.pedidos.add(pedido);
             }
         } catch (EOFException e){

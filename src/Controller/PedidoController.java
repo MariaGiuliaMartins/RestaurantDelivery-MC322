@@ -30,17 +30,22 @@ public class PedidoController {
         return pedidos;
     }
 
-    public void addPedido(Usuario cliente, ArrayList<ItemCardapio> itens, Usuario responsavel, Entregador entregador){
-        Pedido pedido = new Pedido (Calendar.getInstance(), cliente, itens, responsavel, entregador);
+    public void save(){
         try {
             ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("src/data/pedidos.txt"));
-            output.writeObject(pedido);
+            for( Pedido pedido : pedidos){
+                output.writeObject(pedido);
+            }
             output.flush();
             output.close();
-            pedidos.add(pedido);
         } catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    public void addPedido(Usuario cliente, ArrayList<ItemCardapio> itens, Usuario responsavel, Entregador entregador){
+        Pedido pedido = new Pedido (Calendar.getInstance(), cliente, itens, responsavel, entregador);
+        pedidos.add(pedido);
     }
 
     public void removePedido(int index){

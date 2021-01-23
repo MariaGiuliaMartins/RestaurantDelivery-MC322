@@ -191,7 +191,7 @@ public class Cardapio extends JPanel implements ActionListener {
             Object img = tableModelComidas.getValueAt(count,3);
 
             if (img == null || nome == null || desc == null || preco == null){
-                JOptionPane.showMessageDialog(null, "Verifiqiue se os campos de comidas estao todos preenchidos");
+                JOptionPane.showMessageDialog(null, "Verifique se os campos de comidas estao todos preenchidos");
                 return;
             } else{
                 try {

@@ -6,6 +6,8 @@ import helpers.TableMouseListener;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,6 +48,17 @@ public class Home extends javax.swing.JFrame {
         pedidoController = new PedidoController(pedidos);
 
         initComponents();
+
+        //Close opereations
+        setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        this.addWindowListener(new WindowAdapter(){
+            public void windowClosing(WindowEvent e){
+                int i=JOptionPane.showConfirmDialog(null, "Tem certeza em fechar o programa ?");
+                if(i==0)
+                    saveFiles();
+                    System.exit(0);
+            }
+        });
     }
     private void initComponents() {
 
@@ -59,7 +72,6 @@ public class Home extends javax.swing.JFrame {
         jPanelFuncionarios = new Funcionarios(funcionarioController);
         jButtonAtualizar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(800, 500));
 
         // comida table
@@ -163,6 +175,12 @@ public class Home extends javax.swing.JFrame {
         pedidoController.removePedido(selectedRow);
     }
 
+    private void saveFiles(){
+        pedidoController.save();
+        clienteController.save();
+        funcionarioController.save();
+        entregadorController.save();
+    }
 
     private javax.swing.JButton jButtonAtualizar;
     private javax.swing.JPanel jPanelHome;

@@ -11,15 +11,16 @@ public class ClienteController {
 
     private ArrayList<Cliente> clientes;
 
-    public ClienteController(ArrayList<Cliente> entregadores) {
-        this.clientes = entregadores;
+    public ClienteController(ArrayList<Cliente> clientes) {
+        this.clientes = clientes;
 
         // Serializa dados no objeto
         try {
             ObjectInputStream input = new ObjectInputStream(new FileInputStream("src/data/clientes.txt"));
             while(true){
-                Cliente funcionario = (Cliente) input.readObject();
-                this.clientes.add(funcionario);
+                Cliente cliente = (Cliente) input.readObject();
+                Cliente.incrementeCounter();
+                this.clientes.add(cliente);
             }
         } catch (EOFException e){
         } catch (Exception e){
@@ -31,17 +32,22 @@ public class ClienteController {
         return clientes;
     }
 
-    public void addCliente(String nome, String cpf, String email, Sexo sexo, String telefone){
-        Cliente cliente = new Cliente(nome, cpf, email, "senha", sexo, telefone, true, Calendar.getInstance());
+    public void save(){
         try {
             ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("src/data/clientes.txt"));
-            output.writeObject(cliente);
+            for( Cliente cliente : clientes){
+                output.writeObject(cliente);
+            }
             output.flush();
             output.close();
-            clientes.add(cliente);
         } catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    public void addCliente(String nome, String cpf, String email, Sexo sexo, String telefone){
+        Cliente cliente = new Cliente(nome, cpf, email, "senha", sexo, telefone, true, Calendar.getInstance());
+        clientes.add(cliente);
     }
 
     public void removeCliente(ArrayList<Cliente> clientes){

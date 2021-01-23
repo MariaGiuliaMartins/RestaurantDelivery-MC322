@@ -339,11 +339,7 @@ public class Pedido extends javax.swing.JPanel {
         JOptionPane.showMessageDialog(null, "Pedido realizado com sucesso");
         // Limpa os campos
         this.cliente = null;
-        this.entregador = null;
-        this.entregador = null;
         jLabelClienteValue.setText("");
-        jLabelFuncionarioValue.setText("");
-        jLabelEntregadorValue.setText("");
         jLabelTotalValue.setText("0.0");
         this.itensPedido.clear();
         jListModelPedidos.clear();
@@ -362,6 +358,8 @@ public class Pedido extends javax.swing.JPanel {
         Cliente cliente = (Cliente) JOptionPane.showInputDialog(null, "Selecione um cliente", "Clientes", JOptionPane.QUESTION_MESSAGE,
                 null, clientes, clientes[0]);
 
+        if (cliente == null)
+            return;
         jLabelClienteValue.setText(cliente.toString());
         this.cliente = cliente;
 
@@ -380,6 +378,9 @@ public class Pedido extends javax.swing.JPanel {
         Funcionario funcionario = (Funcionario) JOptionPane.showInputDialog(null, "Selecione um funcionario", "Funcionarios", JOptionPane.QUESTION_MESSAGE,
                 null, funcionarios, funcionarios[0]);
 
+        if (funcionario == null)
+            return;
+
         jLabelFuncionarioValue.setText(funcionario.toString());
         this.funcionario = funcionario;
     }
@@ -396,6 +397,9 @@ public class Pedido extends javax.swing.JPanel {
         }
         Entregador entregador = (Entregador) JOptionPane.showInputDialog(null, "Selecione um entregador", "Entregadores", JOptionPane.QUESTION_MESSAGE,
                 null, entregadores, entregadores[0]);
+
+        if (entregador == null)
+            return;
 
         jLabelEntregadorValue.setText(entregador.toString());
         this.entregador = entregador;

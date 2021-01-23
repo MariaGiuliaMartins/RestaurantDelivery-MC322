@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.Entregador;
+import Model.Funcionario;
 import Model.Sexo;
 
 import java.io.*;
@@ -19,6 +20,7 @@ public class EntregadorController {
             ObjectInputStream input = new ObjectInputStream(new FileInputStream("src/data/entregadores.txt"));
             while(true){
                 Entregador funcionario = (Entregador) input.readObject();
+                Funcionario.incrementeCounter();
                 this.entregadores.add(funcionario);
             }
         } catch (EOFException e){
@@ -31,17 +33,22 @@ public class EntregadorController {
         return entregadores;
     }
 
-    public void addEntregador(String nome, String cpf, String email, Sexo sexo, String telefone){
-        Entregador entregador = new Entregador(nome, cpf, email, "senha", sexo, telefone, true, Calendar.getInstance());
+    public void save(){
         try {
             ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("src/data/entregadores.txt"));
-            output.writeObject(entregador);
+            for( Entregador entregador : entregadores){
+                output.writeObject(entregador);
+            }
             output.flush();
             output.close();
-            entregadores.add(entregador);
         } catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    public void addEntregador(String nome, String cpf, String email, Sexo sexo, String telefone){
+        Entregador entregador = new Entregador(nome, cpf, email, "senha", sexo, telefone, true, Calendar.getInstance());
+        entregadores.add(entregador);
     }
 
     public void removeEntregador(ArrayList<Entregador> entregadores){

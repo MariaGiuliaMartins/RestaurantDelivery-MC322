@@ -19,6 +19,7 @@ public class FuncionarioController {
             ObjectInputStream input = new ObjectInputStream(new FileInputStream("src/data/funcionarios.txt"));
             while(true){
                 Funcionario funcionario = (Funcionario) input.readObject();
+                Funcionario.incrementeCounter();
                 this.funcionarios.add(funcionario);
             }
         } catch (EOFException e){
@@ -31,17 +32,22 @@ public class FuncionarioController {
         return funcionarios;
     }
 
-    public void addFuncionario(String nome, String cpf, String email, Sexo sexo, String telefone){
-        Funcionario funcionario = new Funcionario(nome, cpf, email, "senha", sexo, telefone, true, Calendar.getInstance());
+    public void save(){
         try {
             ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("src/data/funcionarios.txt"));
-            output.writeObject(funcionario);
+            for( Funcionario funcionario : funcionarios){
+                output.writeObject(funcionario);
+            }
             output.flush();
             output.close();
-            funcionarios.add(funcionario);
         } catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    public void addFuncionario(String nome, String cpf, String email, Sexo sexo, String telefone){
+        Funcionario funcionario = new Funcionario(nome, cpf, email, "senha", sexo, telefone, true, Calendar.getInstance());
+        funcionarios.add(funcionario);
     }
 
     public void removeFuncionario(ArrayList<Funcionario> funcionarios){

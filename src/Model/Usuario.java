@@ -35,6 +35,8 @@ public class Usuario implements Serializable {
         return counter;
     }
 
+    public static void incrementeCounter(){ counter.incrementAndGet();}
+
     public int getId() {
         return id;
     }

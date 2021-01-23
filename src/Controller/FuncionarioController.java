@@ -50,18 +50,7 @@ public class FuncionarioController {
         funcionarios.add(funcionario);
     }
 
-    public void removeFuncionario(ArrayList<Funcionario> funcionarios){
-        this.funcionarios.clear();
-        // overwrite file
-        try {
-            ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("src/data/funcionarios.txt"));
-            for( Funcionario funcionario : funcionarios){
-                output.writeObject(funcionario);
-            }
-            output.flush();
-            output.close();
-        } catch (Exception e){
-            e.printStackTrace();
-        }
+    public void removeFuncionario(int index){
+        this.funcionarios.remove(index);
     }
 }

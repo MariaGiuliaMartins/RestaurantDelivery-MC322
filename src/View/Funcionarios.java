@@ -122,27 +122,13 @@ public class Funcionarios extends javax.swing.JPanel {
 
     }
     private void jButtonDeleteActionPerformed(java.awt.event.ActionEvent evt) {
-        try {
-            int index = table.getSelectedRow();
-            // check is user selected a row
-            if (index < 0) {
-                JOptionPane.showMessageDialog(null, "Selecione uma linha da lista");
-                return;
-            }
-            tableModel.removeRow(index);
-            ArrayList<Funcionario> funcionarios = new ArrayList<Funcionario>();
-            for (int count = 0; count < tableModel.getRowCount(); count++){
-                String nome = tableModel.getValueAt(count,0).toString();
-                String cpf = tableModel.getValueAt(count,1).toString();
-                String email = tableModel.getValueAt(count,2).toString();
-                String tel = tableModel.getValueAt(count,3).toString();
-                String sexo = tableModel.getValueAt(count,4).toString();
-
-                Funcionario funcionario = new Funcionario(nome, cpf, email, "senha", sexo == "FEMININO" ? Sexo.FEMININO : Sexo.MASCULINO, tel, true, Calendar.getInstance());
-            }
-            funcionarioController.removeFuncionario(funcionarios);
-        }catch (Exception e){
-            e.printStackTrace();
+        int index = table.getSelectedRow();
+        // check is user selected a row
+        if (index < 0) {
+            JOptionPane.showMessageDialog(null, "Selecione uma linha da lista");
+            return;
         }
+        tableModel.removeRow(index);
+        funcionarioController.removeFuncionario(index);
     }
 }

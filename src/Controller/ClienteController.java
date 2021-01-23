@@ -50,18 +50,7 @@ public class ClienteController {
         clientes.add(cliente);
     }
 
-    public void removeCliente(ArrayList<Cliente> clientes){
-        this.clientes.clear();
-        // overwrite file
-        try {
-            ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("src/data/clientes.txt"));
-            for( Cliente cliente : clientes){
-                output.writeObject(cliente);
-            }
-            output.flush();
-            output.close();
-        } catch (Exception e){
-            e.printStackTrace();
-        }
+    public void removeCliente(int index){
+        this.clientes.remove(index);
     }
 }

@@ -51,18 +51,7 @@ public class EntregadorController {
         entregadores.add(entregador);
     }
 
-    public void removeEntregador(ArrayList<Entregador> entregadores){
-        this.entregadores.clear();
-        // overwrite file
-        try {
-            ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("src/data/entregadores.txt"));
-            for( Entregador entregador : entregadores){
-                output.writeObject(entregador);
-            }
-            output.flush();
-            output.close();
-        } catch (Exception e){
-            e.printStackTrace();
-        }
+    public void removeEntregador(int index){
+        this.entregadores.remove(index);
     }
 }

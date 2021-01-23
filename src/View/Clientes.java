@@ -123,27 +123,13 @@ public class Clientes extends javax.swing.JPanel {
 
     }
     private void jButtonDeleteActionPerformed(java.awt.event.ActionEvent evt) {
-        try {
-            int index = table.getSelectedRow();
-            // check is user selected a row
-            if (index < 0) {
-                JOptionPane.showMessageDialog(null, "Selecione uma linha da lista");
-                return;
-            }
-            tableModel.removeRow(index);
-            ArrayList<Cliente> clientes = new ArrayList<Cliente>();
-            for (int count = 0; count < tableModel.getRowCount(); count++){
-                String nome = tableModel.getValueAt(count,0).toString();
-                String cpf = tableModel.getValueAt(count,1).toString();
-                String email = tableModel.getValueAt(count,2).toString();
-                String tel = tableModel.getValueAt(count,3).toString();
-                String sexo = tableModel.getValueAt(count,4).toString();
-
-                Cliente cliente = new Cliente(nome, cpf, email, "senha", sexo == "FEMININO" ? Sexo.FEMININO : Sexo.MASCULINO, tel, true, Calendar.getInstance());
-            }
-            clienteController.removeCliente(clientes);
-        }catch (Exception e){
-            e.printStackTrace();
+        int index = table.getSelectedRow();
+        // check is user selected a row
+        if (index < 0) {
+            JOptionPane.showMessageDialog(null, "Selecione uma linha da lista");
+            return;
         }
+        tableModel.removeRow(index);
+        clienteController.removeCliente(index);
     }
 }
